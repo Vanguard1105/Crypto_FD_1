@@ -66,7 +66,7 @@ const Welcome = () => {
 
         {/* Title */}  
         <div className="text-center h-[46px]">  
-          <h1 className={`text-[40px] font-bold mb-2 ${  
+          <h1 className={`text-[40px] font-bold ${  
             theme === 'dark' ? 'text-white' : 'text-slate-900'  
           }`}>  
             CryptoBet  
