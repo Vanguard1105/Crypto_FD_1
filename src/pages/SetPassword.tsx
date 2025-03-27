@@ -70,7 +70,7 @@ const SetPassword = () => {
   };
 
   return (
-    <div className={`flex flex-col items-center justify-between min-h-screen py-1 px-5${  
+    <div className={`flex flex-col items-center justify-between min-h-screen py-1 px-5 ${  
       theme === 'dark' ? 'bg-slate-900' : 'bg-white'  
     }`}>  
       {loading && (  
