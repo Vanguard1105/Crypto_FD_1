@@ -83,7 +83,7 @@ const Welcome = () => {
       <div className = "mb-[60px] w-full  px-[14px]">  
         <button  
           onClick={handleStartBetting}  
-          className="w-full h-[48px] bg-blue-500 text-white py-2 rounded-lg font-medium text-lg items-center  
+          className="w-full bg-blue-500 text-white py-2 rounded-lg font-medium text-lg items-center  
             hover:bg-blue-600 active:bg-blue-700 transition-colors duration-200"  
         >  
           Play  
