@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Sun, Moon, Mail, Lock, CheckCircle } from 'lucide-react';
 import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
+import { useTelegram } from '../components/useTelegram';  
 
 const SetPassword = () => {
   const [email, setEmail] = useState('');
@@ -12,6 +13,7 @@ const SetPassword = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const [loading, setLoading] = useState(false);
+  const { user } = useTelegram();  
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -68,7 +70,7 @@ const SetPassword = () => {
   };
 
   return (
-    <div className={`flex flex-col items-center justify-between min-h-screen p-6 ${  
+    <div className={`flex flex-col items-center justify-between min-h-screen p-1 ${  
       theme === 'dark' ? 'bg-slate-900' : 'bg-white'  
     }`}>  
       {loading && (  
@@ -86,14 +88,14 @@ const SetPassword = () => {
               : 'text-slate-600 hover:text-slate-800'  
           }`}  
         >  
-          {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}  
+          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}  
         </button>  
-      </div>  
+      </div>   
 
       {/* Main Content */}  
-      <div className="flex flex-col items-center max-w-sm w-full pt-[12%] flex-grow">  
+      <div className="flex flex-col items-center max-w-sm w-full pt-3 flex-grow px-[14px]">  
         {/* Hero Image */}  
-        <div className="w-full h-[173px] aspect-[4/3] relative rounded-md overflow-hidden" style={{ marginTop: '37px' }}>  
+        <div className="w-full h-[173px] aspect-[4/3] relative rounded-md overflow-hidden">  
           <img  
             src="./crypto.jpg"  
             alt="Crypto Trading"  
@@ -101,21 +103,25 @@ const SetPassword = () => {
           />  
           <div className="absolute inset-0 bg-gradient-to-b from-blue-500/30 to-violet-500/30 mix-blend-overlay" />  
         </div>  
-        <h1 className={`text-2xl font-semibold  mt-3 mb-1 ${
-          theme === 'dark' ? 'text-white' : 'text-slate-900'
-        }`}>
-          Welcome to cryptoBet
-        </h1>
-        <p className={`text-sm ${
-          theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-        }`}>
-          Join now to start crypto betting.
-        </p>
+
+        {/* Title */}  
+        <div className="text-center">  
+          <p className={`text-[18px] font-bold pt-2 ${  
+            theme === 'dark' ? 'text-white' : 'text-slate-900'  
+          }`}>  
+            Welcome to cryptoBet {user?.username} 
+          </p>  
+          <p className={`text-sm py-1 ${  
+            theme === 'dark' ? 'text-slate-400' : 'text-slate-600'  
+          }`}>  
+            Join now to start crypto betting.  
+          </p>  
+        </div>  
       </div>  
 
       {/* Signup Form */}
-      <div className="w-full max-w-sm mb-5">
-        <form onSubmit={handleSetPassword} className="space-y-4 mt-8">
+      <div className="w-full max-w-sm mb-2 px-5">
+        <form onSubmit={handleSetPassword} className="space-y-1">
           <div>
             <label className={`block text-sm font-medium mb-1 ${
               theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
@@ -128,7 +134,7 @@ const SetPassword = () => {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`w-full px-4 py-3 rounded-lg text-sm ${
+                className={`w-full px-4 py-2 rounded-lg text-sm ${
                   theme === 'dark'
                     ? 'bg-slate-800 text-white border-slate-700'
                     : 'bg-slate-50 text-slate-900 border-slate-200'
@@ -150,7 +156,7 @@ const SetPassword = () => {
                 placeholder="Create your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`w-full px-4 py-3 rounded-lg text-sm ${
+                className={`w-full px-4 py-2 rounded-lg text-sm ${
                   theme === 'dark'
                     ? 'bg-slate-800 text-white border-slate-700'
                     : 'bg-slate-50 text-slate-900 border-slate-200'
@@ -172,7 +178,7 @@ const SetPassword = () => {
                 placeholder="Confirm your password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className={`w-full px-4 py-3 rounded-lg text-sm ${
+                className={`w-full px-4 py-2 rounded-lg text-sm ${
                   theme === 'dark'
                     ? 'bg-slate-800 text-white border-slate-700'
                     : 'bg-slate-50 text-slate-900 border-slate-200'
@@ -196,7 +202,7 @@ const SetPassword = () => {
           </button>
         </form>
 
-        <p className="text-center mt-6">
+        <p className="text-center mt-4">
           <span className={`${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
             Have already registered?{' '}
           </span>
