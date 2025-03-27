@@ -30,7 +30,7 @@ const Welcome = () => {
   };  
 
   return (  
-    <div className={`flex flex-col items-center justify-between min-h-screen p-6 ${  
+    <div className={`flex flex-col items-center justify-between min-h-screen p-5 ${  
       theme === 'dark' ? 'bg-slate-900' : 'bg-white'  
     }`}>  
       {loading && (  
@@ -48,14 +48,14 @@ const Welcome = () => {
               : 'text-slate-600 hover:text-slate-800'  
           }`}  
         >  
-          {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}  
+          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}  
         </button>  
       </div>  
 
       {/* Main Content */}  
-      <div className="flex flex-col items-center gap-8 max-w-sm w-full pt-[12%] flex-grow">  
+      <div className="flex flex-col items-center gap-8 max-w-sm w-full py-5 flex-grow">  
         {/* Hero Image */}  
-        <div className="w-full h-[173px] aspect-[4/3] relative rounded-md overflow-hidden" style={{ marginTop: '37px' }}>  
+        <div className="w-full h-[173px] aspect-[4/3] relative rounded-md overflow-hidden">  
           <img  
             src="./crypto.jpg"  
             alt="Crypto Trading"  
@@ -65,13 +65,13 @@ const Welcome = () => {
         </div>  
 
         {/* Title */}  
-        <div className="text-center pt-[5%]">  
-          <h1 className={`text-4xl font-bold mb-2 ${  
+        <div className="text-center pt-6 h-[46px]">  
+          <h1 className={`text-[40px] font-bold mb-2 ${  
             theme === 'dark' ? 'text-white' : 'text-slate-900'  
           }`}>  
             CryptoBet  
           </h1>  
-          <p className={`text-sm p-5 ${  
+          <p className={`text-sm py-5 ${  
             theme === 'dark' ? 'text-slate-400' : 'text-slate-600'  
           }`}>  
             Predict cryptocurrency prices and place bets.  
@@ -80,7 +80,7 @@ const Welcome = () => {
       </div>  
 
       {/* CTA Button Container */}  
-      <div className = "mb-[68px] w-full">  
+      <div className = "mb-[89px] w-full">  
         <button  
           onClick={handleStartBetting}  
           className="w-full h-[48px] bg-blue-500 text-white py-2 rounded-lg font-medium text-lg items-center  
