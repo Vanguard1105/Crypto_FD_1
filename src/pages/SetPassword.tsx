@@ -109,7 +109,7 @@ const SetPassword = () => {
           <p className={`text-[18px] font-bold pt-2 ${  
             theme === 'dark' ? 'text-white' : 'text-slate-900'  
           }`}>  
-            Welcome to cryptoBet {user?.username} 
+            Welcome to cryptoBet {user?.username && user.username.length > 4 ? user.username.substring(0, 6) + ".." : user?.username} 
           </p>  
           <p className={`text-sm py-1 ${  
             theme === 'dark' ? 'text-slate-400' : 'text-slate-600'  
