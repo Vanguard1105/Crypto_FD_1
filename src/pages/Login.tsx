@@ -76,7 +76,7 @@ const Login = () => {
       </div>   
 
       {/* Main Content */}  
-      <div className="flex flex-col items-center max-w-sm w-full pt-2 px-5 flex-grow px-[14px]">  
+      <div className="flex flex-col items-center max-w-sm w-full pt-2 px-5 flex-grow px-[30px]">  
         {/* Hero Image */}  
         <div className="w-full h-[173px] aspect-[4/3] relative rounded-md overflow-hidden">  
           <img  

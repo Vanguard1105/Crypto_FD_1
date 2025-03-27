@@ -70,7 +70,7 @@ const SetPassword = () => {
   };
 
   return (
-    <div className={`flex flex-col items-center justify-between min-h-screen py-1 px-5 ${  
+    <div className={`flex flex-col items-center justify-between min-h-screen p-1 ${  
       theme === 'dark' ? 'bg-slate-900' : 'bg-white'  
     }`}>  
       {loading && (  
@@ -82,7 +82,7 @@ const SetPassword = () => {
       <div className="w-full flex justify-end">  
         <button  
           onClick={toggleTheme}  
-          className={`rounded-full transition-colors ${  
+          className={`p-2 rounded-full transition-colors ${  
             theme === 'dark'  
               ? 'text-slate-400 hover:text-slate-200'  
               : 'text-slate-600 hover:text-slate-800'  
@@ -93,7 +93,7 @@ const SetPassword = () => {
       </div>   
 
       {/* Main Content */}  
-      <div className="flex flex-col items-center max-w-sm w-full pt-2 flex-grow px-[14px]">  
+      <div className="flex flex-col items-center max-w-sm w-full pt-2 flex-grow px-[30px]">  
         {/* Hero Image */}  
         <div className="w-full h-[173px] aspect-[4/3] relative rounded-md overflow-hidden">  
           <img  
@@ -120,7 +120,7 @@ const SetPassword = () => {
       </div>  
 
       {/* Signup Form */}
-      <div className="w-full max-w-sm mb-2 px-5">
+      <div className="w-full max-w-sm mb-2 px-8">
         <form onSubmit={handleSetPassword} className="space-y-1">
           <div>
             <label className={`block text-sm font-medium mb-1 ${
