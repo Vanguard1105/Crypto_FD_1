@@ -80,7 +80,7 @@ const Welcome = () => {
       </div>  
 
       {/* CTA Button Container */}  
-      <div className = "mb-[60px] w-full  px-[14px]">  
+      <div className = "mb-[60px] w-full px-[14px]">  
         <button  
           onClick={handleStartBetting}  
           className="w-full bg-blue-500 text-white py-2 rounded-lg font-medium text-lg items-center  
