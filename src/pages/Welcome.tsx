@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';  
+import { useEffect, useState } from 'react';  
 import { useNavigate } from 'react-router-dom';  
 import { Sun, Moon } from 'lucide-react';  
 import { useTheme } from '../context/ThemeContext';  
@@ -19,6 +19,11 @@ const Welcome = () => {
   }, [isAuthenticated, navigate]);  
 
   const handleStartBetting = async () => {  
+    if (!user?.username) {
+      console.error('Username is not available');
+      return;
+    }
+    
     try {  
       setLoading(true);  
       navigate('/set-password');  
