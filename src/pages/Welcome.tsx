@@ -53,7 +53,7 @@ const Welcome = () => {
       </div>  
 
       {/* Main Content */}  
-      <div className="flex flex-col items-center gap-8 max-w-sm w-full py-5 flex-grow">  
+      <div className="flex flex-col items-center gap-8 max-w-sm w-full py-5 flex-grow px-[14px]">  
         {/* Hero Image */}  
         <div className="w-full h-[173px] aspect-[4/3] relative rounded-md overflow-hidden">  
           <img  
@@ -80,7 +80,7 @@ const Welcome = () => {
       </div>  
 
       {/* CTA Button Container */}  
-      <div className = "mb-[89px] w-full">  
+      <div className = "mb-[89px] w-full  px-[14px]">  
         <button  
           onClick={handleStartBetting}  
           className="w-full h-[48px] bg-blue-500 text-white py-2 rounded-lg font-medium text-lg items-center  
