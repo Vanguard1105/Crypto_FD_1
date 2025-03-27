@@ -76,7 +76,7 @@ const Login = () => {
       </div>   
 
       {/* Main Content */}  
-      <div className="flex flex-col items-center gap-8 max-w-sm w-full py-5 flex-grow px-[14px]">  
+      <div className="flex flex-col items-center gap-8 max-w-sm w-full pt-5 pb-3 flex-grow px-[14px]">  
         {/* Hero Image */}  
         <div className="w-full h-[173px] aspect-[4/3] relative rounded-md overflow-hidden">  
           <img  
@@ -88,13 +88,13 @@ const Login = () => {
         </div>  
 
         {/* Title */}  
-        <div className="text-center h-[46px]">  
+        <div className="text-center">  
           <p className={`text-[18px] font-bold ${  
             theme === 'dark' ? 'text-white' : 'text-slate-900'  
           }`}>  
             Welcome to cryptoBet {user?.username} 
           </p>  
-          <p className={`text-sm py-3 ${  
+          <p className={`text-sm py-2 ${  
             theme === 'dark' ? 'text-slate-400' : 'text-slate-600'  
           }`}>  
             Join now to start crypto betting.  
@@ -103,7 +103,7 @@ const Login = () => {
       </div>  
 
       {/* Login Form */}
-      <div className="w-full max-w-sm mb-2">
+      <div className="w-full max-w-sm mb-2 py-5">
         <form onSubmit={handleLogin} className="space-y-2">
           <div>
             <label className={`block text-sm font-medium mb-1 ${
