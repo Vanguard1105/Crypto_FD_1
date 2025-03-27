@@ -103,7 +103,7 @@ const Login = () => {
       </div>  
 
       {/* Login Form */}
-      <div className="w-full max-w-sm mb-2 px-5">
+      <div className="w-full max-w-sm mb-2  px-[30px]">
         <form onSubmit={handleLogin} className="space-y-1">
           <div>
             <label className={`block text-sm font-medium mb-1 ${
