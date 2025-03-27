@@ -30,7 +30,7 @@ const Welcome = () => {
   };  
 
   return (  
-    <div className={`flex flex-col items-center justify-between min-h-screen p-5 ${  
+    <div className={`flex flex-col items-center justify-between min-h-screen p-3 ${  
       theme === 'dark' ? 'bg-slate-900' : 'bg-white'  
     }`}>  
       {loading && (  
@@ -65,13 +65,13 @@ const Welcome = () => {
         </div>  
 
         {/* Title */}  
-        <div className="text-center pt-6 h-[46px]">  
+        <div className="text-center h-[46px]">  
           <h1 className={`text-[40px] font-bold mb-2 ${  
             theme === 'dark' ? 'text-white' : 'text-slate-900'  
           }`}>  
             CryptoBet  
           </h1>  
-          <p className={`text-sm py-5 ${  
+          <p className={`text-sm py-3 ${  
             theme === 'dark' ? 'text-slate-400' : 'text-slate-600'  
           }`}>  
             Predict cryptocurrency prices and place bets.  
@@ -80,7 +80,7 @@ const Welcome = () => {
       </div>  
 
       {/* CTA Button Container */}  
-      <div className = "mb-[89px] w-full  px-[14px]">  
+      <div className = "mb-[60px] w-full  px-[14px]">  
         <button  
           onClick={handleStartBetting}  
           className="w-full h-[48px] bg-blue-500 text-white py-2 rounded-lg font-medium text-lg items-center  
