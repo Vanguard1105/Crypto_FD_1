@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Sun, Moon, Mail, Lock, CheckCircle } from 'lucide-react';
 import axios from 'axios';
@@ -14,6 +14,26 @@ const SetPassword = () => {
   const { theme, toggleTheme } = useTheme();
   const [loading, setLoading] = useState(false);
   const { user } = useTelegram();  
+  
+  useEffect(() => {
+    const checkPasswordStatus = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`https://crypto-bd-1.vercel.app/api/auth/getData/${user?.username}`);
+        if (response.data.hasPassword) {
+          navigate('/login');
+        }
+      } catch (err) {
+        console.error('Error checking password status:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user?.username) {
+      checkPasswordStatus();
+    }
+  }, []);
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -109,7 +129,7 @@ const SetPassword = () => {
           <p className={`text-[18px] font-bold pt-2 ${  
             theme === 'dark' ? 'text-white' : 'text-slate-900'  
           }`}>  
-            Welcome to cryptoBet {user?.username && user.username.length > 4 ? user.username.substring(0, 6) + ".." : user?.username} 
+            Welcome to cryptoBet {user?.username && user.username.length > 6 ? user.username.substring(0, 6) + ".." : user?.username} 
           </p>  
           <p className={`text-sm py-1 ${  
             theme === 'dark' ? 'text-slate-400' : 'text-slate-600'  
