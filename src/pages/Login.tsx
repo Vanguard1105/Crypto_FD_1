@@ -53,7 +53,7 @@ const Login = () => {
   };
 
   return (
-    <div className={`flex flex-col items-center justify-between min-h-screen p-3 ${  
+    <div className={`flex flex-col items-center justify-between min-h-screen p-1 ${  
       theme === 'dark' ? 'bg-slate-900' : 'bg-white'  
     }`}>  
       {loading && (  
@@ -76,7 +76,7 @@ const Login = () => {
       </div>   
 
       {/* Main Content */}  
-      <div className="flex flex-col items-center gap-8 max-w-sm w-full pt-5 flex-grow px-[14px]">  
+      <div className="flex flex-col items-center gap-8 max-w-sm w-full pt-3 flex-grow px-[14px]">  
         {/* Hero Image */}  
         <div className="w-full h-[173px] aspect-[4/3] relative rounded-md overflow-hidden">  
           <img  
@@ -164,7 +164,7 @@ const Login = () => {
           </button>
         </form>
 
-        <p className="text-center mt-6">
+        <p className="text-center mt-4">
           <span className={`${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
             New to cryptobet?{' '}
           </span>
