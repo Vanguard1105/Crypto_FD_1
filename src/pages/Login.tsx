@@ -89,7 +89,7 @@ const Login = () => {
 
         {/* Title */}  
         <div className="text-center">  
-          <p className={`text-[18px] font-bold ${  
+          <p className={`text-[18px] font-bold pt-2 ${  
             theme === 'dark' ? 'text-white' : 'text-slate-900'  
           }`}>  
             Welcome to cryptoBet {user?.username} 
