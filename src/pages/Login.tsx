@@ -103,7 +103,7 @@ const Login = () => {
       </div>  
 
       {/* Login Form */}
-      <div className="w-full max-w-sm mb-2 py-5">
+      <div className="w-full max-w-sm mb-2 px-5">
         <form onSubmit={handleLogin} className="space-y-2">
           <div>
             <label className={`block text-sm font-medium mb-1 ${
