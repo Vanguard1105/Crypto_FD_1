@@ -38,7 +38,7 @@ const Home = () => {
       <div className={`px-3 flex items-center justify-between sticky top-0 z-10 ${
         theme === 'dark' ? 'bg-slate-800/50 backdrop-blur-sm' : 'bg-white/50 backdrop-blur-sm'
       }`}>
-        <div className="flex items-center gap-3 p-2">
+        <div className="flex items-center gap-3 py-1">
           <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
           <span className={`text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'}`}>
             2.53
@@ -50,7 +50,7 @@ const Home = () => {
         </div>
         <button
           onClick={toggleTheme}
-          className={`p-2 rounded-full transition-colors ${
+          className={`px-2 py-1 rounded-full transition-colors ${
             theme === 'dark'
               ? 'text-slate-400 hover:text-slate-200'
               : 'text-slate-600 hover:text-slate-800'
@@ -58,12 +58,12 @@ const Home = () => {
         >
           {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
         </button>
+        {/* Carousel */}
+        <ImageCarousel images={carouselImages} theme={theme} />
       </div>
 
       {/* Main Content */}
-      <div className="p-4 space-y-6">
-        {/* Carousel */}
-        <ImageCarousel images={carouselImages} theme={theme} />
+      <div className="p-2">
 
         {/* Current Lotteries */}
         <div>
