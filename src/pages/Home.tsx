@@ -35,15 +35,18 @@ const Home = () => {
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
       {/* Header */}
-      <div className={`px-3 flex flex-col items-center sticky top-0 z-10 `}>
+      <div className={`px-3 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
         <div className={`flex flex-row justify-between w-full`}>
+          <div>
+
+          </div>
           <div className="flex items-center gap-3 py-1">
             <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
-            <span className={`text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'}`}>
+            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'}`}>
               2.53
             </span>
             <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" width="16" height="16" />
-            <span className={`text-lg font-semibold ${theme === 'dark' ? 'text-red-400' : 'text-red-500'}`}>
+            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-red-400' : 'text-red-500'}`}>
               1000
             </span>
           </div>
