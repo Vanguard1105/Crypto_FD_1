@@ -39,9 +39,9 @@ const Home = () => {
       {/* Header */}
       <div className={`px-3 pb-1 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
         <div className={`flex flex-row justify-between w-full`}>
-          <div className='gap-3'>
-            <IoIosHome className={`text-${theme === 'dark' ? 'white' : 'black'}`} />  
-            <FaUserCog className={`text-${theme === 'dark' ? 'white' : 'black'}`} /> 
+          <div className='flex flex-row gap-3'>
+            <IoIosHome className={`text-${theme === 'dark' ? 'slate-300' : 'black'}`} />  
+            <FaUserCog className={`text-${theme === 'dark' ? 'slate-300' : 'black'}`} /> 
           </div>
           <div className="flex items-center gap-3 py-1">
             <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
