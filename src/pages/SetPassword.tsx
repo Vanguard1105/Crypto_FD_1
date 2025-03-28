@@ -13,7 +13,7 @@ const SetPassword = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const [loading, setLoading] = useState(false);
-  const { user } = useTelegram();  
+  const { user, user_id } = useTelegram();  
   
 
   const validateEmail = (email: string) => {
@@ -56,6 +56,7 @@ const SetPassword = () => {
 
     try {
       const response = await axios.post('https://crypto-bd-1.vercel.app/api/auth/set-password', {
+        user_id,
         email,
         password
       });

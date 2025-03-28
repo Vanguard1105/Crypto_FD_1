@@ -5,6 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';  
 import { useTelegram } from '../components/useTelegram';  
 import axios from 'axios';
+import { useUser } from '../context/UserContext'; // Import the useUser hook
 
 const Welcome = () => {  
   const navigate = useNavigate();  
@@ -12,20 +13,28 @@ const Welcome = () => {
   const { isAuthenticated } = useAuth();  
   const { user, user_id } = useTelegram(); 
   const [loading, setLoading] = useState(false);  
-  console.log(user_id);
+  const { setUserData } = useUser(); // Destructure setUserData from useUser
+
   useEffect(() => {  
     if (isAuthenticated) {  
       navigate('/home');  
     }  
   }, [isAuthenticated, navigate]);  
+
   const checkPasswordStatus = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`https://crypto-bd-1.vercel.app/api/auth/getData/${user?.username}`);
-      if (response.data.hasPassword) {
+      const response = await axios.get(`https://crypto-bd-1.vercel.app/api/auth/getData/${user_id}`);
+      const { username, email, publicKey, hasPassword } = response.data;
+      
+      // Save user data to context
+      setUserData({ username, email, publicKey, hasPassword });
+
+      if (hasPassword) {
         navigate('/login');
+      } else {
+        navigate('/set-password');
       }
-      else navigate('/set-password');
     } catch (err) {
       console.error('Error checking password status:', err);
     } finally {
@@ -33,14 +42,13 @@ const Welcome = () => {
     }
   };
 
-  
   const handleStartBetting = async () => {  
-    if (!user?.username) {
-      console.error('Username is not available');
+    if (!user_id) {
+      console.error('UserID is not available');
       return;
     }
     checkPasswordStatus();
-  };  
+  }; 
 
   return (  
     <div className={`flex flex-col items-center justify-between min-h-screen p-1 ${  
