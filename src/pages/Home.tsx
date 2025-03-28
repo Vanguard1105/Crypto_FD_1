@@ -43,8 +43,8 @@ const Home = () => {
 
           </div>
           <div className="flex items-center gap-3 py-1">
-            <IoIosHome className={`text-${theme === 'dark' ? 'gray-300' : 'black'}`} />  
-            <FaUserCog className={`text-${theme === 'dark' ? 'gray-300' : 'black'}`} /> 
+            <IoIosHome className={`text-${theme === 'dark' ? 'white' : 'black'}`} />  
+            <FaUserCog className={`text-${theme === 'dark' ? 'white' : 'black'}`} /> 
             <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
             <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'}`}>
               2.53
