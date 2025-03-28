@@ -173,7 +173,7 @@ const Home = () => {
                     </span>
                   </div>
                   <div className='flex items-center'>
-                    <CgChevronRight width={35} height={35} className={`text-${theme === 'dark' ? 'slate-600' : 'slate-900'}`}/>
+                    <CgChevronRight size={20} className={`text-${theme === 'dark' ? 'slate-600' : 'slate-900'}`}/>
                   </div>
                 </div>
               </div>
