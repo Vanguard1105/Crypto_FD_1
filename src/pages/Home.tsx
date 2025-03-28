@@ -162,11 +162,15 @@ const Home = () => {
                     </p>
                   </div>
                 </div>
-                <span className={`text-sm ${
-                  theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                }`}>
-                  {winner.rank}
-                </span>
+                <div>
+                  <img src="https://static.vecteezy.com/system/resources/previews/007/589/040/non_2x/business-award-award-badge-icon-vector.jpg" alt="" />
+                  <span className={`text-sm ${
+                    theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
+                  }`}>
+                    {winner.rank}
+                  </span>
+
+                </div>
               </div>
             ))}
           </div>
