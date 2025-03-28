@@ -18,7 +18,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images, interval = 4000, 
   }, [images.length, interval]);
 
   return (
-    <div className="relative w-full h-48 rounded-xl overflow-hidden">
+    <div className="relative w-full h-[173px] rounded-xl overflow-hidden">
       {images.map((src, index) => (
         <div
           key={src}
