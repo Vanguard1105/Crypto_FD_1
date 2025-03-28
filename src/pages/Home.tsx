@@ -66,7 +66,7 @@ const Home = () => {
       </div>
 
       {/* Main Content */}
-      <div className="px-[30px]">
+      <div className="px-5">
         {/* Current Lotteries */}
         <div>
           <h2 className={`text-lg font-semibold mb-2 ${
@@ -79,7 +79,7 @@ const Home = () => {
               <div
                 key={lottery.name}
                 onClick={() => navigate('/lottery')}
-                className={`flex items-center justify-between py-1 rounded-lg border-2 shadow-md cursor-pointer
+                className={`flex items-center justify-between px-2 rounded-lg border-2 shadow-md cursor-pointer
                   transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg ${
                   theme === 'dark' 
                     ? 'bg-slate-800 border-slate-800 hover:border-violet-500/30 hover:shadow-violet-500/20' 
@@ -121,7 +121,7 @@ const Home = () => {
             <h2 className={`text-lg font-semibold ${
             theme === 'dark' ? 'text-white' : 'text-slate-900'
             }`}>
-              Current Lotteries
+              Top Winnders
             </h2> 
             <h2 className={`text-lg font-semibold ${
             theme === 'dark' ? 'text-white' : 'text-slate-900'
@@ -133,7 +133,7 @@ const Home = () => {
             {winners.map((winner) => (
               <div
                 key={winner.name}
-                className={`flex items-center justify-between py-1 rounded-lg border-2 ${
+                className={`flex items-center justify-between px-2 rounded-lg border-2 ${
                   theme === 'dark' ? 'bg-slate-800 border-slate-800' : 'bg-slate-50 border-gray-300'
                 }`}
               >
