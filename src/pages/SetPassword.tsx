@@ -15,25 +15,6 @@ const SetPassword = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useTelegram();  
   
-  useEffect(() => {
-    const checkPasswordStatus = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`https://crypto-bd-1.vercel.app/api/auth/getData/${user?.username}`);
-        if (response.data.hasPassword) {
-          navigate('/login');
-        }
-      } catch (err) {
-        console.error('Error checking password status:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (user?.username) {
-      checkPasswordStatus();
-    }
-  }, []);
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

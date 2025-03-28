@@ -4,6 +4,7 @@ import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';  
 import { useAuth } from '../context/AuthContext';  
 import { useTelegram } from '../components/useTelegram';  
+import axios from 'axios';
 
 const Welcome = () => {  
   const navigate = useNavigate();  
@@ -17,21 +18,28 @@ const Welcome = () => {
       navigate('/home');  
     }  
   }, [isAuthenticated, navigate]);  
+  const checkPasswordStatus = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`https://crypto-bd-1.vercel.app/api/auth/getData/${user?.username}`);
+      if (response.data.hasPassword) {
+        navigate('/login');
+      }
+      else navigate('/set-password');
+    } catch (err) {
+      console.error('Error checking password status:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  
   const handleStartBetting = async () => {  
     if (!user?.username) {
       console.error('Username is not available');
       return;
     }
-    
-    try {  
-      setLoading(true);  
-      navigate('/set-password');  
-    } catch (error) {  
-      console.error('Error fetching user data:', error);  
-    } finally {  
-      setLoading(false);  
-    }  
+    checkPasswordStatus();
   };  
 
   return (  
