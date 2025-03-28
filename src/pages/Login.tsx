@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { useTelegram } from '../components/useTelegram';  
-
+import { useUser } from '../context/UserContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +15,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { login } = useAuth();
-  const { user } = useTelegram();  
+  const { user, user_id } = useTelegram();  
+  const { userData } = useUser();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -39,8 +40,9 @@ const Login = () => {
     setLoading(true);
 
     try {
+      console.log(user_id, password)
       const response = await axios.post('https://crypto-bd-1.vercel.app/api/auth/login', {
-        email,
+        user_id,
         password
       });
       login(response.data.token);
@@ -114,7 +116,8 @@ const Login = () => {
             <div className="relative">
               <input
                 type="email"
-                placeholder="Enter your email"
+                placeholder={userData?.email}
+                disabled
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={`w-full px-4 py-2 rounded-lg text-sm ${
