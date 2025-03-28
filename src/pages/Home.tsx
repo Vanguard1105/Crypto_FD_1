@@ -4,6 +4,8 @@ import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { usePrice } from '../context/PriceContext';
 import ImageCarousel from '../components/ImageCarousel';
+import { IoIosHome } from "react-icons/io";
+import { FaUserCog } from "react-icons/fa";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -41,6 +43,8 @@ const Home = () => {
 
           </div>
           <div className="flex items-center gap-3 py-1">
+            <IoIosHome />
+            <FaUserCog />
             <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
             <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'}`}>
               2.53
