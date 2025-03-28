@@ -69,11 +69,11 @@ const Home = () => {
       <div className="px-5">
         {/* Current Lotteries */}
         <div>
-          <h2 className={`text-lg font-semibold mb-2 ${
+          <h3 className={`text-lg font-semibold mb-2 ${
            theme === 'dark' ? 'text-white' : 'text-slate-900'
           }`}>
             Current Lotteries
-          </h2> 
+          </h3> 
           <div className="space-y-1">
             {lotteries.map((lottery) => (
               <div
@@ -118,23 +118,26 @@ const Home = () => {
         {/* Top Winners */}
         <div>
           <div className="flex items-center mt-1 mb-2 gap-3">
-            <h2 className={`text-lg font-semibold ${
+            <h3 className={`text-lg font-semibold cursor-pointer ${
             theme === 'dark' ? 'text-white' : 'text-slate-900'
             }`}>
               Top Winnders
-            </h2> 
-            <h2 className={`text-lg font-semibold ${
-            theme === 'dark' ? 'text-white' : 'text-slate-900'
+            </h3> 
+            <h3 className={`text-lg font-semibold  cursor-pointer ${
+              theme === 'dark' ? 'text-white' : 'text-slate-900'
             }`}>
               Top Buyers
-            </h2> 
+            </h3> 
           </div>
           <div className="space-y-1">
             {winners.map((winner) => (
               <div
                 key={winner.name}
-                className={`flex items-center justify-between px-2 rounded-lg border-2 ${
-                  theme === 'dark' ? 'bg-slate-800 border-slate-800' : 'bg-slate-50 border-gray-300'
+                className={`flex items-center justify-between px-2 rounded-lg border-2 shadow-md cursor-pointer
+                  transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg ${
+                  theme === 'dark' 
+                    ? 'bg-slate-800 border-slate-800 hover:border-violet-500/30 hover:shadow-violet-500/20' 
+                    : 'bg-slate-50 border-gray-300 hover:border-violet-500/30 hover:shadow-violet-500/10'
                 }`}
               >
                 <div className="flex items-center gap-3">
