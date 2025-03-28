@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useState } from 'react';
 
 interface UserData {
-  username: string;
+  username: string | undefined;
   user_id: string | undefined;
-  email: string;
-  publicKey: string;
-  hasPassword: boolean;
+  email: string | undefined;
+  publicKey: string | undefined;
+  hasPassword: boolean | undefined;
 }
 
 interface UserContextType {

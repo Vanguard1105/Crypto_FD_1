@@ -14,7 +14,7 @@ const SetPassword = () => {
   const { theme, toggleTheme } = useTheme();
   const [loading, setLoading] = useState(false);
   const { user, user_id } = useTelegram();  
-  const { setUserData } = useUser();
+  const { userData, setUserData } = useUser();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -62,7 +62,10 @@ const SetPassword = () => {
       });
       
       if (response.status === 200) {
-        const { username, email, publicKey, hasPassword } = response.data;
+        const username = userData?.username;
+        const publicKey = userData?.publicKey;
+        const hasPassword = userData?.hasPassword;
+
         setUserData({ username, user_id, email, publicKey, hasPassword });
         setTimeout(() => {
           navigate('/login');
