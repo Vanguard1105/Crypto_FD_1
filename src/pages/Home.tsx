@@ -165,7 +165,7 @@ const Home = () => {
                 </div>
                 <div className='flex flex-col items-center'>
                   <svg
-                    className='py-1'
+                    className='pt-0.5'
                     style={{ width: '20px', height: '20px', overflow: 'visible', opacity: 1, zIndex: 1, fill: 'rgb(255, 149, 0)' }}
                     viewBox="0 0 384 512"
                   >
