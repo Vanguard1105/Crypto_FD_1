@@ -35,7 +35,7 @@ const Home = () => {
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
       {/* Header */}
-      <div className={`px-3 pb-2 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
+      <div className={`px-3 pb-1 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
         <div className={`flex flex-row justify-between w-full`}>
           <div>
 
@@ -69,12 +69,12 @@ const Home = () => {
       <div className="px-5">
         {/* Current Lotteries */}
         <div>
-          <h2 className={`text-lg font-semibold mb-2 ${
+          <h2 className={`text-lg font-semibold mb-1 ${
            theme === 'dark' ? 'text-white' : 'text-slate-900'
           }`}>
             Current Lotteries
           </h2> 
-          <div className="space-y-2">
+          <div className="space-y-1">
             {lotteries.map((lottery) => (
               <div
                 key={lottery.name}
@@ -117,7 +117,7 @@ const Home = () => {
 
         {/* Top Winners */}
         <div>
-          <div className="flex items-center mb-2 gap-3">
+          <div className="flex items-center mb-1 gap-3">
             <h2 className={`text-lg font-semibold ${
             theme === 'dark' ? 'text-white' : 'text-slate-900'
             }`}>
@@ -129,7 +129,7 @@ const Home = () => {
               Top Buyers
             </h2> 
           </div>
-          <div className="space-y-2">
+          <div className="space-y-1">
             {winners.map((winner) => (
               <div
                 key={winner.name}
