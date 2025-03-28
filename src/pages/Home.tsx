@@ -29,11 +29,11 @@ const Home = () => {
   ];
 
   const winners = [
-    { name: 'R. Mendes', amount: 157.32, rank: '48/52', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop' },
+    { name: 'R. Mendes', amount: 157.32, rank: '48/52', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop',  },
     { name: 'D.Micheal', amount: 72.54, rank: '39/71', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=64&h=64&fit=crop' },
     { name: 'S.Danielle', amount: 48.92, rank: '11/13', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=64&h=64&fit=crop' },
   ];
-
+  const colors = ["rgb(255,149,0)", "rgb(127,127,127)", "rgb(129, 76, 2)"];
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
       {/* Header */}
@@ -133,7 +133,7 @@ const Home = () => {
             </h3> 
           </div>
           <div className="space-y-1">
-            {winners.map((winner) => (
+            {winners.map((winner, index) => (
               <div
                 key={winner.name}
                 className={`flex items-center justify-between px-2 rounded-lg border-2 shadow-md cursor-pointer
@@ -163,7 +163,7 @@ const Home = () => {
                   </div>
                 </div>
                 <div className='flex flex-col items-center'>
-                  <MyIcon width={20} height={20} fill='rgb(255, 149, 0)'/>
+                  <MyIcon width={20} height={20} fill={colors[index]}/>
                   <span className={`text-sm ${
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                   }`}>
