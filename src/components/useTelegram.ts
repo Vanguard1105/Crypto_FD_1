@@ -17,6 +17,7 @@ interface IWebApp {
 interface IUseTelegram {
   webApp: IWebApp | undefined;
   user: IWebApp['initDataUnsafe']['user'] | undefined;
+  user_id: number | undefined; // Add user_id to the interface
   start_param: string | undefined;
   onArgumentResult: (functionName: string, argument: string, result: string | Error) => void;
   onClose: () => void;
@@ -31,6 +32,7 @@ export function useTelegram(): IUseTelegram {
     const webApp: IWebApp | undefined = typeof window !== 'undefined' ? (window as any).Telegram?.WebApp : undefined;  
   
     const user: IWebApp['initDataUnsafe']['user'] | undefined = webApp?.initDataUnsafe.user;  
+    const user_id = user?.id; // Get the user_id from the user object
     const start_param = webApp?.initDataUnsafe.start_param;  
   
     const onArgumentResult = (functionName: string, argument: string, result: string | Error) => {  
@@ -69,6 +71,7 @@ export function useTelegram(): IUseTelegram {
     return {  
       webApp,  
       user,  
+      user_id, // Return user_id
       start_param,  
       onArgumentResult,  
       onResult,  

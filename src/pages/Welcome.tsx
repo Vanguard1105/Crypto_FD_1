@@ -10,9 +10,9 @@ const Welcome = () => {
   const navigate = useNavigate();  
   const { theme, toggleTheme } = useTheme();  
   const { isAuthenticated } = useAuth();  
-  const { user } = useTelegram();  
+  const { user, user_id } = useTelegram(); 
   const [loading, setLoading] = useState(false);  
-
+  console.log(user_id);
   useEffect(() => {  
     if (isAuthenticated) {  
       navigate('/home');  
