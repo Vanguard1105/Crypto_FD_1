@@ -39,12 +39,11 @@ const Home = () => {
       {/* Header */}
       <div className={`px-3 pb-1 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
         <div className={`flex flex-row justify-between w-full`}>
-          <div>
-
-          </div>
-          <div className="flex items-center gap-3 py-1">
+          <div className='gap-3'>
             <IoIosHome className={`text-${theme === 'dark' ? 'white' : 'black'}`} />  
             <FaUserCog className={`text-${theme === 'dark' ? 'white' : 'black'}`} /> 
+          </div>
+          <div className="flex items-center gap-3 py-1">
             <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
             <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'}`}>
               2.53
@@ -53,17 +52,17 @@ const Home = () => {
             <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-red-400' : 'text-red-500'}`}>
               1000
             </span>
-          </div>
-          <button
-            onClick={toggleTheme}
-            className={`px-2 py-1 rounded-full transition-colors ${
-              theme === 'dark'
+            <button
+              onClick={toggleTheme}
+              className={`px-2 py-1 rounded-full transition-colors ${
+                theme === 'dark'
                 ? 'text-slate-400 hover:text-slate-200'
                 : 'text-slate-600 hover:text-slate-800'
-            }`}
-          >
-            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
+              }`}
+              >
+              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+          </div>
         </div>
         {/* Carousel */}
         <ImageCarousel images={carouselImages} theme={theme} />
