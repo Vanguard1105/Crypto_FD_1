@@ -6,6 +6,7 @@ import { usePrice } from '../context/PriceContext';
 import ImageCarousel from '../components/ImageCarousel';
 import { IoIosHome } from "react-icons/io";
 import { FaUserCog } from "react-icons/fa";
+import { CgChevronRight } from "react-icons/cg";
 import MyIcon from '../components/MyIcon';
 const Home = () => {
   const navigate = useNavigate();
@@ -162,14 +163,16 @@ const Home = () => {
                     </p>
                   </div>
                 </div>
-                <div className='flex flex-col items-center'>
-                  <MyIcon width={20} height={20} fill={colors[index]}/>
-                  <span className={`text-sm ${
-                    theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                  }`}>
-                    {winner.rank}
-                  </span>
-
+                <div className='flex flex-row gap-3'>
+                  <div className='flex flex-col items-center'>
+                    <MyIcon width={20} height={20} fill={colors[index]}/>
+                    <span className={`text-sm ${
+                      theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
+                    }`}>
+                      {winner.rank}
+                    </span>
+                  </div>
+                  <CgChevronRight />
                 </div>
               </div>
             ))}
