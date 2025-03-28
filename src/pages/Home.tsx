@@ -41,16 +41,16 @@ const Home = () => {
       <div className={`px-3 pb-1 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
         <div className={`flex flex-row justify-between w-full`}>
           <div className='flex flex-row gap-3 items-center py-1 px-2'>
-            <IoIosHome className={`text-${theme === 'dark' ? 'slate-600' : 'slate-900'} cursor-pointer`} />  
-            <FaUserCog className={`text-${theme === 'dark' ? 'slate-600' : 'slate-900'} cursor-pointer`} /> 
+            <IoIosHome className={`text-${theme === 'dark' ? 'slate-400 hover:text-slate-300' : 'slate-900 hover:text-slate-800'} cursor-pointer`} />  
+            <FaUserCog className={`text-${theme === 'dark' ? 'slate-400 hover:text-slate-300' : 'slate-900 hover:text-slate-800'} cursor-pointer`} /> 
           </div>
           <div className="flex items-center gap-3 py-1">
-            <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full cursor-pointer transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
-            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'} cursor-pointer transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg`}>
+            <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full cursor-pointer" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
+            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'} cursor-pointer`}>
               2.53
             </span>
-            <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg' width="16" height="16" />
-            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-red-400' : 'text-red-500'} cursor-pointer transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg`}>
+            <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer' width="16" height="16" />
+            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-red-400' : 'text-red-500'} cursor-pointer`}>
               1000
             </span>
             <button
@@ -73,7 +73,7 @@ const Home = () => {
       <div className="px-5">
         {/* Current Lotteries */}
         <div>
-          <h3 className={`text-lg font-semibold mb-2 cursor-pointer transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg ${
+          <h3 className={`text-lg font-semibold mb-2 cursor-pointer ${
            theme === 'dark' ? 'text-white' : 'text-slate-900'
           }`}>
             Current Lotteries
@@ -122,12 +122,12 @@ const Home = () => {
         {/* Top Winners */}
         <div>
           <div className="flex items-center mt-1 mb-2 gap-3">
-            <h3 className={`text-lg font-semibold cursor-pointer transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg ${
+            <h3 className={`text-lg font-semibold cursor-pointer ${
             theme === 'dark' ? 'text-white' : 'text-slate-900'
             }`}>
               Top Winnders
             </h3> 
-            <h3 className={`text-lg font-semibold  cursor-pointer transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg ${
+            <h3 className={`text-lg font-semibold  cursor-pointer ${
               theme === 'dark' ? 'text-white' : 'text-slate-900'
             }`}>
               Top Buyers
