@@ -6,6 +6,7 @@ import { usePrice } from '../context/PriceContext';
 import ImageCarousel from '../components/ImageCarousel';
 import { IoIosHome } from "react-icons/io";
 import { FaUserCog } from "react-icons/fa";
+import { FaMedal } from "react-icons/fa6";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -163,7 +164,7 @@ const Home = () => {
                   </div>
                 </div>
                 <div>
-                  <img src="https://static.vecteezy.com/system/resources/previews/007/589/040/non_2x/business-award-award-badge-icon-vector.jpg" alt="" />
+                  <FaMedal />
                   <span className={`text-sm ${
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                   }`}>
