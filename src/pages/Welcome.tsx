@@ -11,7 +11,7 @@ const Welcome = () => {
   const navigate = useNavigate();  
   const { theme, toggleTheme } = useTheme();  
   const { isAuthenticated } = useAuth();  
-  const { user, user_id } = useTelegram(); 
+  const { user_id } = useTelegram(); 
   const [loading, setLoading] = useState(false);  
   const { setUserData } = useUser(); // Destructure setUserData from useUser
 
