@@ -172,7 +172,9 @@ const Home = () => {
                       {winner.rank}
                     </span>
                   </div>
-                  <CgChevronRight />
+                  <div className='items-center'>
+                    <CgChevronRight width={20} height={20} className={`text-${theme === 'dark' ? 'slate-600' : 'slate-900'}`}/>
+                  </div>
                 </div>
               </div>
             ))}
