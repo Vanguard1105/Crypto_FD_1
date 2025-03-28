@@ -25,6 +25,7 @@ const Welcome = () => {
     try {
       setLoading(true);
       const response = await axios.get(`https://crypto-bd-1.vercel.app/api/auth/getData/${user_id}`);
+      console.log(response)
       const { username, email, publicKey, hasPassword } = response.data;
       
       // Save user data to context
