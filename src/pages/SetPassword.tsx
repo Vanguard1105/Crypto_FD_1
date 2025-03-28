@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Sun, Moon, Mail, Lock, CheckCircle } from 'lucide-react';
 import axios from 'axios';
