@@ -21,9 +21,9 @@ const Home = () => {
   ];
 
   const lotteries = [
-    { name: 'Solana', count: 4, value: latestPrice, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full" height="35" width="35" alt="SOL" loading="lazy" decoding="async"/> },
-    { name: 'Etherium', count: 3, value: 2011.88, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png" height="35" width="35" alt="ETH" loading="lazy" decoding="async"  /> },
-    { name: 'Bitcoin', count: 3, value: 84297.15, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1.png" height="35" width="35" alt="BTC" loading="lazy" decoding="async" /> },
+    { name: 'Solana', count: 4, value: latestPrice, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full" height="25" width="25" alt="SOL" loading="lazy" decoding="async"/> },
+    { name: 'Etherium', count: 3, value: 2011.88, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png" height="25" width="25" alt="ETH" loading="lazy" decoding="async"  /> },
+    { name: 'Bitcoin', count: 3, value: 84297.15, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1.png" height="25" width="25" alt="BTC" loading="lazy" decoding="async" /> },
   ];
 
   const winners = [
@@ -35,7 +35,7 @@ const Home = () => {
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
       {/* Header */}
-      <div className={`px-3 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
+      <div className={`px-3 pb-2 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
         <div className={`flex flex-row justify-between w-full`}>
           <div>
 
@@ -66,21 +66,20 @@ const Home = () => {
       </div>
 
       {/* Main Content */}
-      <div className="p-2">
-
+      <div className="px-[30px]">
         {/* Current Lotteries */}
         <div>
-          <h2 className={`text-lg font-semibold mb-3 ${
-            theme === 'dark' ? 'text-white' : 'text-slate-900'
+          <h2 className={`text-lg font-semibold mb-2 ${
+           theme === 'dark' ? 'text-white' : 'text-slate-900'
           }`}>
             Current Lotteries
-          </h2>
+          </h2> 
           <div className="space-y-2">
             {lotteries.map((lottery) => (
               <div
                 key={lottery.name}
                 onClick={() => navigate('/lottery')}
-                className={`flex items-center justify-between px-3 py-1.5 rounded-lg border-2 shadow-md cursor-pointer
+                className={`flex items-center justify-between py-1 rounded-lg border-2 shadow-md cursor-pointer
                   transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg ${
                   theme === 'dark' 
                     ? 'bg-slate-800 border-slate-800 hover:border-violet-500/30 hover:shadow-violet-500/20' 
@@ -118,23 +117,23 @@ const Home = () => {
 
         {/* Top Winners */}
         <div>
-          <div className="flex items-center mb-3">
+          <div className="flex items-center mb-2 gap-3">
             <h2 className={`text-lg font-semibold ${
-              theme === 'dark' ? 'text-white' : 'text-slate-900'
+            theme === 'dark' ? 'text-white' : 'text-slate-900'
             }`}>
-              Top Winners
-            </h2>
-            <button className={`text-sm ${
-              theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
+              Current Lotteries
+            </h2> 
+            <h2 className={`text-lg font-semibold ${
+            theme === 'dark' ? 'text-white' : 'text-slate-900'
             }`}>
               Top Buyers
-            </button>
+            </h2> 
           </div>
           <div className="space-y-2">
             {winners.map((winner) => (
               <div
                 key={winner.name}
-                className={`flex items-center justify-between p-3 rounded-lg border-2 ${
+                className={`flex items-center justify-between py-1 rounded-lg border-2 ${
                   theme === 'dark' ? 'bg-slate-800 border-slate-800' : 'bg-slate-50 border-gray-300'
                 }`}
               >
@@ -142,7 +141,7 @@ const Home = () => {
                   <img
                     src={winner.image}
                     alt={winner.name}
-                    className="w-10 h-10 rounded-full"
+                    className="w-8 h-8 rounded-full"
                   />
                   <div>
                     <p className={`font-medium ${
