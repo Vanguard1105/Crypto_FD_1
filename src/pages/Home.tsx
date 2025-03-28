@@ -45,12 +45,12 @@ const Home = () => {
             <FaUserCog className={`text-${theme === 'dark' ? 'slate-600' : 'slate-900'} cursor-pointer`} /> 
           </div>
           <div className="flex items-center gap-3 py-1">
-            <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full cursor-pointer" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
-            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'} cursor-pointer`}>
+            <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full cursor-pointer transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
+            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'} cursor-pointer transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg`}>
               2.53
             </span>
-            <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer' width="16" height="16" />
-            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-red-400' : 'text-red-500'} cursor-pointer`}>
+            <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg' width="16" height="16" />
+            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-red-400' : 'text-red-500'} cursor-pointer transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg`}>
               1000
             </span>
             <button
@@ -73,7 +73,7 @@ const Home = () => {
       <div className="px-5">
         {/* Current Lotteries */}
         <div>
-          <h3 className={`text-lg font-semibold mb-2 cursor-pointer ${
+          <h3 className={`text-lg font-semibold mb-2 cursor-pointer transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg ${
            theme === 'dark' ? 'text-white' : 'text-slate-900'
           }`}>
             Current Lotteries
@@ -122,12 +122,12 @@ const Home = () => {
         {/* Top Winners */}
         <div>
           <div className="flex items-center mt-1 mb-2 gap-3">
-            <h3 className={`text-lg font-semibold cursor-pointer ${
+            <h3 className={`text-lg font-semibold cursor-pointer transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg ${
             theme === 'dark' ? 'text-white' : 'text-slate-900'
             }`}>
               Top Winnders
             </h3> 
-            <h3 className={`text-lg font-semibold  cursor-pointer ${
+            <h3 className={`text-lg font-semibold  cursor-pointer transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg ${
               theme === 'dark' ? 'text-white' : 'text-slate-900'
             }`}>
               Top Buyers
