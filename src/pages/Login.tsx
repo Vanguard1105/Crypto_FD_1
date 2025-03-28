@@ -39,7 +39,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('https://crypto-bet-backend.vercel.app/api/auth/login', {
+      const response = await axios.post('https://crypto-bd-1.vercel.app/api/auth/login', {
         email,
         password
       });
