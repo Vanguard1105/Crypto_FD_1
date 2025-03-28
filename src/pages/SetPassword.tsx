@@ -64,8 +64,9 @@ const SetPassword = () => {
       if (response.status === 200) {
         const { username, email, publicKey, hasPassword } = response.data;
         setUserData({ username, user_id, email, publicKey, hasPassword });
-
-        navigate('/login');
+        setTimeout(() => {
+          navigate('/login');
+        }, 100); // Small delay to ensure state is updated
       }
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to set password. Please try again.');

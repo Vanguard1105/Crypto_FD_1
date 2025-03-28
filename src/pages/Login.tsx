@@ -8,7 +8,6 @@ import { useTelegram } from '../components/useTelegram';
 import { useUser } from '../context/UserContext';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -17,6 +16,7 @@ const Login = () => {
   const { login } = useAuth();
   const { user, user_id } = useTelegram();  
   const { userData } = useUser();
+  const [email, setEmail] = useState(userData?.email == undefined? '': userData?.email);
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
