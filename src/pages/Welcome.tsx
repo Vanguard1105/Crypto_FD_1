@@ -29,7 +29,7 @@ const Welcome = () => {
       const { username, email, publicKey, hasPassword } = response.data;
       
       // Save user data to context
-      setUserData({ username, email, publicKey, hasPassword });
+      setUserData({ username, user_id, email, publicKey, hasPassword });
 
       if (hasPassword) {
         navigate('/login');

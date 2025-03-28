@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from 'react';
 
 interface UserData {
   username: string;
+  user_id: string | undefined;
   email: string;
   publicKey: string;
   hasPassword: boolean;

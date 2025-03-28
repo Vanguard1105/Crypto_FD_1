@@ -4,7 +4,7 @@ import { Sun, Moon, Mail, Lock, CheckCircle } from 'lucide-react';
 import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
 import { useTelegram } from '../components/useTelegram';  
-
+import { useUser } from '../context/UserContext';
 const SetPassword = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,7 +14,7 @@ const SetPassword = () => {
   const { theme, toggleTheme } = useTheme();
   const [loading, setLoading] = useState(false);
   const { user, user_id } = useTelegram();  
-  
+  const { setUserData } = useUser();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -62,6 +62,9 @@ const SetPassword = () => {
       });
       
       if (response.status === 200) {
+        const { username, email, publicKey, hasPassword } = response.data;
+        setUserData({ username, user_id, email, publicKey, hasPassword });
+
         navigate('/login');
       }
     } catch (err: any) {
