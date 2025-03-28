@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BarChart2, User, Sun, Moon, Bitcoin, Feather as Ethereum } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { usePrice } from '../context/PriceContext';
 import ImageCarousel from '../components/ImageCarousel';
@@ -21,9 +21,9 @@ const Home = () => {
   ];
 
   const lotteries = [
-    { name: 'Solana', count: 4, value: 137.63, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full" height="35" width="35" alt="SOL" loading="lazy" decoding="async" fetchpriority="low" /> },
-    { name: 'Etherium', count: 3, value: 2011.88, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png" height="35" width="35" alt="ETH" loading="lazy" decoding="async" fetchpriority="low" /> },
-    { name: 'Bitcoin', count: 3, value: 84297.15, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1.png" height="35" width="35" alt="BTC" loading="lazy" decoding="async" fetchpriority="low" /> },
+    { name: 'Solana', count: 4, value: latestPrice, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full" height="35" width="35" alt="SOL" loading="lazy" decoding="async"/> },
+    { name: 'Etherium', count: 3, value: 2011.88, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png" height="35" width="35" alt="ETH" loading="lazy" decoding="async"  /> },
+    { name: 'Bitcoin', count: 3, value: 84297.15, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1.png" height="35" width="35" alt="BTC" loading="lazy" decoding="async" /> },
   ];
 
   const winners = [
@@ -35,15 +35,15 @@ const Home = () => {
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
       {/* Header */}
-      <div className={`px-4 py-3 flex items-center justify-between sticky top-0 z-10 ${
+      <div className={`px-3 flex items-center justify-between sticky top-0 z-10 ${
         theme === 'dark' ? 'bg-slate-800/50 backdrop-blur-sm' : 'bg-white/50 backdrop-blur-sm'
       }`}>
-        <div className="flex items-center gap-3">
-          <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full" height="20" width="20" alt="SOL" loading="lazy" decoding="async" fetchpriority="low" />
+        <div className="flex items-center gap-3 p-2">
+          <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
           <span className={`text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'}`}>
             2.53
           </span>
-          <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" width="20" height="20" />
+          <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" width="16" height="16" />
           <span className={`text-lg font-semibold ${theme === 'dark' ? 'text-red-400' : 'text-red-500'}`}>
             1000
           </span>
@@ -56,7 +56,7 @@ const Home = () => {
               : 'text-slate-600 hover:text-slate-800'
           }`}
         >
-          {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
         </button>
       </div>
 
