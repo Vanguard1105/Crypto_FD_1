@@ -163,7 +163,7 @@ const Home = () => {
                   </div>
                 </div>
                 <div className='flex flex-col items-center'>
-                  <MyIcon width={20} height={20} fill=''/>
+                  <MyIcon width={20} height={20} fill='rgb(255, 149, 0)'/>
                   <span className={`text-sm ${
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                   }`}>

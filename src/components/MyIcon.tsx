@@ -6,7 +6,7 @@ interface IconProps {
   fill?: string;   // optional fill color  
 }  
 
-const MyIcon: React.FC<IconProps> = ({ width = 20, height = 20, fill = 'rgb(127, 127, 127)' }) => {  
+const MyIcon: React.FC<IconProps> = ({ width = 20, height = 20, fill }) => {  
   return (  
     <svg  
       style={{ width: `${width}px`, height: `${height}px`, overflow: 'visible', opacity: 1, zIndex: 1, fill }}  
