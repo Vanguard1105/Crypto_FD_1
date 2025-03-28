@@ -69,7 +69,7 @@ const Home = () => {
       <div className="px-5">
         {/* Current Lotteries */}
         <div>
-          <h2 className={`text-lg font-semibold mb-1 ${
+          <h2 className={`text-lg font-semibold mb-2 ${
            theme === 'dark' ? 'text-white' : 'text-slate-900'
           }`}>
             Current Lotteries
@@ -117,7 +117,7 @@ const Home = () => {
 
         {/* Top Winners */}
         <div>
-          <div className="flex items-center mb-1 gap-3">
+          <div className="flex items-center mt-1 mb-2 gap-3">
             <h2 className={`text-lg font-semibold ${
             theme === 'dark' ? 'text-white' : 'text-slate-900'
             }`}>
