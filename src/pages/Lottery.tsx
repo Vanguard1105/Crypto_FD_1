@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Sun, Moon } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import PriceChart from '../components/PriceChart';
 import { usePrice } from '../context/PriceContext';
 import { TimePeriod } from '../types';
+import { IoIosHome } from "react-icons/io";
+import { FaUserCog } from "react-icons/fa";
 
 const Lottery = () => {
   const navigate = useNavigate();
@@ -29,21 +31,32 @@ const Lottery = () => {
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
       {/* Header */}
-      <div className={`px-4 py-3 flex items-center justify-between sticky top-0 z-10 ${
-        theme === 'dark' ? 'bg-slate-800/50 backdrop-blur-sm' : 'bg-white/50 backdrop-blur-sm'
-      }`}>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => navigate('/home')}
-            className={`p-1 rounded-lg transition-colors ${
-              theme === 'dark' ? 'text-slate-400 hover:text-slate-200' : 'text-slate-600 hover:text-slate-800'
-            }`}
-          >
-            <ArrowLeft size={20} />
-          </button>
-          <span className={`text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'}`}>
-            SOL/USD ${latestPrice.toFixed(3)}
-          </span>
+      <div className={`px-3 pb-1 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
+        <div className={`flex flex-row justify-between w-full`}>
+          <div className='flex flex-row gap-3 items-center py-1 px-2'>
+            <IoIosHome className={`text-${theme === 'dark' ? 'slate-400 hover:text-slate-300' : 'slate-900 hover:text-slate-800'} cursor-pointer`} />  
+            <FaUserCog className={`text-${theme === 'dark' ? 'slate-400 hover:text-slate-300' : 'slate-900 hover:text-slate-800'} cursor-pointer`} /> 
+          </div>
+          <div className="flex items-center gap-3 py-1">
+            <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full cursor-pointer" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
+            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'} cursor-pointer`}>
+              2.53
+            </span>
+            <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer' width="16" height="16" />
+            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-red-400' : 'text-red-500'} cursor-pointer`}>
+              1000
+            </span>
+            <button
+              onClick={toggleTheme}
+              className={`px-2 py-1 rounded-full transition-colors ${
+                theme === 'dark'
+                ? 'text-slate-400 hover:text-slate-200'
+                : 'text-slate-600 hover:text-slate-800'
+              }`}
+              >
+              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex bg-slate-100 rounded-lg p-0.5">
