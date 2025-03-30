@@ -94,14 +94,16 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
       theme === 'dark' ? 'border-slate-700/50' : 'border-blue-300'
     }`}>      
       <div className="h-[180px] w-full">
-        <div className="flex items-center justify-between ml-2 mr-10 h-5">
+        <div className="flex items-center justify-between ml-2 mr-[42px] h-5">
           <div className='flex flex-row gap-2 items-center'>
             <div>
               <span className='text-lg text-[#007aff] font-semibold'>SOL</span>
-              <span className='text-lg text-slate-600 font-semibold'>/</span>
+              <span className={`text-lg font-semibold ${
+                theme === 'dark' ? 'border-slate-700/50' : 'text-slate-900'
+              }`}>/</span>
               <span className='text-lg text-[#811f1a] font-semibold'>USD</span>
             </div>
-            <p className='text-[#286e34'>${latestPrice}</p>
+            <p className='text-[#286e34] font-bold'>${latestPrice}</p>
           </div>
           <div className="flex p-1">
             {timeFilters.map(({ label, value }) => (
