@@ -79,7 +79,7 @@ const Lottery = () => {
       </div>
 
       {/* Chart Section */}
-      <div className="pb-2">
+      <div className="pb-2 px-4">
         <PriceChart
           data={priceHistory[selectedPeriod]}
           latestPrice={latestPrice}
