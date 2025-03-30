@@ -84,10 +84,10 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
   }));
 
   return (
-    <div className={`h-[180px] w-full rounded-lg overflow-hidden border ${
+    <div className={`w-full rounded-lg overflow-hidden border ${
       theme === 'dark' ? 'border-slate-700/50' : 'border-blue-300'
     }`}>      
-      <div className="w-full">
+      <div className="h-[180px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={processedData}
