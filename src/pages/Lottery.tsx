@@ -14,7 +14,7 @@ const Lottery = () => {
   const { theme, toggleTheme } = useTheme();
   const { priceHistory, latestPrice, previousPrice } = usePrice();
   const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>('5m');
-  const [selectedType, setSelectedType] = useState<LotteryType>('vote');
+  const [selectedType, setSelectedType] = useState<LotteryType>("vote");
 
   const lotteries = [
     { id: 13, date: '2025.03.24', startTime: '12:00:00', status: 'upcoming', type: 'vote' },
@@ -26,8 +26,8 @@ const Lottery = () => {
     { id: 11, date: '2025.03.23', startTime: '11:20:00', status: 'ended', type: 'vote' },
     { id: 10, date: '2025.03.22', startTime: '18:00:00', status: 'ended', type: 'predict' },
   ];
+  
   const filteredLotteries = lotteries.filter(lottery => lottery.type === selectedType);
-
   const handlePeriodChange = (period: TimePeriod) => {
     setSelectedPeriod(period);
   };
@@ -96,8 +96,8 @@ const Lottery = () => {
             className={`flex items-center w-1/2 justify-center py-1 rounded-md font-medium transition-all duration-200 hover:shadow-purple-500/30 ${
               selectedType === 'predict'
                 ? theme === 'dark'
-                  ? 'bg-blue-500 text-white shadow-lg shadow-purple-500/30'
-                  : 'bg-blue-500 text-white shadow-lg shadow-purple-500/30'
+                  ? 'bg-blue-500 text-white shadow-lg'
+                  : 'bg-blue-500 text-white shadow-lg'
                 : theme === 'dark'
                 ? 'text-slate-400 hover:text-slate-200'
                 : 'text-slate-600 hover:text-slate-800'
