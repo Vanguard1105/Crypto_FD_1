@@ -95,7 +95,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
     }`}>      
       <div className="h-[180px] w-full">
         <div className="flex items-center justify-end mr-2 h-5">
-          <div className="flex p-1 gap-3">
+          <div className="flex p-1 mx-[2px]">
             {timeFilters.map(({ label, value }) => (
               <button
                 key={value}
