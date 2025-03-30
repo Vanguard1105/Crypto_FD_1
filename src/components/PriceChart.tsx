@@ -94,7 +94,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
       theme === 'dark' ? 'border-slate-700/50' : 'border-blue-300'
     }`}>      
       <div className="h-[180px] w-full">
-        <div className="flex items-center justify-between ml-2 mr-[42px] h-5">
+        <div className="flex items-center justify-between ml-2 mr-[44px] h-5">
           <div className='flex flex-row gap-2 items-center'>
             <div>
               <span className='text-lg text-[#007aff] font-semibold'>SOL</span>
