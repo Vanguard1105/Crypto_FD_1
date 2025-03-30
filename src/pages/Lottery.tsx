@@ -76,7 +76,7 @@ const Lottery = () => {
       </div>
 
       <div className="flex px-4">
-        <div className={`inline-flex rounded-lg px-1 py-0.5 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'} w-full`}>
+        <div className={`inline-flex rounded-lg px-1 py-1.5 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'} w-full`}>
           <button
             onClick={() => setSelectedType('vote')}
             className={`flex items-center w-1/2 justify-center py-1 rounded-md font-medium transition-all duration-200 hover:shadow-purple-500/30 ${
@@ -175,7 +175,7 @@ const Lottery = () => {
             </div>
             
             <div className="flex justify-between items-end">
-              <span className={`px-4 py-1 rounded-full text-sm font-medium ${
+              <span className={`px-4 py-1 rounded-md text-sm font-medium ${
                 lottery.type === 'vote'
                   ? 'bg-blue-500/10 text-blue-500'
                   : 'bg-purple-500/10 text-purple-500'
