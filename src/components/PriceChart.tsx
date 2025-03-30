@@ -49,7 +49,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
   const [gradientAboveId] = useState(() => `gradient-above-${Math.random().toString(36).substr(2, 9)}`);
   const [gradientBelowId] = useState(() => `gradient-below-${Math.random().toString(36).substr(2, 9)}`);
   const timeFilters = [
-    { label: '5M', value: '5m' },
+    { label: '5m', value: '5m' },
     { label: '1H', value: '1h' },
     { label: '1D', value: '1d' },
     { label: '7D', value: '7d' },
@@ -93,16 +93,16 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
     <div className={`w-full rounded-lg overflow-hidden border ${
       theme === 'dark' ? 'border-slate-700/50' : 'border-blue-300'
     }`}>      
-      <div className="h-[180px] w-full">
+      <div className="h-[160px] w-full">
         <div className="flex items-center justify-end gap-2 mr-2 h-5">
-          <div className="flex p-0.5">
+          <div className="flex p-1">
             {timeFilters.map(({ label, value }) => (
               <button
                 key={value}
                 onClick={() => onPeriodChange(value as TimePeriod)}
-                className={`px-1 rounded text-[10px] font-medium transition-all duration-200 ${
+                className={`px-1 rounded text-[10px] font-medium transition-all duration-200 border-black ${
                   period === value
-                    ? 'bg-blue-300 text-white shadow'
+                    ? 'bg-[#5856d6] text-white shadow'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
