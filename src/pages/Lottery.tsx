@@ -26,7 +26,7 @@ const Lottery = () => {
     { id: 11, date: '2025.03.23', startTime: '11:20:00', status: 'ended', type: 'vote' },
     { id: 10, date: '2025.03.22', startTime: '18:00:00', status: 'ended', type: 'predict' },
   ];
-  
+
   const filteredLotteries = lotteries.filter(lottery => lottery.type === selectedType);
   const handlePeriodChange = (period: TimePeriod) => {
     setSelectedPeriod(period);
@@ -110,9 +110,9 @@ const Lottery = () => {
 
       {/* Lottery List */}
       <div className="px-4 space-y-2 py-2">
-        {filteredLotteries.map((lottery) => (
+        {filteredLotteries.map((lottery, index) => (
           <div
-          key={lottery.id}
+          key={index}
           className={`relative rounded-xl overflow-hidden group cursor-pointer ${
             theme === 'dark' ? 'bg-slate-800' : 'bg-white'
           } shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-md ${
