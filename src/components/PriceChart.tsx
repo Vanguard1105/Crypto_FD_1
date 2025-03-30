@@ -93,17 +93,17 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
     <div className={`w-full rounded-lg overflow-hidden border ${
       theme === 'dark' ? 'border-slate-700/50' : 'border-blue-300'
     }`}>      
-      <div className="h-[160px] w-full">
+      <div className="h-[180px] w-full">
         <div className="flex items-center justify-end gap-2 mr-2 h-5">
           <div className="flex p-1">
             {timeFilters.map(({ label, value }) => (
               <button
                 key={value}
                 onClick={() => onPeriodChange(value as TimePeriod)}
-                className={`px-1 rounded text-[10px] font-medium transition-all duration-200 border-black ${
+                className={`px-1 rounded text-[10px] font-medium transition-all duration-200 border border-slate-900 ${
                   period === value
                     ? 'bg-[#5856d6] text-white shadow'
-                    : 'text-slate-600 hover:text-slate-900'
+                    : 'text-slate-600'
                 }`}
               >
                 {label}
@@ -111,7 +111,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
             ))}
           </div>
         </div>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="160px">
           <AreaChart
             data={processedData}
             margin={{ top: 3, right: 5, left: 5, bottom: 0 }}
