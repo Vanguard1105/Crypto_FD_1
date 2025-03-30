@@ -77,7 +77,7 @@ const Lottery = () => {
       </div>
 
       <div className="flex w-full px-4">
-        <div className={`inline-flex rounded-lg px-1 py-0.5 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'}`}>
+        <div className={`inline-flex rounded-lg px-1 py-0.5 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'} w-full`}>
           <button
             onClick={() => setSelectedType('vote')}
             className={`flex items-center justify-center py-1 rounded-md font-medium transition-all duration-200 ${
