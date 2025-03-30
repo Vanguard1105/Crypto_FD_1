@@ -94,13 +94,13 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
       theme === 'dark' ? 'border-slate-700/50' : 'border-blue-300'
     }`}>      
       <div className="h-[180px] w-full">
-        <div className="flex items-center justify-end mr-2 h-5">
-          <div className="flex p-1 mx-[2px]">
+        <div className="flex items-center justify-end mr-4 h-5">
+          <div className="flex p-1">
             {timeFilters.map(({ label, value }) => (
               <button
                 key={value}
                 onClick={() => onPeriodChange(value as TimePeriod)}
-                className={`flex items-center px-1 rounded text-[10px] w-[25px] font-medium transition-all duration-200 border border-slate-900 ${
+                className={`flex items-center justify-center mx-[2px] px-1 rounded text-[10px] w-[25px] font-medium transition-all duration-200 border border-slate-900 ${
                   period === value
                     ? 'bg-[#5856d6] text-white shadow'
                     : 'text-slate-600'
@@ -114,7 +114,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={processedData}
-            margin={{ top: 3, right: 18, left: 5, bottom: 0 }}
+            margin={{ top: 3, right: 5, left: 5, bottom: 0 }}
           >
             <defs>
               <linearGradient id={gradientAboveId} x1="0" y1="0" x2="0" y2="1">
