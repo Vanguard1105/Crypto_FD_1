@@ -91,8 +91,8 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={processedData}
-            margin={{ top: 25, right: 10, left: 5, bottom: 0 }}
-            className={`border border-2 ${theme === 'dark' ? 'border-slate-700/50' : 'border-slate-200'
+            // margin={{ top: 25, right: 5, left: 5, bottom: 0 }}
+            className={`px-[5px] pt-6 border border-2 ${theme === 'dark' ? 'border-slate-700/50' : 'border-slate-200'
           }`}
           >
             <defs>
