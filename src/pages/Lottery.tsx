@@ -83,8 +83,8 @@ const Lottery = () => {
             className={`flex items-center w-1/2 justify-center py-1 rounded-md font-medium transition-all duration-200 ${
               selectedType === 'vote'
                 ? theme === 'dark'
-                  ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30'
-                  : 'bg-blue-500 text-white shadow-lg shadow-blue-500/30'
+                  ? 'bg-blue-500 text-white shadow-lg shadow-purple-500/30'
+                  : 'bg-blue-500 text-white shadow-lg shadow-purple-500/30'
                 : theme === 'dark'
                 ? 'text-slate-400 hover:text-slate-200'
                 : 'text-slate-600 hover:text-slate-800'

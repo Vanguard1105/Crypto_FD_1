@@ -93,7 +93,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, period, them
     <div className={`w-full rounded-lg overflow-hidden border ${
       theme === 'dark' ? 'border-slate-700/50' : 'border-blue-300'
     }`}>      
-      <div className="h-[180px] w-full">
+      <div className="h-[160px] w-full">
         <div className="flex items-center justify-between ml-2 mr-[44px] h-5">
           <div className='flex flex-row gap-2 items-center'>
             <div>
@@ -121,7 +121,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, period, them
             ))}
           </div>
         </div>
-        <div className='h-[170px] w-full'>
+        <div className='h-[150px] w-full'>
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={processedData}
