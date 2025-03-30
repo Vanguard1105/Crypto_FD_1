@@ -76,11 +76,11 @@ const Lottery = () => {
         />
       </div>
 
-      <div className="flex w-full px-4">
+      <div className="flex px-4">
         <div className={`inline-flex rounded-lg px-1 py-0.5 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'} w-full`}>
           <button
             onClick={() => setSelectedType('vote')}
-            className={`flex items-center justify-center py-1 rounded-md font-medium transition-all duration-200 ${
+            className={`flex items-center w-1/2 justify-center py-1 rounded-md font-medium transition-all duration-200 ${
               selectedType === 'vote'
                 ? theme === 'dark'
                   ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30'
@@ -94,7 +94,7 @@ const Lottery = () => {
           </button>
           <button
             onClick={() => setSelectedType('predict')}
-            className={`flex items-center justify-center py-1 rounded-md font-medium transition-all duration-200 ${
+            className={`flex items-center w-1/2 justify-center py-1 rounded-md font-medium transition-all duration-200 ${
               selectedType === 'predict'
                 ? theme === 'dark'
                   ? 'bg-blue-500 text-white shadow-lg shadow-purple-500/30'
