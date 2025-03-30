@@ -76,7 +76,7 @@ const Lottery = () => {
       </div>
 
       <div className="flex px-4">
-        <div className={`inline-flex rounded-lg py-1 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'} w-full`}>
+        <div className={`inline-flex rounded-lg p-1 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'} w-full`}>
           <button
             onClick={() => setSelectedType('vote')}
             className={`flex items-center w-1/2 justify-center py-1 rounded-md font-medium transition-all duration-200 hover:shadow-purple-500/30 ${
@@ -123,7 +123,7 @@ const Lottery = () => {
               : 'hover:shadow-purple-500/20'
           }`}
         >
-          <div className={`absolute inset-0 ${
+          {/* <div className={`absolute inset-0 ${
             lottery.type === 'vote'
               ? 'bg-gradient-to-r from-blue-500/10 to-transparent'
               : 'bg-gradient-to-r from-purple-500/10 to-transparent'
@@ -135,7 +135,7 @@ const Lottery = () => {
                 ? 'bg-blue-500'
                 : 'bg-purple-500'
             } opacity-50 group-hover:opacity-100 transition-opacity duration-300`} />
-          </div>
+          </div> */}
 
           <div className={`px-2 py-1 h-full flex flex-col justify-between relative ${
             theme === 'dark' ? 'text-white' : 'text-slate-900'
