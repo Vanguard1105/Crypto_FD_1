@@ -7,18 +7,27 @@ import { usePrice } from '../context/PriceContext';
 import { TimePeriod } from '../types';
 import { FaUserCog } from "react-icons/fa";
 import { CgChevronLeft } from "react-icons/cg";
+type LotteryType = 'vote' | 'predict';
 
 const Lottery = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const { priceHistory, latestPrice, previousPrice } = usePrice();
   const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>('5m');
+  const [selectedType, setSelectedType] = useState<LotteryType>('vote');
 
-  const lotteries = [
+  const vote_lotteries = [
     { id: 13, date: '2025.03.24', startTime: '12:00:00', status: 'upcoming' },
     { id: 12, date: '2025.03.24', startTime: '09:30:00', status: 'upcoming' },
     { id: 11, date: '2025.03.23', startTime: '11:20:00', status: 'ended' },
     { id: 10, date: '2025.03.22', startTime: '18:00:00', status: 'ended' },
+  ];
+
+  const predict_lotteries = [
+    { id: 13, date: '2025.03.24', startTime: '09:00:00', status: 'upcoming' },
+    { id: 12, date: '2025.03.24', startTime: '09:09:00', status: 'upcoming' },
+    { id: 11, date: '2025.03.23', startTime: '09:09:00', status: 'ended' },
+    { id: 10, date: '2025.03.22', startTime: '09:00:00', status: 'ended' },
   ];
   const handlePeriodChange = (period: TimePeriod) => {
     setSelectedPeriod(period);
@@ -67,19 +76,42 @@ const Lottery = () => {
         />
       </div>
 
-      {/* Action Buttons */}
-      <div className="px-4 mt-4 grid grid-cols-2 gap-2">
-        <button className="bg-violet-600 text-white py-2.5 rounded-lg font-medium">
-          Vote
-        </button>
-        <button className="bg-slate-100 text-slate-900 py-2.5 rounded-lg font-medium">
-          Predict
-        </button>
+      <div className="px-4 grid grid-cols-2 gap-2">
+        <div className={`inline-flex rounded-lg p-1 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'}`}>
+          <button
+            onClick={() => setSelectedType('vote')}
+            className={`px-6 py-2 rounded-md font-medium transition-all duration-200 ${
+              selectedType === 'vote'
+                ? theme === 'dark'
+                  ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30'
+                  : 'bg-blue-500 text-white shadow-lg shadow-blue-500/30'
+                : theme === 'dark'
+                ? 'text-slate-400 hover:text-slate-200'
+                : 'text-slate-600 hover:text-slate-800'
+            }`}
+          >
+            Vote
+          </button>
+          <button
+            onClick={() => setSelectedType('predict')}
+            className={`px-6 py-2 rounded-md font-medium transition-all duration-200 ${
+              selectedType === 'predict'
+                ? theme === 'dark'
+                  ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/30'
+                  : 'bg-purple-500 text-white shadow-lg shadow-purple-500/30'
+                : theme === 'dark'
+                ? 'text-slate-400 hover:text-slate-200'
+                : 'text-slate-600 hover:text-slate-800'
+            }`}
+          >
+            Predict
+          </button>
+        </div>
       </div>
 
       {/* Lottery List */}
       <div className="px-4 mt-6 space-y-2 pb-6">
-        {lotteries.map((lottery) => (
+        {selectedType == "vote"? (vote_lotteries.map((lottery) => (
           <div
             key={lottery.id}
             className={`relative rounded-lg overflow-hidden ${
@@ -109,7 +141,39 @@ const Lottery = () => {
               </span>
             </div>
           </div>
-        ))}
+        ))):
+        (predict_lotteries.map((lottery) => (
+          <div
+            key={lottery.id}
+            className={`relative rounded-lg overflow-hidden ${
+              lottery.status === 'ended' ? 'opacity-80' : ''
+            }`}
+          >
+            <img
+              src="/ticket.jpg"
+              alt={`Lottery ${lottery.id}`}
+              className="w-full h-auto"
+            />
+            <div className="absolute top-3 left-3 flex items-center gap-2">
+              <span className={`text-blue-400 font-medium`}>
+                {lottery.date}
+              </span>
+            </div>
+            <div className="absolute bottom-3 right-3 flex items-center gap-2">
+              <span className={`${
+                lottery.status === 'ended' ? 'text-red-400' : 'text-green-400'
+              } font-medium`}>
+                {lottery.status === 'ended' ? 'Ended:' : 'Start:'} {lottery.startTime}
+              </span>
+            </div>
+            <div className="absolute top-1/2 right-6 transform -translate-y-1/2">
+              <span className="text-yellow-400 text-xl font-bold">
+                #{lottery.id}
+              </span>
+            </div>
+          </div>
+        )))
+        }
       </div>
     </div>
   );

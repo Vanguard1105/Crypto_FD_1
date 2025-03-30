@@ -45,7 +45,7 @@ const CustomTooltip = ({ active, payload, label, period, theme }: any) => {
   return null;  
 };  
 
-const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPrice, period, theme, onPeriodChange }) => {
+const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, period, theme, onPeriodChange }) => {
   const [gradientAboveId] = useState(() => `gradient-above-${Math.random().toString(36).substr(2, 9)}`);
   const [gradientBelowId] = useState(() => `gradient-below-${Math.random().toString(36).substr(2, 9)}`);
   const timeFilters = [
