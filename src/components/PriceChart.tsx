@@ -121,7 +121,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
             ))}
           </div>
         </div>
-        <div className='h-[160px] w-full'>
+        <div className='h-[170px] w-full'>
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={processedData}
