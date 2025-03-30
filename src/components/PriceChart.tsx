@@ -18,6 +18,7 @@ interface PriceChartProps {
   previousPrice: number;
   period: TimePeriod;
   theme: Theme;
+  onPeriodChange: (period: TimePeriod) => void; // Add this prop
 }
 
 const CustomTooltip = ({ active, payload, label, period, theme }: any) => {  
@@ -44,10 +45,15 @@ const CustomTooltip = ({ active, payload, label, period, theme }: any) => {
   return null;  
 };  
 
-const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPrice, period, theme }) => {
+const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPrice, period, theme, onPeriodChange }) => {
   const [gradientAboveId] = useState(() => `gradient-above-${Math.random().toString(36).substr(2, 9)}`);
   const [gradientBelowId] = useState(() => `gradient-below-${Math.random().toString(36).substr(2, 9)}`);
-  
+  const timeFilters = [
+    { label: '5M', value: '5m' },
+    { label: '1H', value: '1h' },
+    { label: '1D', value: '1d' },
+    { label: '7D', value: '7d' },
+  ];
   const yAxisDomain = useMemo(() => {
     if (data.length === 0) return [120, 130];
     
@@ -95,6 +101,23 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
             className={`border ${theme === 'dark' ? 'border-slate-700/50' : 'border-slate-200'
           }`}
           >
+            <div className="flex items-center justify-end gap-2 mt-2 mr-2">
+              <div className="flex bg-slate-100 rounded-lg p-0.5">
+                {timeFilters.map(({ label, value }) => (
+                  <button
+                    key={value}
+                    onClick={() => onPeriodChange(value as TimePeriod)}
+                    className={`px-2 py-0.5 rounded text-[10px] font-medium transition-all duration-200 ${
+                      period === value
+                        ? 'bg-white text-blue-600 shadow'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
             <defs>
               <linearGradient id={gradientAboveId} x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#22C55E" stopOpacity={0.2} />

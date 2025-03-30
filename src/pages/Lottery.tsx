@@ -15,20 +15,15 @@ const Lottery = () => {
   const { priceHistory, latestPrice, previousPrice } = usePrice();
   const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>('5m');
 
-  const timeFilters = [
-    { label: '5M', value: '5m' },
-    { label: '1H', value: '1h' },
-    { label: '1D', value: '1d' },
-    { label: '7D', value: '7d' },
-  ];
-
   const lotteries = [
     { id: 13, date: '2025.03.24', startTime: '12:00:00', status: 'upcoming' },
     { id: 12, date: '2025.03.24', startTime: '09:30:00', status: 'upcoming' },
     { id: 11, date: '2025.03.23', startTime: '11:20:00', status: 'ended' },
     { id: 10, date: '2025.03.22', startTime: '18:00:00', status: 'ended' },
   ];
-
+  const handlePeriodChange = (period: TimePeriod) => {
+    setSelectedPeriod(period);
+  };
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
       {/* Header */}
@@ -86,6 +81,7 @@ const Lottery = () => {
           previousPrice={previousPrice}
           period={selectedPeriod}
           theme={theme}
+          onPeriodChange={handlePeriodChange}
         />
       </div>
 
