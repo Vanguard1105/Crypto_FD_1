@@ -94,14 +94,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
       theme === 'dark' ? 'border-slate-700/50' : 'border-blue-300'
     }`}>      
       <div className="h-[180px] w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart
-            data={processedData}
-            margin={{ top: 25, right: 5, left: 5, bottom: 0 }}
-            className={`border ${theme === 'dark' ? 'border-slate-700/50' : 'border-slate-200'
-          }`}
-          >
-            <div className="flex items-center justify-end gap-2 mt-2 mr-2">
+            <div className="flex items-center justify-end gap-2 mt-2 mr-2 h-6">
               <div className="flex bg-slate-100 rounded-lg p-0.5">
                 {timeFilters.map(({ label, value }) => (
                   <button
@@ -118,6 +111,13 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
                 ))}
               </div>
             </div>
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart
+            data={processedData}
+            margin={{ top: 25, right: 5, left: 5, bottom: 0 }}
+            className={`border ${theme === 'dark' ? 'border-slate-700/50' : 'border-slate-200'
+          }`}
+          >
             <defs>
               <linearGradient id={gradientAboveId} x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#22C55E" stopOpacity={0.2} />
