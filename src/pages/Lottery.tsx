@@ -21,6 +21,10 @@ const Lottery = () => {
     { id: 12, date: '2025.03.24', startTime: '09:30:00', status: 'upcoming', type: 'predict' },
     { id: 11, date: '2025.03.23', startTime: '11:20:00', status: 'ended', type: 'vote' },
     { id: 10, date: '2025.03.22', startTime: '18:00:00', status: 'ended', type: 'predict' },
+    { id: 13, date: '2025.03.24', startTime: '12:00:00', status: 'upcoming', type: 'vote' },
+    { id: 12, date: '2025.03.24', startTime: '09:30:00', status: 'upcoming', type: 'predict' },
+    { id: 11, date: '2025.03.23', startTime: '11:20:00', status: 'ended', type: 'vote' },
+    { id: 10, date: '2025.03.22', startTime: '18:00:00', status: 'ended', type: 'predict' },
   ];
   const filteredLotteries = lotteries.filter(lottery => lottery.type === selectedType);
 
@@ -105,13 +109,13 @@ const Lottery = () => {
       </div>
 
       {/* Lottery List */}
-      <div className="px-4 mt-6 space-y-2 pb-6">
+      <div className="px-4 space-y-2 py-2">
         {filteredLotteries.map((lottery) => (
           <div
           key={lottery.id}
           className={`relative rounded-xl overflow-hidden group cursor-pointer ${
             theme === 'dark' ? 'bg-slate-800' : 'bg-white'
-          } shadow-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-xl ${
+          } shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-md ${
             lottery.status === 'ended' ? 'opacity-80' : ''
           } ${
             lottery.type === 'vote' 
@@ -133,7 +137,7 @@ const Lottery = () => {
             } opacity-50 group-hover:opacity-100 transition-opacity duration-300`} />
           </div>
 
-          <div className={`p-6 h-full flex flex-col justify-between relative ${
+          <div className={`px-2 py-1 h-full flex flex-col justify-between relative ${
             theme === 'dark' ? 'text-white' : 'text-slate-900'
           }`}>
             <div className="flex justify-between items-start">
