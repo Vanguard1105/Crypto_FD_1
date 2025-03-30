@@ -109,7 +109,7 @@ const Lottery = () => {
       </div>
 
       {/* Lottery List */}
-      <div className="px-4 space-y-1 py-2">
+      <div className="px-4 space-y-1 pt-2">
         {filteredLotteries.map((lottery) => (
           <div
           key={lottery.id}
@@ -175,14 +175,14 @@ const Lottery = () => {
             </div>
             
             <div className="flex justify-between items-end">
-              <span className={`px-4 py-1.5 rounded-full text-sm font-medium ${
+              <span className={`px-4 py-1 rounded-full text-sm font-medium ${
                 lottery.type === 'vote'
                   ? 'bg-blue-500/10 text-blue-500'
                   : 'bg-purple-500/10 text-purple-500'
               }`}>
                 {lottery.type === 'vote' ? '3rd SOL Vote' : '3rd SOL Predict'}
               </span>
-              <div className={`w-24 h-24 absolute bottom-4 right-4 rounded-full ${
+              <div className={`w-24 h-24 absolute bottom-4 right-4 rounded-lg ${
                 lottery.type === 'vote'
                   ? 'bg-blue-500/5'
                   : 'bg-purple-500/5'
