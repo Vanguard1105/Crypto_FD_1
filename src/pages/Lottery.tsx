@@ -35,7 +35,7 @@ const Lottery = () => {
       <div className={`px-3 pb-1 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
         <div className={`flex flex-row justify-between w-full`}>
           <div className='flex flex-row gap-3 items-center py-1 px-2'>
-            <CgChevronLeft className={`text-${theme === 'dark' ? 'slate-400 hover:text-slate-300' : 'slate-900 hover:text-slate-800'} cursor-pointer`} onClick={() => navigate("/home")}/>
+            <CgChevronLeft size={20} className={`text-${theme === 'dark' ? 'slate-400 hover:text-slate-300' : 'slate-900 hover:text-slate-800'} cursor-pointer`} onClick={() => navigate("/home")}/>
             <FaUserCog className={`text-${theme === 'dark' ? 'slate-400 hover:text-slate-300' : 'slate-900 hover:text-slate-800'} cursor-pointer`} /> 
           </div>
           <div className="flex items-center gap-3 py-1">
@@ -79,7 +79,7 @@ const Lottery = () => {
       </div>
 
       {/* Chart Section */}
-      <div className="p-4">
+      <div className="pb-2">
         <PriceChart
           data={priceHistory[selectedPeriod]}
           latestPrice={latestPrice}
