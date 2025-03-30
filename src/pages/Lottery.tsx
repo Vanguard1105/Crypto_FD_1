@@ -76,7 +76,7 @@ const Lottery = () => {
       </div>
 
       <div className="flex px-4">
-        <div className={`inline-flex rounded-lg px-1 py-1.5 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'} w-full`}>
+        <div className={`inline-flex rounded-lg py-1 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'} w-full`}>
           <button
             onClick={() => setSelectedType('vote')}
             className={`flex items-center w-1/2 justify-center py-1 rounded-md font-medium transition-all duration-200 hover:shadow-purple-500/30 ${
@@ -113,8 +113,8 @@ const Lottery = () => {
         {filteredLotteries.map((lottery) => (
           <div
           key={lottery.id}
-          className={`relative rounded-xl overflow-hidden group cursor-pointer border border-slate-900 ${
-            theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'
+          className={`relative rounded-xl overflow-hidden group cursor-pointer border ${
+            theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100 border-slate-400'
           } shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-md ${
             lottery.status === 'ended' ? 'opacity-80' : ''
           } ${
