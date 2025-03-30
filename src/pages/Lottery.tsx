@@ -114,7 +114,7 @@ const Lottery = () => {
           <div
           key={lottery.id}
           className={`relative rounded-xl overflow-hidden group cursor-pointer border ${
-            theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100 border-slate-400'
+            theme === 'dark' ? 'bg-slate-800 border-slate-800' : 'bg-slate-100 border-slate-400'
           } shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-md ${
             lottery.status === 'ended' ? 'opacity-80' : ''
           } ${
