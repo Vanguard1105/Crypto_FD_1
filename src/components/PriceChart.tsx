@@ -100,7 +100,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
               <span className='text-lg text-[#007aff] font-semibold'>SOL</span>
               <span className={`text-lg font-semibold ${
                 theme === 'dark' ? 'border-slate-700/50' : 'text-slate-900'
-              }`}>/</span>
+              }`}> / </span>
               <span className='text-lg text-[#811f1a] font-semibold'>USD</span>
             </div>
             <p className='text-[#286e34] font-bold'>${latestPrice}</p>
@@ -121,88 +121,90 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
             ))}
           </div>
         </div>
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart
-            data={processedData}
-            margin={{ top: 3, right: 5, left: 5, bottom: 0 }}
-          >
-            <defs>
-              <linearGradient id={gradientAboveId} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#22C55E" stopOpacity={0.2} />
-                <stop offset="100%" stopColor="#22C55E" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id={gradientBelowId} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#EF4444" stopOpacity={0.2} />
-                <stop offset="100%" stopColor="#EF4444" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid 
-              strokeDasharray="3 3" 
-              vertical={false}
-              stroke={theme === 'dark' ? 'rgba(148, 163, 184, 0.1)' : 'rgba(148, 163, 184, 0.2)'}
-            />
-            <XAxis
-              dataKey="timestamp"
-              tickFormatter={formatXAxis}
-              stroke={theme === 'dark' ? '#64748B' : '#475569'}
-              tick={{ fill: theme === 'dark' ? '#64748B' : '#475569', fontSize: 10 }}
-              axisLine={{ stroke: theme === 'dark' ? '#334155' : '#CBD5E1' }}
-              tickLine={{ stroke: theme === 'dark' ? '#334155' : '#CBD5E1' }}
-              interval="preserveStartEnd"
-              minTickGap={30}
-            />
-            <YAxis
-              domain={yAxisDomain}
-              orientation="right"
-              stroke={theme === 'dark' ? '#64748B' : '#475569'}
-              tick={{ fill: theme === 'dark' ? '#64748B' : '#475569', fontSize: 10 }}
-              axisLine={{ stroke: theme === 'dark' ? '#334155' : '#CBD5E1' }}
-              tickLine={{ stroke: theme === 'dark' ? '#334155' : '#CBD5E1' }}
-              tickFormatter={(value) => value.toFixed(2)}
-              width={45}
-            />
-            <Tooltip 
-              content={<CustomTooltip period={period} theme={theme} />}
-              cursor={{ 
-                stroke: theme === 'dark' ? '#475569' : '#64748B',
-                strokeWidth: 1,
-                strokeDasharray: '3 3'
-              }}
-            />
-            <ReferenceLine
-              y={currentAverage}
-              stroke={theme === 'dark' ? "rgba(148, 163, 184, 0.2)" : "rgba(148, 163, 184, 0.3)"}
-              strokeDasharray="2 4"
-              strokeWidth={1}
-            />
-            <Area
-              type="monotone"
-              dataKey="value"
-              stroke="#EF4444"
-              strokeWidth={1.5}
-              fill={`url(#${gradientBelowId})`}
-              fillOpacity={1}
-              isAnimationActive={false}
-              connectNulls={true}
-              baseValue={currentAverage}
-              name="Price"
-              hide={false}
-            />
-            <Area
-              type="monotone"
-              dataKey="value"
-              stroke="#22C55E"
-              strokeWidth={1.5}
-              fill={`url(#${gradientAboveId})`}
-              fillOpacity={1}
-              isAnimationActive={false}
-              connectNulls={true}
-              baseValue={currentAverage}
-              name="Price"
-              hide={false}
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+        <div className='h-[160px] w-full'>
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart
+              data={processedData}
+              margin={{ top: 3, right: 5, left: 5, bottom: 0 }}
+            >
+              <defs>
+                <linearGradient id={gradientAboveId} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#22C55E" stopOpacity={0.2} />
+                  <stop offset="100%" stopColor="#22C55E" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id={gradientBelowId} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#EF4444" stopOpacity={0.2} />
+                  <stop offset="100%" stopColor="#EF4444" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid 
+                strokeDasharray="3 3" 
+                vertical={false}
+                stroke={theme === 'dark' ? 'rgba(148, 163, 184, 0.1)' : 'rgba(148, 163, 184, 0.2)'}
+              />
+              <XAxis
+                dataKey="timestamp"
+                tickFormatter={formatXAxis}
+                stroke={theme === 'dark' ? '#64748B' : '#475569'}
+                tick={{ fill: theme === 'dark' ? '#64748B' : '#475569', fontSize: 10 }}
+                axisLine={{ stroke: theme === 'dark' ? '#334155' : '#CBD5E1' }}
+                tickLine={{ stroke: theme === 'dark' ? '#334155' : '#CBD5E1' }}
+                interval="preserveStartEnd"
+                minTickGap={30}
+              />
+              <YAxis
+                domain={yAxisDomain}
+                orientation="right"
+                stroke={theme === 'dark' ? '#64748B' : '#475569'}
+                tick={{ fill: theme === 'dark' ? '#64748B' : '#475569', fontSize: 10 }}
+                axisLine={{ stroke: theme === 'dark' ? '#334155' : '#CBD5E1' }}
+                tickLine={{ stroke: theme === 'dark' ? '#334155' : '#CBD5E1' }}
+                tickFormatter={(value) => value.toFixed(2)}
+                width={45}
+              />
+              <Tooltip 
+                content={<CustomTooltip period={period} theme={theme} />}
+                cursor={{ 
+                  stroke: theme === 'dark' ? '#475569' : '#64748B',
+                  strokeWidth: 1,
+                  strokeDasharray: '3 3'
+                }}
+              />
+              <ReferenceLine
+                y={currentAverage}
+                stroke={theme === 'dark' ? "rgba(148, 163, 184, 0.2)" : "rgba(148, 163, 184, 0.3)"}
+                strokeDasharray="2 4"
+                strokeWidth={1}
+              />
+              <Area
+                type="monotone"
+                dataKey="value"
+                stroke="#EF4444"
+                strokeWidth={1.5}
+                fill={`url(#${gradientBelowId})`}
+                fillOpacity={1}
+                isAnimationActive={false}
+                connectNulls={true}
+                baseValue={currentAverage}
+                name="Price"
+                hide={false}
+              />
+              <Area
+                type="monotone"
+                dataKey="value"
+                stroke="#22C55E"
+                strokeWidth={1.5}
+                fill={`url(#${gradientAboveId})`}
+                fillOpacity={1}
+                isAnimationActive={false}
+                connectNulls={true}
+                baseValue={currentAverage}
+                name="Price"
+                hide={false}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
   );
