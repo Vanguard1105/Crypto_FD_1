@@ -76,7 +76,7 @@ const Lottery = () => {
         />
       </div>
 
-      <div className="flex w-full px-4 grid grid-cols-2 gap-2">
+      <div className="flex w-full px-4">
         <div className={`inline-flex rounded-lg px-1 py-0.5 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'}`}>
           <button
             onClick={() => setSelectedType('vote')}
