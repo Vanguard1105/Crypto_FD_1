@@ -100,7 +100,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
               <button
                 key={value}
                 onClick={() => onPeriodChange(value as TimePeriod)}
-                className={`px-1 rounded text-[10px] w-[20px] font-medium transition-all duration-200 border border-slate-900 ${
+                className={`flex items-center px-1 rounded text-[10px] w-[25px] font-medium transition-all duration-200 border border-slate-900 ${
                   period === value
                     ? 'bg-[#5856d6] text-white shadow'
                     : 'text-slate-600'
@@ -114,7 +114,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, previousPric
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={processedData}
-            margin={{ top: 3, right: 5, left: 5, bottom: 0 }}
+            margin={{ top: 3, right: 18, left: 5, bottom: 0 }}
           >
             <defs>
               <linearGradient id={gradientAboveId} x1="0" y1="0" x2="0" y2="1">
