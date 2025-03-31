@@ -118,7 +118,7 @@ const Profile = () => {
                 }`}>
                   ✓ {item.title}
                 </span>
-                <div className="items-center gap-3">
+                <div className="items-center gap-3 py-2">
                   <span className={`text-sm font-medium ${
                     theme === 'dark' ? 'text-white' : 'text-slate-900'
                   }`}>
@@ -132,7 +132,7 @@ const Profile = () => {
                 </div>
               </div>
               <div className="flex items-center">
-                <div className={`px-3 py-1 rounded-lg w-[90px] ${
+                <div className={`px-3 py-1 rounded-lg w-[80px] ${
                   theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500'
                 }`}>
                   <div className="text-xs text-white text-center">{item.bonus}</div>
