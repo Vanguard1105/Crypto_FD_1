@@ -132,7 +132,7 @@ const Profile = () => {
                 </div>
               </div>
               <div className="flex items-center">
-                <div className={`px-3 py-1 rounded-lg w-[80px] ${
+                <div className={`p-1 rounded-lg w-[80px] h-full ${
                   theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500'
                 }`}>
                   <div className="text-xs text-white text-center">{item.bonus}</div>
