@@ -81,7 +81,7 @@ const Profile = () => {
           />
           <div>
             <h2 className={`text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
-              {userData?.username}
+              {userData?.username? userData.username: "user"+ userData?.user_id}
             </h2>
             <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
               @{userData?.username? userData.username : userData?.user_id}
@@ -90,13 +90,13 @@ const Profile = () => {
         </div>
 
         {/* Navigation */}
-        <div className="flex gap-4 mb-6">
+        <div className="flex gap-4 mb-4">
           <button className={`px-4 py-2 text-sm font-medium rounded-full ${
             theme === 'dark' ? 'text-white' : 'text-slate-900'
           }`}>
             Settings
           </button>
-          <button className={`px-4 py-2 text-sm font-medium rounded-full ${
+          <button className={`px-4 py-1 text-sm font-medium rounded-xl ${
             theme === 'dark' ? 'bg-blue-600 text-white' : 'bg-blue-500 text-white'
           }`}>
             Bonuses
@@ -104,11 +104,11 @@ const Profile = () => {
         </div>
 
         {/* Bonus Items */}
-        <div className="space-y-4">
+        <div className="space-y-2">
           {bonusItems.map((item, index) => (
             <div
               key={index}
-              className={`p-4 rounded-lg ${
+              className={`px-4 py-2 rounded-lg ${
                 theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'
               }`}
             >
