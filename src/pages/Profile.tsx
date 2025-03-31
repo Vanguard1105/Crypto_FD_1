@@ -46,7 +46,7 @@ const Profile = () => {
       <div className={`px-3 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
         <div className={`flex flex-row justify-between w-full`}>
           <div className='flex flex-row gap-3 items-center py-1 px-2'>
-            <CgChevronLeft size={20} className={`text-${theme === 'dark' ? 'slate-400 hover:text-slate-300' : 'slate-900 hover:text-slate-800'} cursor-pointer`} onClick={() => navigate("/home")}/>
+            <CgChevronLeft size={16} className={`text-${theme === 'dark' ? 'slate-400 hover:text-slate-300' : 'slate-900 hover:text-slate-800'} cursor-pointer`} onClick={() => navigate("/home")}/>
           </div>
           <div className="flex items-center gap-3 py-1">
             <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full cursor-pointer" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
@@ -73,7 +73,7 @@ const Profile = () => {
 
       {/* Profile Info */}
       <div className="px-4 py-2">
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex items-center gap-4 mb-6 pr-2">
           <img
             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=96&h=96&fit=crop"
             alt="Profile"
