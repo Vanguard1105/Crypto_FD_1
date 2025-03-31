@@ -132,8 +132,8 @@ const Profile = () => {
                   <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer' width="16" height="16" />
                 </div>
               </div>
-              <div className="flex items-center cursor-pointer">
-                <div className={`px-1 py-2 rounded-lg w-[80px] h-full ${
+              <div className="flex items-center justify-center cursor-pointer">
+                <div className={`px-1 my-[6px] rounded-lg w-[80px] h-full ${
                   theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500'
                 }`}>
                   <div className="text-xs text-white text-center">{item.bonus}</div>
