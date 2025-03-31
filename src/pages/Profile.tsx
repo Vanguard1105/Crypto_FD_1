@@ -124,7 +124,7 @@ const Profile = () => {
                   }`}>
                     {item.count}
                   </span>
-                  <span className={`text-md ${
+                  <span className={`text-md w-10 ${
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                   }`}>
                     {item.multiplier}
@@ -137,7 +137,9 @@ const Profile = () => {
                   theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500'
                 }`}>
                   <div className="text-xs text-white text-center">{item.bonus}</div>
-                  <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer py-0.5' width="16" height="16" />
+                  <div className='w-full flex justify-center py-1'>
+                    <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" width="16" height="16" />
+                  </div>
                   <div className="text-xs text-white text-center">{item.reward}</div>
                 </div>
               </div>
