@@ -142,7 +142,7 @@ const Login = () => {
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`w-full pr-4 pl-8 py-2 rounded-lg text-sm ${
+                className={`w-full pr-8 pl-4 py-2 rounded-lg text-sm ${
                   theme === 'dark'
                     ? 'bg-slate-800 text-white border-slate-700'
                     : 'bg-slate-50 text-slate-900 border-slate-200'
