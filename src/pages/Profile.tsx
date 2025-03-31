@@ -124,7 +124,7 @@ const Profile = () => {
                   }`}>
                     {item.count}
                   </span>
-                  <span className={`text-md w-13 ${
+                  <span className={`text-md w-[50px] ${
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                   }`}>
                     {item.multiplier}
