@@ -69,7 +69,7 @@ const SetPassword = () => {
         setUserData({ username, user_id, email, publicKey, hasPassword });
         setTimeout(() => {
           navigate('/login');
-        }, 100); // Small delay to ensure state is updated
+        }, 100); 
       }
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to set password. Please try again.');
@@ -165,7 +165,7 @@ const SetPassword = () => {
                 placeholder="Create your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`w-full px-4 py-2 rounded-lg text-sm ${
+                className={`w-full pr-4 pl-8 py-2 rounded-lg text-sm ${
                   theme === 'dark'
                     ? 'bg-slate-800 text-white border-slate-700'
                     : 'bg-slate-50 text-slate-900 border-slate-200'
@@ -187,7 +187,7 @@ const SetPassword = () => {
                 placeholder="Confirm your password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className={`w-full px-4 py-2 rounded-lg text-sm ${
+                className={`w-full pr-4 pl-8 py-2 rounded-lg text-sm ${
                   theme === 'dark'
                     ? 'bg-slate-800 text-white border-slate-700'
                     : 'bg-slate-50 text-slate-900 border-slate-200'

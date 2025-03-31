@@ -123,20 +123,6 @@ const Lottery = () => {
               : 'hover:shadow-purple-500/20'
           }`}
         >
-          {/* <div className={`absolute inset-0 ${
-            lottery.type === 'vote'
-              ? 'bg-gradient-to-r from-blue-500/10 to-transparent'
-              : 'bg-gradient-to-r from-purple-500/10 to-transparent'
-          } transition-opacity duration-300 opacity-0 group-hover:opacity-100`} />
-          
-          <div className="absolute top-0 left-0 w-full h-full">
-            <div className={`h-full w-1 ${
-              lottery.type === 'vote'
-                ? 'bg-blue-500'
-                : 'bg-purple-500'
-            } opacity-50 group-hover:opacity-100 transition-opacity duration-300`} />
-          </div> */}
-
           <div className={`px-2 py-1 h-full flex flex-col justify-between relative ${
             theme === 'dark' ? 'text-white' : 'text-slate-900'
           }`}>
