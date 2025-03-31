@@ -73,7 +73,7 @@ const Profile = () => {
 
       {/* Profile Info */}
       <div className="px-4 py-2">
-        <div className="flex items-center gap-4 mb-6 pr-2">
+        <div className="flex items-center gap-4 mb-6 pl-4">
           <img
             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=96&h=96&fit=crop"
             alt="Profile"
