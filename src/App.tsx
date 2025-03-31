@@ -7,6 +7,7 @@ import Welcome from './pages/Welcome';
 import Login from './pages/Login';
 import SetPassword from './pages/SetPassword';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
 import Track from './pages/Track';
 import Lottery from './pages/Lottery';
 import { PriceProvider } from './context/PriceContext';
@@ -24,6 +25,7 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/track" element={<Track />} />
               <Route path="/lottery" element={<Lottery />} />
+              <Route path="/profile" element={<Profile />} />
             </Routes>
           </BrowserRouter>
         </PriceProvider>
