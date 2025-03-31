@@ -1,12 +1,13 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { CgChevronLeft } from "react-icons/cg";
+import { useUser } from '../context/UserContext';
 
 const Profile = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
+  const { userData } = useUser();
 
   const bonusItems = [
     {
@@ -71,19 +72,19 @@ const Profile = () => {
       </div>
 
       {/* Profile Info */}
-      <div className="px-4 py-6">
+      <div className="px-4 py-2">
         <div className="flex items-center gap-4 mb-6">
           <img
             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=96&h=96&fit=crop"
             alt="Profile"
-            className="w-24 h-24 rounded-full object-cover"
+            className="w-20 h-20 rounded-full object-cover"
           />
           <div>
             <h2 className={`text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
-              Peter Coiner
+              {userData?.username}
             </h2>
             <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
-              @cryptoboss009
+              @{userData?.username? userData.username : userData?.user_id}
             </p>
           </div>
         </div>
