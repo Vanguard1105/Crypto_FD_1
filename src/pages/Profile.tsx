@@ -108,7 +108,7 @@ const Profile = () => {
           {bonusItems.map((item, index) => (
             <div
               key={index}
-              className={`px-4 py-2 rounded-lg ${
+              className={`px-4 py-2 rounded-lg flex flex-col justify-between ${
                 theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'
               }`}
             >
@@ -118,8 +118,6 @@ const Profile = () => {
                 }`}>
                   ✓ {item.title}
                 </span>
-              </div>
-              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <span className={`text-sm font-medium ${
                     theme === 'dark' ? 'text-white' : 'text-slate-900'
@@ -132,7 +130,9 @@ const Profile = () => {
                     {item.multiplier}
                   </span>
                 </div>
-                <div className={`px-3 py-1 rounded-lg ${
+              </div>
+              <div className="flex items-center">
+                <div className={`px-3 py-1 rounded-lg w-10 ${
                   theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500'
                 }`}>
                   <div className="text-xs text-white text-center">{item.bonus}</div>
