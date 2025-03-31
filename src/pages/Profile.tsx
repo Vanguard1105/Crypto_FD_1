@@ -119,7 +119,7 @@ const Profile = () => {
                   ✓ {item.title}
                 </span>
                 <div className="flex flex-row items-center gap-3 py-2">
-                  <span className={`text-sm font-large px-2 ${
+                  <span className={`text-sm font-large px-2 w-[90px] ${
                     theme === 'dark' ? 'text-white' : 'text-slate-900'
                   }`}>
                     {item.count}
@@ -132,12 +132,12 @@ const Profile = () => {
                   <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer' width="16" height="16" />
                 </div>
               </div>
-              <div className="flex items-center justify-center cursor-pointer">
+              <div className="flex items-center justify-center cursor-pointer py-0.5">
                 <div className={`px-1 my-[6px] rounded-lg w-[80px] items-center ${
                   theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500'
                 }`}>
                   <div className="text-xs text-white text-center">{item.bonus}</div>
-                  <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer' width="16" height="16" />
+                  <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer py-0.5' width="16" height="16" />
                   <div className="text-xs text-white text-center">{item.reward}</div>
                 </div>
               </div>
