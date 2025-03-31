@@ -108,7 +108,7 @@ const Profile = () => {
           {bonusItems.map((item, index) => (
             <div
               key={index}
-              className={`px-4 py-2 rounded-lg flex flex-row justify-between ${
+              className={`px-4 py-2 rounded-lg flex flex-row justify-between cursor-pointer ${
                 theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'
               }`}
             >
