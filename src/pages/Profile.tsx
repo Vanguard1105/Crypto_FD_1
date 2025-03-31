@@ -18,7 +18,7 @@ const Profile = () => {
       reward: '+ 20'
     },
     {
-      title: 'TOTAL TICKETS PURCHASED BY FRIENDS',
+      title: 'TICKETS PURCHASED BY FRIENDS',
       count: '24 tickets',
       multiplier: 'x 5 💎',
       bonus: '24 Tickets',
