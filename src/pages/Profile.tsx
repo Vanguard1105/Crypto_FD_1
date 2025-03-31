@@ -112,13 +112,13 @@ const Profile = () => {
                 theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'
               }`}
             >
-              <div className="flex items-center justify-between mb-2">
+              <div className="items-center mb-2">
                 <span className={`text-sm font-medium ${
                   theme === 'dark' ? 'text-green-400' : 'text-green-600'
                 }`}>
                   ✓ {item.title}
                 </span>
-                <div className="flex items-center gap-3">
+                <div className="items-center gap-3">
                   <span className={`text-sm font-medium ${
                     theme === 'dark' ? 'text-white' : 'text-slate-900'
                   }`}>
@@ -132,7 +132,7 @@ const Profile = () => {
                 </div>
               </div>
               <div className="flex items-center">
-                <div className={`px-3 py-1 rounded-lg w-[150px] ${
+                <div className={`px-3 py-1 rounded-lg w-[90px] ${
                   theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500'
                 }`}>
                   <div className="text-xs text-white text-center">{item.bonus}</div>
