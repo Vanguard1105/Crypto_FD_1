@@ -13,28 +13,28 @@ const Profile = () => {
     {
       title: 'INVETE FRIENDS',
       count: '4 friends',
-      multiplier: 'x 10 💎',
+      multiplier: 'x 10',
       bonus: '+2 Friends',
       reward: '+ 20'
     },
     {
       title: 'TICKETS PURCHASED BY FRIENDS',
       count: '24 tickets',
-      multiplier: 'x 5 💎',
+      multiplier: 'x 5',
       bonus: '24 Tickets',
       reward: '+ 120'
     },
     {
       title: 'DAILY BETTING',
       count: '6 days',
-      multiplier: 'x 2 💎',
+      multiplier: 'x 2',
       bonus: '7 Day',
       reward: '+ 14'
     },
     {
       title: 'TOP BUYER IN LOTTERY',
       count: '2 times',
-      multiplier: 'x 200 💎',
+      multiplier: 'x 200',
       bonus: '2 Times',
       reward: '+ 400'
     }
@@ -118,24 +118,26 @@ const Profile = () => {
                 }`}>
                   ✓ {item.title}
                 </span>
-                <div className="items-center gap-3 py-2">
-                  <span className={`text-sm font-medium ${
+                <div className="flex flex-row items-center gap-3 py-2">
+                  <span className={`text-sm font-large px-2 ${
                     theme === 'dark' ? 'text-white' : 'text-slate-900'
                   }`}>
                     {item.count}
                   </span>
-                  <span className={`text-sm ${
+                  <span className={`text-md ${
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                   }`}>
                     {item.multiplier}
                   </span>
+                  <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer' width="16" height="16" />
                 </div>
               </div>
-              <div className="flex items-center">
-                <div className={`p-1 rounded-lg w-[80px] h-full ${
+              <div className="flex items-center cursor-pointer">
+                <div className={`px-1 py-2 rounded-lg w-[80px] h-full ${
                   theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500'
                 }`}>
                   <div className="text-xs text-white text-center">{item.bonus}</div>
+                  <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer' width="16" height="16" />
                   <div className="text-xs text-white text-center">{item.reward}</div>
                 </div>
               </div>
