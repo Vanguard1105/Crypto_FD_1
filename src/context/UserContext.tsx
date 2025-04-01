@@ -8,7 +8,7 @@ interface UserData {
   publicKey: string | undefined;
   has_password: boolean | undefined;
   diamond_count: number | undefined;
-  solBalance: number | undefined; 
+  solBalance: number | null; 
 }
 
 interface UserContextType {
