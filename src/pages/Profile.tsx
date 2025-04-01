@@ -12,9 +12,10 @@ const Profile = () => {
   const { userData } = useUser();
   const [activeTab, setActiveTab] = useState<'settings' | 'bonuses'>('settings');
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
-  const [username, setUsername] = useState(userData?.username || 'Peter Coiner');
+  const [username, setUsername] = useState(userData?.username || 'User' + userData?.user_id);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState(userData?.email);
 
   const bonusItems = [
     {
@@ -91,36 +92,50 @@ const Profile = () => {
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <div className="p-4 pt-0 space-y-3">
+              <div className="p-3 pt-0 space-y-2">
+                
                 <div>
-                  <label className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                    <label className={`block text-sm font-medium mb-1 ${
+                    theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
+                    }`}>
                     Username *
-                  </label>
-                  <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className={`mt-1 w-full p-2 rounded-lg border ${
-                      theme === 'dark' 
-                        ? 'bg-slate-700 border-slate-600 text-white' 
-                        : 'bg-white border-slate-300 text-slate-900'
-                    }`}
-                  />
+                    </label>
+                    <div className="relative">
+                    <input
+                        type="text"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) => setUsername(e.target.value)}
+                        className={`w-full px-4 py-2 rounded-lg text-sm ${
+                        theme === 'dark'
+                            ? 'bg-slate-800 text-white border-slate-700'
+                            : 'bg-slate-50 text-slate-900 border-slate-200'
+                        } border focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                    />
+                    <Mail className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    </div>
                 </div>
                 
                 <div>
-                  <label className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                    <label className={`block text-sm font-medium mb-1 ${
+                    theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
+                    }`}>
                     Email *
-                  </label>
-                  <div className={`mt-1 p-2 rounded-lg border ${
-                    theme === 'dark' 
-                      ? 'bg-slate-700 border-slate-600' 
-                      : 'bg-white border-slate-300'
-                  }`}>
-                    <span className={theme === 'dark' ? 'text-white' : 'text-slate-900'}>
-                      {userData?.email || 'vanguard951105@gmail.com'}
-                    </span>
-                  </div>
+                    </label>
+                    <div className="relative">
+                    <input
+                        type="email"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className={`w-full px-4 py-2 rounded-lg text-sm ${
+                        theme === 'dark'
+                            ? 'bg-slate-800 text-white border-slate-700'
+                            : 'bg-slate-50 text-slate-900 border-slate-200'
+                        } border focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                    />
+                    <Mail className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    </div>
                 </div>
               </div>
             </motion.div>
