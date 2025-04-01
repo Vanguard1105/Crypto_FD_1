@@ -18,6 +18,7 @@ interface PriceChartProps {
   previousPrice: number;
   period: TimePeriod;
   theme: Theme;
+  title: string | undefined;
   onPeriodChange: (period: TimePeriod) => void; // Add this prop
 }
 
@@ -45,7 +46,7 @@ const CustomTooltip = ({ active, payload, label, period, theme }: any) => {
   return null;  
 };  
 
-const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, period, theme, onPeriodChange }) => {
+const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, period, title, theme, onPeriodChange }) => {
   const [gradientAboveId] = useState(() => `gradient-above-${Math.random().toString(36).substr(2, 9)}`);
   const [gradientBelowId] = useState(() => `gradient-below-${Math.random().toString(36).substr(2, 9)}`);
   const timeFilters = [
@@ -97,7 +98,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, period, them
         <div className="flex items-center justify-between ml-2 mr-[44px] h-5">
           <div className='flex flex-row gap-2 items-center'>
             <div>
-              <span className='text-lg text-[#007aff] font-semibold'>SOL</span>
+              <span className='text-lg text-[#007aff] font-semibold'>{title}</span>
               <span className={`text-lg font-semibold ${
                 theme === 'dark' ? 'border-slate-700/50' : 'text-slate-900'
               }`}> / </span>
