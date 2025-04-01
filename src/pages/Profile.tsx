@@ -223,15 +223,15 @@ const Profile = () => {
           className="w-full p-4 flex items-center justify-between"
         >
           <div className="flex items-center gap-2">
-            <Lock className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
+            <Lock className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={16} />
             <h3 className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
               Security
             </h3>
           </div>
           {expandedSection === 'security' ? (
-            <ChevronUp className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
+            <ChevronUp className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={16} />
           ) : (
-            <ChevronDown className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
+            <ChevronDown className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={16} />
           )}
         </button>
 
@@ -244,56 +244,58 @@ const Profile = () => {
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <div className="p-4 pt-0 space-y-3">
-              <div>
-            <label className={`block text-sm font-medium mb-1 ${
-              theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
-            }`}>
-              Password *
-            </label>
-            <div className="relative">
-              <input
-                type="password"
-                placeholder="Create your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className={`w-full pr-8 pl-4 py-2 rounded-lg text-sm ${
-                  theme === 'dark'
-                    ? 'bg-slate-800 text-white border-slate-700'
-                    : 'bg-slate-50 text-slate-900 border-slate-200'
-                } border focus:outline-none focus:ring-2 focus:ring-blue-500`}
-              />
-              <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            </div>
-          </div>
+              <div className="pt-0 space-y-2">
+                <div>
+                    <label className={`block text-sm font-medium mb-1 ${
+                    theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
+                    }`}>
+                    Password *
+                    </label>
+                    <div className="relative">
+                    <input
+                        type="password"
+                        placeholder="Create your password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className={`w-full pr-8 pl-4 py-2 rounded-lg text-sm ${
+                        theme === 'dark'
+                            ? 'bg-slate-800 text-white border-slate-700'
+                            : 'bg-slate-50 text-slate-900 border-slate-200'
+                        } border focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                    />
+                    <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    </div>
+                </div>
 
-          <div>
-            <label className={`block text-sm font-medium mb-1 ${
-              theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
-            }`}>
-              Confirm Password *
-            </label>
-            <div className="relative">
-              <input
-                type="password"
-                placeholder="Confirm your password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className={`w-full pr-8 pl-4 py-2 rounded-lg text-sm ${
-                  theme === 'dark'
-                    ? 'bg-slate-800 text-white border-slate-700'
-                    : 'bg-slate-50 text-slate-900 border-slate-200'
-                } border focus:outline-none focus:ring-2 focus:ring-blue-500`}
-              />
-              <CheckCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            </div>
-          </div>
-          {error? (
-            <div className="text-red-500 text-sm text-center h-[20px]">
-              {error}
-            </div>
-          ): <div className = "h-[20px]"></div>}
-              </div>
+                <div>
+                    <label className={`block text-sm font-medium ${
+                    theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
+                    }`}>
+                    Confirm Password *
+                    </label>
+                    <div className="relative">
+                    <input
+                        type="password"
+                        placeholder="Confirm your password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className={`w-full pr-8 pl-4 py-2 rounded-lg text-sm ${
+                        theme === 'dark'
+                            ? 'bg-slate-800 text-white border-slate-700'
+                            : 'bg-slate-50 text-slate-900 border-slate-200'
+                        } border focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                    />
+                    <CheckCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    </div>
+                </div>
+                {error? (
+                    <div className="text-red-500 text-sm text-center h-[20px]">
+                    {error}
+                    </div>
+                    ): <div className = "h-[20px]">
+                    </div>
+                    }
+                </div>
             </motion.div>
           )}
         </AnimatePresence>
