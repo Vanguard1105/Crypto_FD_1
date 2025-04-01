@@ -25,6 +25,7 @@ export const fetchSolanaBalance = async (publicKey: string | undefined) => {
       return null;
     }
   } catch (error) {
+    console.log("ERROR : ", error)
     return null;
   } 
 };
