@@ -17,7 +17,7 @@ interface PriceChartProps {
   latestPrice: number;
   previousPrice: number;
   period: TimePeriod;
-  title: string;
+  title: string | null;
   theme: Theme;
   onPeriodChange: (period: TimePeriod) => void; // Add this prop
 }
