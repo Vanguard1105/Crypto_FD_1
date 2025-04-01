@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sun, Moon, ChevronDown, ChevronUp, Mail, Lock, Wallet, User, CheckCircle } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
