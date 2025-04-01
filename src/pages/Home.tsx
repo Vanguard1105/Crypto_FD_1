@@ -18,7 +18,7 @@ const Home = () => {
   const { latestPrice } = usePrice();
   const { userData, setUserData} = useUser();
   const [solBalance, setSolBalance] = useState<number | null>(null);
-  const { priceHistory: ethereumHistory, latestPrice: ethereumLatestPrice, previousPrice: ethereumPreviousPrice } = useEthereumPrice();
+  const {latestPrice: ethereumLatestPrice} = useEthereumPrice();
   const carouselImages = [
     './home_1.png',
     './home_2.jpg',
@@ -110,7 +110,7 @@ const Home = () => {
             {lotteries.map((lottery) => (
               <div
                 key={lottery.name}
-                onClick={() => navigate('/lottery')}
+                onClick={() => navigate(`/lottery?type=${lottery.name}`)}
                 className={`flex items-center justify-between px-2 rounded-lg border-2 shadow-md cursor-pointer
                   transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg ${
                   theme === 'dark' 

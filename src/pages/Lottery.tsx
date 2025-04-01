@@ -4,23 +4,47 @@ import { Sun, Moon, Timer, Trophy, Calendar } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import PriceChart from '../components/PriceChart';
 import { usePrice } from '../context/PriceContext';
-import { TimePeriod } from '../types';
+import { useEthereumPrice } from '../context/EthereumPriceContext';
+import { PriceData, TimePeriod } from '../types';
 import { FaUserCog } from "react-icons/fa";
 import { CgChevronLeft } from "react-icons/cg";
 import { useUser } from '../context/UserContext';
 import { fetchSolanaBalance } from '../utils/fetchSolanaBalance';
-
+import { useLocation } from 'react-router-dom';
 type LotteryType = 'vote' | 'predict';
 
 const Lottery = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
-  const { priceHistory, latestPrice, previousPrice } = usePrice();
   const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>('5m');
   const [selectedType, setSelectedType] = useState<LotteryType>("vote");
   const { userData, setUserData} = useUser();
   const [solBalance, setSolBalance] = useState<number | null | undefined>(userData?.solBalance);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const lotteryType = searchParams.get('type');
+  const { priceHistory: solanaHistory, latestPrice: solanaLatestPrice, previousPrice: solanaPreviousPrice } = usePrice();
+  const { priceHistory: ethereumHistory, latestPrice: ethereumLatestPrice, previousPrice: ethereumPreviousPrice } = useEthereumPrice();
 
+  let priceHistory: PriceData[], latestPrice, previousPrice;
+
+  switch (lotteryType) {
+    case 'Solana':
+      priceHistory = solanaHistory[selectedPeriod];
+      latestPrice = solanaLatestPrice;
+      previousPrice = solanaPreviousPrice;
+      break;
+    case 'Ethereum':
+      priceHistory = ethereumHistory[selectedPeriod];
+      latestPrice = ethereumLatestPrice;
+      previousPrice = ethereumPreviousPrice;
+      break;
+    default:
+      priceHistory = [];
+      latestPrice = 0;
+      previousPrice = 0;
+      break;
+  }
   const lotteries = [
     { id: 26, date: '2025.03.24', startTime: '12:00:00', status: 'upcoming', type: 'vote' },
     { id: 25, date: '2025.03.24', startTime: '09:00:00', status: 'upcoming', type: 'vote' },
@@ -91,7 +115,7 @@ const Lottery = () => {
       {/* Chart Section */}
       <div className="pb-2 px-4">
         <PriceChart
-          data={priceHistory[selectedPeriod]}
+          data={priceHistory}
           latestPrice={latestPrice}
           previousPrice={previousPrice}
           period={selectedPeriod}
