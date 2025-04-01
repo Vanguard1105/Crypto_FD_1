@@ -13,11 +13,11 @@ export const fetchSolanaBalance = async (publicKey: string | undefined) => {
       `https://public-api.birdeye.so/v1/wallet/token_balance?wallet=${publicKey}&token_address=So11111111111111111111111111111111111111111`,
       options
     );
-    console.log(response.json())
+    const data = await response.json(); 
+    console.log(data.data)
     if (!response.ok) {
       return null
     }
-    const data = await response.json(); 
     if (data.success && data.data) {
       const balance = Number(data.data['uiAmount']);
       return balance;
