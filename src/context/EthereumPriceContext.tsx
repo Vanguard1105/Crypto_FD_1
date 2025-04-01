@@ -15,7 +15,7 @@ interface PriceHistory {
   '7d': PriceData[];
 }
 
-interface PriceContextType {
+interface EthereumPriceContextType {
   priceHistory: PriceHistory;
   latestPrice: number;
   previousPrice: number;
@@ -29,16 +29,16 @@ const initialPriceHistory: PriceHistory = {
   '7d': [],
 };
 
-const PriceContext = createContext<PriceContextType>({
+const EthereumPriceContext = createContext<EthereumPriceContextType>({
   priceHistory: initialPriceHistory,
   latestPrice: 0,
   previousPrice: 0,
 });
 
 const BIRDEYE_API_KEY = 'b59a1173ffe2443fb6a0b37b11ad892a';
-const SOLANA_TOKEN_ADDRESS = 'So11111111111111111111111111111111111111112';
+const ETHEREUM_TOKEN_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'; // WETH address
 
-export const PriceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const EthereumPriceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [priceHistory, setPriceHistory] = useState<PriceHistory>(initialPriceHistory);
   const [latestPrice, setLatestPrice] = useState(0);
   const [previousPrice, setPreviousPrice] = useState(0);
@@ -55,7 +55,7 @@ export const PriceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       
       const response = await axios.get('https://public-api.birdeye.so/defi/history_price', {
         params: {
-          address: SOLANA_TOKEN_ADDRESS,
+          address: ETHEREUM_TOKEN_ADDRESS,
           address_type: 'token',
           type: {
             '1h': '1m',
@@ -67,7 +67,7 @@ export const PriceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         },
         headers: {
           'X-API-KEY': BIRDEYE_API_KEY,
-          'x-chain': 'solana',
+          'x-chain': 'ethereum',
         },
       });
 
@@ -83,22 +83,22 @@ export const PriceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         [period]: dataPoints,
       }));
     } catch (error) {
-      ;
+      console.error('Error fetching Ethereum historical data:', error);
     }
   };
 
   // Fetch real-time price from Coinbase
-  const fetchSolanaPrice = async (retryCount = 0): Promise<number | null> => {
+  const fetchEthereumPrice = async (retryCount = 0): Promise<number | null> => {
     try {
-      const response = await axios.get('https://api.coinbase.com/v2/prices/SOL-USD/spot', {
+      const response = await axios.get('https://api.coinbase.com/v2/prices/ETH-USD/spot', {
         timeout: 2000
       });
       return parseFloat(response.data.data.amount);
     } catch (error) {
-      console.error('Error fetching Solana price:', error);
+      console.error('Error fetching Ethereum price:', error);
       if (retryCount < 3) {
         await new Promise(resolve => setTimeout(resolve, 500));
-        return fetchSolanaPrice(retryCount + 1);
+        return fetchEthereumPrice(retryCount + 1);
       }
       return null;
     }
@@ -106,7 +106,7 @@ export const PriceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Update price history
   const updatePriceHistory = async () => {
-    const newPrice = await fetchSolanaPrice();
+    const newPrice = await fetchEthereumPrice();
     if (newPrice === null) return;
 
     const now = Date.now();
@@ -148,21 +148,21 @@ export const PriceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Update real-time data
   useEffect(() => {
-    const interval = setInterval(updatePriceHistory, 1000);
+    const interval = setInterval(updatePriceHistory, 1000); // Fetch Ethereum price every 1 second
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <PriceContext.Provider value={{ priceHistory, latestPrice, previousPrice }}>
+    <EthereumPriceContext.Provider value={{ priceHistory, latestPrice, previousPrice }}>
       {children}
-    </PriceContext.Provider>
+    </EthereumPriceContext.Provider>
   );
 };
 
-export const usePrice = () => {
-  const context = useContext(PriceContext);
+export const useEthereumPrice = () => {
+  const context = useContext(EthereumPriceContext);
   if (!context) {
-    throw new Error('usePrice must be used within a PriceProvider');
+    throw new Error('useEthereumPrice must be used within an EthereumPriceProvider');
   }
   return context;
 };

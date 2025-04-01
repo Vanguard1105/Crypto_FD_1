@@ -10,23 +10,25 @@ import Profile from './pages/Profile';
 import Track from './pages/Track';
 import Lottery from './pages/Lottery';
 import { PriceProvider } from './context/PriceContext';
-
+import { EthereumPriceProvider } from './context/EthereumPriceContext';
 function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
         <PriceProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Welcome />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/set-password" element={<SetPassword />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/track" element={<Track />} />
-              <Route path="/lottery" element={<Lottery />} />
-              <Route path="/profile" element={<Profile />} />
-            </Routes>
-          </BrowserRouter>
+          <EthereumPriceProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Welcome />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/set-password" element={<SetPassword />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/track" element={<Track />} />
+                <Route path="/lottery" element={<Lottery />} />
+                <Route path="/profile" element={<Profile />} />
+              </Routes>
+            </BrowserRouter>
+          </EthereumPriceProvider>
         </PriceProvider>
       </AuthProvider>
     </ThemeProvider>
