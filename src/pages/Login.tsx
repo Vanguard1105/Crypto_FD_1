@@ -41,7 +41,7 @@ const Login = () => {
 
     try {
       console.log(user_id, password)
-      await axios.post('https://crypto-bd-1.vercel.app/api/auth/login', {
+      await axios.post('https://solana-betting-backend-one.vercel.app/api/auth/login', {
         user_id,
         password
       });
