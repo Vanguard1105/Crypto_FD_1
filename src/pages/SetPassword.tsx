@@ -20,7 +20,11 @@ const SetPassword = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-
+  const handleLoginNavigation = () => {
+    if (userData?.email) {
+      navigate('/login');
+    }
+  };
   const validatePassword = (password: string) => {
     const errors = [];
     if (password.length < 8) errors.push("Password must be at least 8 characters long");
@@ -215,12 +219,12 @@ const SetPassword = () => {
           <span className={`${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
             Have already registered?{' '}
           </span>
-          <Link
-            to="/login"
+          <button
+            onClick={handleLoginNavigation}
             className="text-blue-500 font-medium hover:text-blue-600"
           >
             Log In
-          </Link>
+          </button>
         </p>
       </div>
     </div>
