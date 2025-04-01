@@ -51,7 +51,7 @@ const Home = () => {
 
   const lotteries = [
     { name: 'Solana', count: 4, value: latestPrice, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full" height="25" width="25" alt="SOL" loading="lazy" decoding="async"/> },
-    { name: 'Etherium', count: 3, value: ethereumLatestPrice, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png" height="25" width="25" alt="ETH" loading="lazy" decoding="async"  /> },
+    { name: 'Ethereum', count: 3, value: ethereumLatestPrice, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png" height="25" width="25" alt="ETH" loading="lazy" decoding="async"  /> },
     { name: 'Bitcoin', count: 3, value: 84297.15, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1.png" height="25" width="25" alt="BTC" loading="lazy" decoding="async" /> },
   ];
 
