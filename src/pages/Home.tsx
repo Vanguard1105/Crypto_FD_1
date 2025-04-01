@@ -27,7 +27,7 @@ const Home = () => {
     './home_7.jpg',
   ];
   const fetchSolanaBalance = async (publicKey: string) => {
-    const connection = new Connection('https://api.mainnet-beta.solana.com'); // Solana mainnet connection
+    const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=a4e3e19a-1bc7-41f8-92ee-d4b7580a71f5'); // Solana mainnet connection
     const publicKeyObj = new PublicKey(publicKey); // Convert public key string to PublicKey object
     const balance = await connection.getBalance(publicKeyObj); // Fetch balance in lamports
     console.log(balance)
