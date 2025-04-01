@@ -43,12 +43,6 @@ export const PriceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [latestPrice, setLatestPrice] = useState(0);
   const [previousPrice, setPreviousPrice] = useState(0);
 
-  // Helper function to add variation to price data
-  const addVariation = (price: number, min: number, max: number) => {
-    const variation = Math.random() * (max - min) + min;
-    return price + (Math.random() > 0.5 ? variation : -variation);
-  };
-
   // Fetch historical data from Birdeye API
   const fetchHistoricalData = async (period: '1h' | '1d' | '7d') => {
     try {

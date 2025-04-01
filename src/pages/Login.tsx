@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Sun, Moon, Mail, Lock } from 'lucide-react';
 import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
@@ -44,7 +44,6 @@ const Login = () => {
     setLoading(true);
 
     try {
-      console.log(user_id, password)
       await axios.post('https://crypto-bet-backend-chi.vercel.app/api/auth/login', {
         user_id,
         password

@@ -16,7 +16,6 @@ const Home = () => {
   const { latestPrice } = usePrice();
   const { userData } = useUser();
   const [solBalance, setSolBalance] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
 
   const carouselImages = [
     './home_1.png',
@@ -55,16 +54,12 @@ const Home = () => {
     } catch (error) {
       console.error('Error fetching Solana balance:', error);
       setSolBalance(null); // Set balance to null in case of error
-    } finally {
-      setLoading(false); // Stop loading after fetching
-    }
+    } 
   };
   
   useEffect(() => {
     if (userData?.publicKey) {
       fetchSolanaBalance(userData.publicKey);
-    } else {
-      setLoading(false);
     }
   }, [userData?.publicKey]);
 
