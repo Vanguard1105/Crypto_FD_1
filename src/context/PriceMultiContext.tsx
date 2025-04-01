@@ -108,7 +108,8 @@ export const PriceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           'x-chain': chain,
         },
       });
-
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
       const items = response.data.data.items;
       const dataPoints = items.map((item: any) => ({
         timestamp: item.unixTime * 1000,
@@ -193,7 +194,7 @@ export const PriceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Initialize data on mount
   useEffect(() => {
-    fetchHistoricalData(SOLANA_TOKEN_ADDRESS, 'solana', '1h');
+    fetchHistoricalData(SOLANA_TOKEN_ADDRESS, 'solana', '1h'); 
     fetchHistoricalData(SOLANA_TOKEN_ADDRESS, 'solana', '1d');
     fetchHistoricalData(SOLANA_TOKEN_ADDRESS, 'solana', '7d');
 
