@@ -27,7 +27,7 @@ const Profile = () => {
     else if (!/[0-9]/.test(password)) errors.push("Password must contain at least one number");
     return errors;
   };
-  
+
   const bonusItems = [
     {
       title: 'INVITE FRIENDS',
@@ -103,7 +103,7 @@ const Profile = () => {
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <div className="p-3 pt-0 space-y-2">
+              <div className="p-2 pt-0 space-y-2">
                 
                 <div>
                     <label className={`block text-sm font-medium mb-1 ${
@@ -188,12 +188,12 @@ const Profile = () => {
                     <span className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
                       Sol wallet address
                     </span>
-                    <span className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-slate-900'}`}>
+                    <span className={`text-sm text-bold ${theme === 'dark' ? 'text-slate-300' : 'text-slate-900'}`}>
                       available: 2.53
                     </span>
                   </div>
                   <div className={`mt-1 text-xs ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'}`}>
-                    HfA6GS1mZN6PrcFpxSuHYWuoX1cj9DASkMKgkdgyid
+                    {userData?.publicKey}
                   </div>
                 </div>
 
