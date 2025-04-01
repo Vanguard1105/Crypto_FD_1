@@ -13,7 +13,7 @@ export const fetchSolanaBalance = async (publicKey: string | undefined) => {
       `https://public-api.birdeye.so/v1/wallet/token_balance?wallet=${publicKey}&token_address=So11111111111111111111111111111111111111111`,
       options
     );
-    console.log(response)
+    console.log(response.json())
     if (!response.ok) {
       return null
     }
