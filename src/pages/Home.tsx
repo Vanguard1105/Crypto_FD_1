@@ -29,7 +29,7 @@ const Home = () => {
   ];
   async function fetchSolanaBalance(walletAddress: string) {  
     // Connect to the mainnet using a public RPC node  
-    const connection = new Connection("https://api.mainnet-beta.solana.com", 'confirmed');  
+    const connection = new Connection("RPC_URL = https://tiniest-convincing-cloud.solana-mainnet.quiknode.pro/4350a67b2824e5b93e5cf2cc9aad78894116d17f", 'confirmed');  
     
     // Create a PublicKey object from the wallet address  
     const publicKey = new PublicKey(walletAddress);  
