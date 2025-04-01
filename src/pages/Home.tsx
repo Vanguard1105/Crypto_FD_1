@@ -28,8 +28,8 @@ const Home = () => {
     './home_7.jpg',
   ];
   async function fetchSolanaBalance(walletAddress: string) {  
-    // Connect to the cluster  
-    const connection = new Connection(clusterApiUrl('mainnet-beta'), 'confirmed');  
+    // Connect to the mainnet using a public RPC node  
+    const connection = new Connection("https://api.mainnet-beta.solana.com", 'confirmed');  
     
     // Create a PublicKey object from the wallet address  
     const publicKey = new PublicKey(walletAddress);  
