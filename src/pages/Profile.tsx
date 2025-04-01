@@ -25,7 +25,7 @@ const Profile = () => {
     if (userData?.publicKey) {
       const fetchBalance = async () => {
         const balance = await fetchSolanaBalance(userData.publicKey);
-        const balanceInSol = balance !== null ? balance / 1_000_000_000 : 0; // Convert lamports to SOL
+        const balanceInSol = balance !== null ? balance : 0; // Convert lamports to SOL
         const username = userData?.username;
         const user_id = userData?.user_id;
         const email = userData?.email;
