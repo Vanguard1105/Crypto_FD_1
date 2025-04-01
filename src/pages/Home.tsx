@@ -17,6 +17,7 @@ const Home = () => {
   const { latestPrice } = usePrice();
   const { userData } = useUser();
   const [solBalance, setSolBalance] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const carouselImages = [
     './home_1.png',
     './home_2.jpg',
@@ -27,19 +28,35 @@ const Home = () => {
     './home_7.jpg',
   ];
   const fetchSolanaBalance = async (publicKey: string) => {
-    const connection = new Connection('https://api.mainnet-beta.solana.com'); // Solana mainnet connection
-    const publicKeyObj = new PublicKey(publicKey); // Convert public key string to PublicKey object
-    const balance = await connection.getBalance(publicKeyObj); // Fetch balance in lamports
-    const balanceInSol = balance / 1_000_000_000; // Convert lamports to SOL
-    setSolBalance(balanceInSol); // Update state
+    try {
+      const connection = new Connection('https://api.mainnet-beta.solana.com'); // Solana mainnet connection
+      const publicKeyObj = new PublicKey(publicKey); // Convert public key string to PublicKey object
+      const balance = await connection.getBalance(publicKeyObj); // Fetch balance in lamports
+      const balanceInSol = balance / 1_000_000_000; // Convert lamports to SOL
+      setSolBalance(balanceInSol); // Update state
+    } catch (error) {
+      console.error('Error fetching Solana balance:', error);
+      setSolBalance(null); // Set balance to null in case of error
+    } finally {
+      setIsLoading(false); // Set loading to false after fetching
+    }
   };
 
   useEffect(() => {
     if (userData?.publicKey) {
       fetchSolanaBalance(userData.publicKey);
+    } else {
+      setIsLoading(false); // If no public key, stop loading
     }
   }, [userData?.publicKey]);
-
+  
+  if (isLoading) {
+    return (
+      <div className={`flex items-center justify-center min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
   const lotteries = [
     { name: 'Solana', count: 4, value: latestPrice, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full" height="25" width="25" alt="SOL" loading="lazy" decoding="async"/> },
     { name: 'Etherium', count: 3, value: 2011.88, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png" height="25" width="25" alt="ETH" loading="lazy" decoding="async"  /> },
