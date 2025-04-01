@@ -9,7 +9,8 @@ import { CgChevronRight } from "react-icons/cg";
 import MyIcon from '../components/MyIcon';
 import { useUser } from '../context/UserContext';
 import { useState, useEffect} from 'react';
-import { Connection, PublicKey } from '@solana/web3.js';
+import { Connection, clusterApiUrl, PublicKey } from '@solana/web3.js';  
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -26,14 +27,21 @@ const Home = () => {
     './home_6.jpg',
     './home_7.jpg',
   ];
-  const fetchSolanaBalance = async (publicKey: string) => {
-    const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=a4e3e19a-1bc7-41f8-92ee-d4b7580a71f5'); // Solana mainnet connection
-    const publicKeyObj = new PublicKey(publicKey); // Convert public key string to PublicKey object
-    const balance = await connection.getBalance(publicKeyObj); // Fetch balance in lamports
-    console.log(balance)
-    const balanceInSol = balance / 1_000_000_000; // Convert lamports to SOL
-    setSolBalance(balanceInSol); // Update state
-  };
+  async function fetchSolanaBalance(walletAddress: string) {  
+    // Connect to the cluster  
+    const connection = new Connection(clusterApiUrl('mainnet-beta'), 'confirmed');  
+    
+    // Create a PublicKey object from the wallet address  
+    const publicKey = new PublicKey(walletAddress);  
+
+    // Fetch the wallet balance  
+    const balance = await connection.getBalance(publicKey);  
+
+    // Convert balance from lamports to SOL  
+    const lamportsToSol = balance / 1_000_000_000; // 1 SOL = 1,000,000,000 lamports  
+    setSolBalance(lamportsToSol);
+    console.log(`Balance for wallet ${walletAddress}: ${lamportsToSol} SOL`);  
+} 
 
   useEffect(() => {
     if (userData?.publicKey) {
