@@ -89,7 +89,7 @@ export const PriceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         [period]: dataPoints,
       }));
     } catch (error) {
-      console.error(`Error fetching ${period} data:`, error);
+      ;
     }
   };
 

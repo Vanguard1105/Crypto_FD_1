@@ -42,17 +42,12 @@ const Home = () => {
         `https://public-api.birdeye.so/v1/wallet/token_balance?wallet=${publicKey}&token_address=So11111111111111111111111111111111111111111`,
         options
       );
-  
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
-      const data = await response.json();
-      console.log(data.data['uiAmount']);
-  
-      // Extract the balance from the response
+      const data = await response.json(); 
       if (data.success && data.data && data.data.length > 0) {
-        const balance = data.data.uiAmount;
+        const balance = Number(data.data['uiAmount']);
         setSolBalance(balance);
       } else {
         setSolBalance(0.00); // If no balance data is found
@@ -69,7 +64,7 @@ const Home = () => {
     if (userData?.publicKey) {
       fetchSolanaBalance(userData.publicKey);
     } else {
-      setLoading(false); // If no public key, stop loading
+      setLoading(false);
     }
   }, [userData?.publicKey]);
 

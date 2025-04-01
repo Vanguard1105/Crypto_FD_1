@@ -60,7 +60,7 @@ export function useTelegram(): IUseTelegram {
           onArgumentResult(methodName, argument, wrappedResult);  
         }  
       } catch (error) {  
-        onArgumentResult(methodName, argument, "error");  
+        ;  
       }  
     };  
   
