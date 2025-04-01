@@ -9,8 +9,6 @@ import { CgChevronRight } from "react-icons/cg";
 import MyIcon from '../components/MyIcon';
 import { useUser } from '../context/UserContext';
 import { useState, useEffect} from 'react';
-import { Connection, clusterApiUrl, PublicKey } from '@solana/web3.js';  
-
 
 const Home = () => {
   const navigate = useNavigate();
@@ -27,21 +25,19 @@ const Home = () => {
     './home_6.jpg',
     './home_7.jpg',
   ];
-  async function fetchSolanaBalance(walletAddress: string) {  
-    // Connect to the mainnet using a public RPC node  
-    const connection = new Connection("RPC_URL = https://tiniest-convincing-cloud.solana-mainnet.quiknode.pro/4350a67b2824e5b93e5cf2cc9aad78894116d17f", 'confirmed');  
+  const fetchSolanaBalance = async (publicKey: string) => {
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        'x-chain': 'solana',
+        'X-API-KEY': '537be612ab8a4f4cb65f3ab3fb46f188'
+      }
+    };
     
-    // Create a PublicKey object from the wallet address  
-    const publicKey = new PublicKey(walletAddress);  
-
-    // Fetch the wallet balance  
-    const balance = await connection.getBalance(publicKey);  
-
-    // Convert balance from lamports to SOL  
-    const lamportsToSol = balance / 1_000_000_000; // 1 SOL = 1,000,000,000 lamports  
-    setSolBalance(lamportsToSol);
-    console.log(`Balance for wallet ${walletAddress}: ${lamportsToSol} SOL`);  
-} 
+    const response = fetch(`https://public-api.birdeye.so/v1/wallet/token_balance?wallet=${publicKey}&token_address=So11111111111111111111111111111111111111111`, options)
+    console.log((await response).json)
+  };
 
   useEffect(() => {
     if (userData?.publicKey) {
