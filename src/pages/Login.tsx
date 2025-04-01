@@ -22,7 +22,11 @@ const Login = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-
+  const handleSignUpNavigation = () => {
+    if (!userData?.email) {
+      navigate('/set-password');
+    }
+  };
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -171,12 +175,12 @@ const Login = () => {
           <span className={`${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
             New to cryptobet?{' '}
           </span>
-          <Link
-            to="/set-password"
+          <button
+            onClick={handleSignUpNavigation}
             className="text-blue-500 font-medium hover:text-blue-600"
           >
             Sign Up
-          </Link>
+          </button>
         </p>
       </div>
     </div>

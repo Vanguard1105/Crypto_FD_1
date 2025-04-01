@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Sun, Moon, Mail, Lock, CheckCircle } from 'lucide-react';
 import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
