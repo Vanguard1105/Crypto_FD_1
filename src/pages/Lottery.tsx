@@ -99,7 +99,7 @@ const Lottery = () => {
           data={solana.priceHistory[selectedPeriod]}
           latestPrice={solana.latestPrice}
           previousPrice={solana.previousPrice}
-          
+
           period={selectedPeriod}
           theme={theme}
           onPeriodChange={handlePeriodChange}
