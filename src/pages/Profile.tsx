@@ -249,12 +249,12 @@ const Profile = () => {
                     <label className={`block text-sm font-medium mb-1 ${
                     theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
                     }`}>
-                    Password *
+                    New Password *
                     </label>
                     <div className="relative">
                     <input
                         type="password"
-                        placeholder="Create your password"
+                        placeholder="Create New password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className={`w-full pr-8 pl-4 py-2 rounded-lg text-sm ${

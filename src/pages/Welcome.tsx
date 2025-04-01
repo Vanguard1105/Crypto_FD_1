@@ -4,8 +4,6 @@ import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';  
 import { useAuth } from '../context/AuthContext';  
 import { useTelegram } from '../components/useTelegram';  
-import axios from 'axios';
-import { useUser } from '../context/UserContext'; // Import the useUser hook
 
 const Welcome = () => {  
   const navigate = useNavigate();  
@@ -13,7 +11,6 @@ const Welcome = () => {
   const { isAuthenticated } = useAuth();  
   const { user_id } = useTelegram(); 
   const [loading, setLoading] = useState(false);  
-  const { setUserData } = useUser(); // Destructure setUserData from useUser
 
   useEffect(() => {  
     if (isAuthenticated) {  
@@ -21,34 +18,20 @@ const Welcome = () => {
     }  
   }, [isAuthenticated, navigate]);  
 
-  const checkPasswordStatus = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`https://crypto-bd-1.vercel.app/api/auth/getData/${user_id}`);
-      console.log(response)
-      const { username, email, publicKey, hasPassword } = response.data;
-      
-      // Save user data to context
-      setUserData({ username, user_id, email, publicKey, hasPassword });
-
-      if (hasPassword) {
-        navigate('/login');
-      } else {
-        navigate('/set-password');
-      }
-    } catch (err) {
-      console.error('Error checking password status:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleStartBetting = async () => {  
     if (!user_id) {
       console.error('UserID is not available');
       return;
     }
-    checkPasswordStatus();
+    try {
+      setLoading(true);
+      navigate('/login');
+    } catch (err) {
+      console.error('Error checking password status:', err);
+    } finally {
+      setLoading(false);
+    }
   }; 
 
   return (  
