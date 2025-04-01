@@ -34,14 +34,41 @@ const Home = () => {
         'X-API-KEY': '537be612ab8a4f4cb65f3ab3fb46f188'
       }
     };
-    
-    const response = fetch(`https://public-api.birdeye.so/v1/wallet/token_balance?wallet=${publicKey}&token_address=So11111111111111111111111111111111111111111`, options)
-    console.log((await response).json)
+  
+    try {
+      const response = await fetch(
+        `https://public-api.birdeye.so/v1/wallet/token_balance?wallet=${publicKey}&token_address=So11111111111111111111111111111111111111111`,
+        options
+      );
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log(data);
+  
+      // Extract the balance from the response
+      if (data.success && data.data && data.data.length > 0) {
+        const balanceInLamports = data.data[0].amount;
+        const balanceInSol = balanceInLamports / 1_000_000_000; // Convert lamports to SOL
+        setSolBalance(balanceInSol);
+      } else {
+        setSolBalance(null); // If no balance data is found
+      }
+    } catch (error) {
+      console.error('Error fetching Solana balance:', error);
+      setSolBalance(null); // Set balance to null in case of error
+    } finally {
+      setIsLoading(false); // Stop loading after fetching
+    }
   };
-
+  
   useEffect(() => {
     if (userData?.publicKey) {
       fetchSolanaBalance(userData.publicKey);
+    } else {
+      setIsLoading(false); // If no public key, stop loading
     }
   }, [userData?.publicKey]);
 
