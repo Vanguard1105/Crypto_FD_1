@@ -26,23 +26,32 @@ const Lottery = () => {
   const { priceHistory: solanaHistory, latestPrice: solanaLatestPrice, previousPrice: solanaPreviousPrice } = usePrice();
   const { priceHistory: ethereumHistory, latestPrice: ethereumLatestPrice, previousPrice: ethereumPreviousPrice } = useEthereumPrice();
 
-  let priceHistory: PriceData[], latestPrice, previousPrice;
+  let priceHistory: PriceData[], latestPrice, previousPrice, title;
 
   switch (lotteryType) {
     case 'Solana':
       priceHistory = solanaHistory[selectedPeriod];
       latestPrice = solanaLatestPrice;
       previousPrice = solanaPreviousPrice;
+      title = "SOL";
       break;
     case 'Ethereum':
       priceHistory = ethereumHistory[selectedPeriod];
       latestPrice = ethereumLatestPrice;
       previousPrice = ethereumPreviousPrice;
+      title = "ETH";
+      break;
+    case 'Bitcoin':
+      priceHistory = ethereumHistory[selectedPeriod];
+      latestPrice = ethereumLatestPrice;
+      previousPrice = ethereumPreviousPrice;
+      title = "BTC";
       break;
     default:
       priceHistory = [];
       latestPrice = 0;
       previousPrice = 0;
+      title = "";
       break;
   }
   const lotteries = [
@@ -119,6 +128,7 @@ const Lottery = () => {
           latestPrice={latestPrice}
           previousPrice={previousPrice}
           period={selectedPeriod}
+          title = {title}
           theme={theme}
           onPeriodChange={handlePeriodChange}
         />
