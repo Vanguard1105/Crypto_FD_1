@@ -1,17 +1,24 @@
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, ChevronDown, ChevronUp, Mail, Lock, Wallet, User } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { CgChevronLeft } from "react-icons/cg";
 import { useUser } from '../context/UserContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Profile = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const { userData } = useUser();
+  const [activeTab, setActiveTab] = useState<'settings' | 'bonuses'>('settings');
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
+  const [username, setUsername] = useState(userData?.username || 'Peter Coiner');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const bonusItems = [
     {
-      title: 'INVETE FRIENDS',
+      title: 'INVITE FRIENDS',
       count: '4 friends',
       multiplier: 'x 10',
       bonus: '+2 Friends',
@@ -40,6 +47,281 @@ const Profile = () => {
     }
   ];
 
+  const handleSaveChanges = () => {
+    // Handle save changes logic here
+    console.log('Saving changes...', { username, password });
+  };
+
+  const toggleSection = (section: string) => {
+    setExpandedSection(expandedSection === section ? null : section);
+  };
+
+  const renderSettings = () => (
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -20 }}
+      className="space-y-4"
+    >
+      {/* Account Settings */}
+      <div className={`rounded-lg ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'}`}>
+        <button
+          onClick={() => toggleSection('account')}
+          className="w-full p-4 flex items-center justify-between"
+        >
+          <div className="flex items-center gap-2">
+            <User className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
+            <h3 className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
+              Account settings
+            </h3>
+          </div>
+          {expandedSection === 'account' ? (
+            <ChevronUp className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
+          ) : (
+            <ChevronDown className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
+          )}
+        </button>
+        
+        <AnimatePresence>
+          {expandedSection === 'account' && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
+            >
+              <div className="p-4 pt-0 space-y-3">
+                <div>
+                  <label className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                    Username *
+                  </label>
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className={`mt-1 w-full p-2 rounded-lg border ${
+                      theme === 'dark' 
+                        ? 'bg-slate-700 border-slate-600 text-white' 
+                        : 'bg-white border-slate-300 text-slate-900'
+                    }`}
+                  />
+                </div>
+                
+                <div>
+                  <label className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                    Email *
+                  </label>
+                  <div className={`mt-1 p-2 rounded-lg border ${
+                    theme === 'dark' 
+                      ? 'bg-slate-700 border-slate-600' 
+                      : 'bg-white border-slate-300'
+                  }`}>
+                    <span className={theme === 'dark' ? 'text-white' : 'text-slate-900'}>
+                      {userData?.email || 'vanguard951105@gmail.com'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Wallet Management */}
+      <div className={`rounded-lg ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'}`}>
+        <button
+          onClick={() => toggleSection('wallet')}
+          className="w-full p-4 flex items-center justify-between"
+        >
+          <div className="flex items-center gap-2">
+            <Wallet className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
+            <h3 className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
+              Wallet management
+            </h3>
+          </div>
+          {expandedSection === 'wallet' ? (
+            <ChevronUp className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
+          ) : (
+            <ChevronDown className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
+          )}
+        </button>
+
+        <AnimatePresence>
+          {expandedSection === 'wallet' && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
+            >
+              <div className="p-4 pt-0 space-y-2">
+                <div className={`p-2 rounded-lg ${theme === 'dark' ? 'bg-slate-700' : 'bg-white'}`}>
+                  <div className="flex items-center justify-between">
+                    <span className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                      Sol wallet address
+                    </span>
+                    <span className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-slate-900'}`}>
+                      available: 2.53
+                    </span>
+                  </div>
+                  <div className={`mt-1 text-xs ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'}`}>
+                    HfA6GS1mZN6PrcFpxSuHYWuoX1cj9DASkMKgkdgyid
+                  </div>
+                </div>
+
+                <div className={`p-2 rounded-lg ${theme === 'dark' ? 'bg-slate-700' : 'bg-white'}`}>
+                  <div className="flex items-center justify-between">
+                    <span className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                      Available Diamonds
+                    </span>
+                    <span className={`text-sm ${theme === 'dark' ? 'text-red-400' : 'text-red-500'}`}>
+                      1000
+                    </span>
+                  </div>
+                  <button className="mt-2 w-full py-1 px-4 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">
+                    Charge
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Security */}
+      <div className={`rounded-lg ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'}`}>
+        <button
+          onClick={() => toggleSection('security')}
+          className="w-full p-4 flex items-center justify-between"
+        >
+          <div className="flex items-center gap-2">
+            <Lock className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
+            <h3 className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
+              Security
+            </h3>
+          </div>
+          {expandedSection === 'security' ? (
+            <ChevronUp className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
+          ) : (
+            <ChevronDown className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
+          )}
+        </button>
+
+        <AnimatePresence>
+          {expandedSection === 'security' && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
+            >
+              <div className="p-4 pt-0 space-y-3">
+                <div>
+                  <label className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                    Password *
+                  </label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Please input your password"
+                    className={`mt-1 w-full p-2 rounded-lg border ${
+                      theme === 'dark' 
+                        ? 'bg-slate-700 border-slate-600 text-white' 
+                        : 'bg-white border-slate-300 text-slate-900'
+                    }`}
+                  />
+                </div>
+
+                <div>
+                  <label className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                    Confirm *
+                  </label>
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Please confirm your password"
+                    className={`mt-1 w-full p-2 rounded-lg border ${
+                      theme === 'dark' 
+                        ? 'bg-slate-700 border-slate-600 text-white' 
+                        : 'bg-white border-slate-300 text-slate-900'
+                    }`}
+                  />
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {expandedSection && (
+        <motion.button
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          onClick={handleSaveChanges}
+          className="w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+        >
+          Save Changes
+        </motion.button>
+      )}
+    </motion.div>
+  );
+
+  const renderBonuses = () => (
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -20 }}
+      className="space-y-2"
+    >
+      {bonusItems.map((item, index) => (
+        <div
+          key={index}
+          className={`px-4 py-2 rounded-lg flex flex-row justify-between cursor-pointer ${
+            theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'
+          }`}
+        >
+          <div className="items-center mb-2">
+            <span className={`text-sm font-medium ${
+              theme === 'dark' ? 'text-green-400' : 'text-green-600'
+            }`}>
+              ✓ {item.title}
+            </span>
+            <div className="flex flex-row items-center gap-3 py-2">
+              <span className={`text-sm font-large px-2 w-[90px] ${
+                theme === 'dark' ? 'text-white' : 'text-slate-900'
+              }`}>
+                {item.count}
+              </span>
+              <span className={`text-md w-[50px] ${
+                theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
+              }`}>
+                {item.multiplier}
+              </span>
+              <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer' width="16" height="16" />
+            </div>
+          </div>
+          <div className="flex items-center justify-center cursor-pointer py-0.5">
+            <div className={`px-1 my-[6px] rounded-lg w-[80px] items-center ${
+              theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500'
+            }`}>
+              <div className="text-xs text-white text-center">{item.bonus}</div>
+              <div className='w-full flex justify-center py-1'>
+                <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" width="16" height="16" />
+              </div>
+              <div className="text-xs text-white text-center">{item.reward}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </motion.div>
+  );
+
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
       {/* Header */}
@@ -64,7 +346,7 @@ const Profile = () => {
                 ? 'text-slate-400 hover:text-slate-200'
                 : 'text-slate-600 hover:text-slate-800'
               }`}
-              >
+            >
               {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
             </button>
           </div>
@@ -73,7 +355,7 @@ const Profile = () => {
 
       {/* Profile Info */}
       <div className="px-4 py-2">
-        <div className="flex items-center gap-4 mb-6 pl-4">
+        <div className="flex items-center gap-4 mb-6">
           <img
             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=96&h=96&fit=crop"
             alt="Profile"
@@ -81,71 +363,50 @@ const Profile = () => {
           />
           <div>
             <h2 className={`text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
-              {userData?.username? userData.username: "user"+ userData?.user_id}
+              {username}
             </h2>
             <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
-              @{userData?.username? userData.username : userData?.user_id}
+              @{userData?.username || 'cryptoboss009'}
             </p>
           </div>
         </div>
 
         {/* Navigation */}
         <div className="flex gap-4 mb-4">
-          <button className={`px-4 py-2 text-sm font-medium rounded-full ${
-            theme === 'dark' ? 'text-white' : 'text-slate-900'
-          }`}>
+          <button 
+            onClick={() => setActiveTab('settings')}
+            className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+              activeTab === 'settings'
+                ? theme === 'dark'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-blue-500 text-white'
+                : theme === 'dark'
+                ? 'text-white hover:bg-slate-800'
+                : 'text-slate-900 hover:bg-slate-100'
+            }`}
+          >
             Settings
           </button>
-          <button className={`px-4 py-1 text-sm font-medium rounded-xl ${
-            theme === 'dark' ? 'bg-blue-600 text-white' : 'bg-blue-500 text-white'
-          }`}>
+          <button 
+            onClick={() => setActiveTab('bonuses')}
+            className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+              activeTab === 'bonuses'
+                ? theme === 'dark'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-blue-500 text-white'
+                : theme === 'dark'
+                ? 'text-white hover:bg-slate-800'
+                : 'text-slate-900 hover:bg-slate-100'
+            }`}
+          >
             Bonuses
           </button>
         </div>
 
-        {/* Bonus Items */}
-        <div className="space-y-2">
-          {bonusItems.map((item, index) => (
-            <div
-              key={index}
-              className={`px-4 py-2 rounded-lg flex flex-row justify-between cursor-pointer ${
-                theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'
-              }`}
-            >
-              <div className="items-center mb-2">
-                <span className={`text-sm font-medium ${
-                  theme === 'dark' ? 'text-green-400' : 'text-green-600'
-                }`}>
-                  ✓ {item.title}
-                </span>
-                <div className="flex flex-row items-center gap-3 py-2">
-                  <span className={`text-sm font-large px-2 w-[90px] ${
-                    theme === 'dark' ? 'text-white' : 'text-slate-900'
-                  }`}>
-                    {item.count}
-                  </span>
-                  <span className={`text-md w-[50px] ${
-                    theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                  }`}>
-                    {item.multiplier}
-                  </span>
-                  <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer' width="16" height="16" />
-                </div>
-              </div>
-              <div className="flex items-center justify-center cursor-pointer py-0.5">
-                <div className={`px-1 my-[6px] rounded-lg w-[80px] items-center ${
-                  theme === 'dark' ? 'bg-blue-600' : 'bg-blue-500'
-                }`}>
-                  <div className="text-xs text-white text-center">{item.bonus}</div>
-                  <div className='w-full flex justify-center py-1'>
-                    <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" width="16" height="16" />
-                  </div>
-                  <div className="text-xs text-white text-center">{item.reward}</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Content */}
+        <AnimatePresence mode="wait">
+          {activeTab === 'settings' ? renderSettings() : renderBonuses()}
+        </AnimatePresence>
       </div>
     </div>
   );
