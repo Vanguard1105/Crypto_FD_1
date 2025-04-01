@@ -48,7 +48,7 @@ const Home = () => {
       }
   
       const data = await response.json();
-      console.log(data);
+      console.log(data.uiAmount);
   
       // Extract the balance from the response
       if (data.success && data.data && data.data.length > 0) {
