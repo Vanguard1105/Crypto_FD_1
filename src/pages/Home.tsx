@@ -16,6 +16,8 @@ const Home = () => {
   const { latestPrice } = usePrice();
   const { userData } = useUser();
   const [solBalance, setSolBalance] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
+
   const carouselImages = [
     './home_1.png',
     './home_2.jpg',
@@ -50,17 +52,16 @@ const Home = () => {
   
       // Extract the balance from the response
       if (data.success && data.data && data.data.length > 0) {
-        const balanceInLamports = data.data[0].amount;
-        const balanceInSol = balanceInLamports / 1_000_000_000; // Convert lamports to SOL
-        setSolBalance(balanceInSol);
+        const balance = data.data.uiAmount;
+        setSolBalance(balance);
       } else {
-        setSolBalance(null); // If no balance data is found
+        setSolBalance(0.00); // If no balance data is found
       }
     } catch (error) {
       console.error('Error fetching Solana balance:', error);
       setSolBalance(null); // Set balance to null in case of error
     } finally {
-      setIsLoading(false); // Stop loading after fetching
+      setLoading(false); // Stop loading after fetching
     }
   };
   
@@ -68,7 +69,7 @@ const Home = () => {
     if (userData?.publicKey) {
       fetchSolanaBalance(userData.publicKey);
     } else {
-      setIsLoading(false); // If no public key, stop loading
+      setLoading(false); // If no public key, stop loading
     }
   }, [userData?.publicKey]);
 
