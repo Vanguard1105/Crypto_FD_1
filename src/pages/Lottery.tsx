@@ -3,19 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import { Sun, Moon, Timer, Trophy, Calendar } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import PriceChart from '../components/PriceChart';
-import { usePrice } from '../context/PriceContext';
 import { TimePeriod } from '../types';
 import { FaUserCog } from "react-icons/fa";
 import { CgChevronLeft } from "react-icons/cg";
 import { useUser } from '../context/UserContext';
 import { fetchSolanaBalance } from '../utils/fetchSolanaBalance';
-
+// import { usePrice } from '../context/PriceContext';
+import { usePrice } from '../context/PriceMultiContext';
 type LotteryType = 'vote' | 'predict';
 
 const Lottery = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
-  const { priceHistory, latestPrice, previousPrice } = usePrice();
+  // const { priceHistory, latestPrice, previousPrice } = usePrice();
+  const { solana, ethereum, bitcoin } = usePrice();
+
   const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>('5m');
   const [selectedType, setSelectedType] = useState<LotteryType>("vote");
   const { userData, setUserData} = useUser();
@@ -91,9 +93,13 @@ const Lottery = () => {
       {/* Chart Section */}
       <div className="pb-2 px-4">
         <PriceChart
-          data={priceHistory[selectedPeriod]}
-          latestPrice={latestPrice}
-          previousPrice={previousPrice}
+          // data={priceHistory[selectedPeriod]}
+          // latestPrice={latestPrice}
+          // previousPrice={previousPrice}
+          data={solana.priceHistory[selectedPeriod]}
+          latestPrice={solana.latestPrice}
+          previousPrice={solana.previousPrice}
+          
           period={selectedPeriod}
           theme={theme}
           onPeriodChange={handlePeriodChange}
