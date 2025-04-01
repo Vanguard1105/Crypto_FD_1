@@ -64,9 +64,9 @@ const SetPassword = () => {
       if (response.status === 200) {
         const username = userData?.username;
         const publicKey = userData?.publicKey;
-        const hasPassword = userData?.hasPassword;
+        const has_password = userData?.has_password;
 
-        setUserData({ username, user_id, email, publicKey, hasPassword });
+        setUserData({ username, user_id, email, publicKey, has_password });
         setTimeout(() => {
           navigate('/login');
         }, 100); 
