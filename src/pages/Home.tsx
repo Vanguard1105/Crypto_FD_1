@@ -46,7 +46,7 @@ const Home = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json(); 
-      if (data.success && data.data && data.data.length > 0) {
+      if (data.success && data.data) {
         const balance = Number(data.data['uiAmount']);
         setSolBalance(balance);
       } else {
