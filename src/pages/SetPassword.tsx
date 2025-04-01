@@ -69,8 +69,10 @@ const SetPassword = () => {
         const username = userData?.username;
         const publicKey = userData?.publicKey;
         const has_password = userData?.has_password;
+        const diamond_count = userData?.diamond_count;
+        const nickname = userData?.nickname;
 
-        setUserData({ username, user_id, email, publicKey, has_password });
+        setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count});
         setTimeout(() => {
           navigate('/login');
         }, 100); 

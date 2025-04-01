@@ -4,8 +4,10 @@ interface UserData {
   username: string | undefined;
   user_id: string | undefined;
   email: string | undefined;
+  nickname: string | undefined;
   publicKey: string | undefined;
-  hasPassword: boolean | undefined;
+  has_password: boolean | undefined;
+  diamond_count: number | undefined;
 }
 
 interface UserContextType {

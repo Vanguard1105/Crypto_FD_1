@@ -24,12 +24,12 @@ const Welcome = () => {
   const checkPasswordStatus = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`https://solana-betting-backend-one.vercel.app/api/user/${user_id}`);
+      const response = await axios.get(`https://crypto-bet-backend-chi.vercel.app/api/user/${user_id}`);
       console.log(response)
-      const { username, email, publicKey, has_password } = response.data;
+      const { username, email, publicKey, has_password, nickname, diamond_count } = response.data;
       
       // Save user data to context
-      setUserData({ username, user_id, email, publicKey, has_password });
+      setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count });
 
       if (has_password) {
         navigate('/login');
