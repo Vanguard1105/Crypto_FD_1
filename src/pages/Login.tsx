@@ -41,11 +41,11 @@ const Login = () => {
 
     try {
       console.log(user_id, password)
-      const response = await axios.post('https://crypto-bd-1.vercel.app/api/auth/login', {
+      await axios.post('https://crypto-bd-1.vercel.app/api/auth/login', {
         user_id,
         password
       });
-      login(response.data.token);
+      login("token");
       navigate('/home');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Invalid email or password');
