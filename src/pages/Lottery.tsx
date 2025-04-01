@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sun, Moon, Timer, Trophy, Calendar } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
@@ -7,6 +7,9 @@ import { usePrice } from '../context/PriceContext';
 import { TimePeriod } from '../types';
 import { FaUserCog } from "react-icons/fa";
 import { CgChevronLeft } from "react-icons/cg";
+import { useUser } from '../context/UserContext';
+import { fetchSolanaBalance } from '../utils/fetchSolanaBalance';
+
 type LotteryType = 'vote' | 'predict';
 
 const Lottery = () => {
@@ -15,6 +18,8 @@ const Lottery = () => {
   const { priceHistory, latestPrice, previousPrice } = usePrice();
   const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>('5m');
   const [selectedType, setSelectedType] = useState<LotteryType>("vote");
+  const { userData, setUserData} = useUser();
+  const [solBalance, setSolBalance] = useState<number | null| undefined>(userData?.solBalance);
 
   const lotteries = [
     { id: 26, date: '2025.03.24', startTime: '12:00:00', status: 'upcoming', type: 'vote' },
@@ -26,7 +31,25 @@ const Lottery = () => {
     { id: 11, date: '2025.03.22', startTime: '18:00:00', status: 'ended', type: 'predict' },
     { id: 10, date: '2025.03.22', startTime: '12:00:00', status: 'ended', type: 'predict' },
   ];
-
+  useEffect(() => {
+    if (userData?.publicKey) {
+      const fetchBalance = async () => {
+        const balance = await fetchSolanaBalance(userData.publicKey);
+        const balanceInSol = balance !== null ? balance / 1_000_000_000 : null; // Convert lamports to SOL
+        const username = userData?.username;
+        const user_id = userData?.user_id;
+        const email = userData?.email;
+        const publicKey = userData?.publicKey;
+        const has_password = userData?.has_password;
+        const diamond_count = userData?.diamond_count;
+        const nickname = userData?.nickname;
+        const solBalance = balanceInSol;
+        setSolBalance(balanceInSol);
+        setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count, solBalance});
+      };
+      fetchBalance();
+    }
+  }, [userData?.publicKey]);
   const filteredLotteries = lotteries.filter(lottery => lottery.type === selectedType);
   const handlePeriodChange = (period: TimePeriod) => {
     setSelectedPeriod(period);
@@ -45,11 +68,11 @@ const Lottery = () => {
           <div className="flex items-center gap-3 py-1">
             <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full cursor-pointer" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
             <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'} cursor-pointer`}>
-              2.53
+              {solBalance}
             </span>
             <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer' width="16" height="16" />
             <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-red-400' : 'text-red-500'} cursor-pointer`}>
-              1000
+              {userData?.diamond_count}
             </span>
             <button
               onClick={toggleTheme}

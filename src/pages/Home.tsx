@@ -9,12 +9,13 @@ import { CgChevronRight } from "react-icons/cg";
 import MyIcon from '../components/MyIcon';
 import { useUser } from '../context/UserContext';
 import { useState, useEffect} from 'react';
+import { fetchSolanaBalance } from '../utils/fetchSolanaBalance';
 
 const Home = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const { latestPrice } = usePrice();
-  const { userData } = useUser();
+  const { userData, setUserData} = useUser();
   const [solBalance, setSolBalance] = useState<number | null>(null);
 
   const carouselImages = [
@@ -26,40 +27,24 @@ const Home = () => {
     './home_6.jpg',
     './home_7.jpg',
   ];
-  const fetchSolanaBalance = async (publicKey: string) => {
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        'x-chain': 'solana',
-        'X-API-KEY': '537be612ab8a4f4cb65f3ab3fb46f188'
-      }
-    };
-  
-    try {
-      const response = await fetch(
-        `https://public-api.birdeye.so/v1/wallet/token_balance?wallet=${publicKey}&token_address=So11111111111111111111111111111111111111111`,
-        options
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const data = await response.json(); 
-      if (data.success && data.data) {
-        const balance = Number(data.data['uiAmount']);
-        setSolBalance(balance);
-      } else {
-        setSolBalance(0.00); // If no balance data is found
-      }
-    } catch (error) {
-      console.error('Error fetching Solana balance:', error);
-      setSolBalance(null); // Set balance to null in case of error
-    } 
-  };
   
   useEffect(() => {
     if (userData?.publicKey) {
-      fetchSolanaBalance(userData.publicKey);
+      const fetchBalance = async () => {
+        const balance = await fetchSolanaBalance(userData.publicKey);
+        const balanceInSol = balance !== null ? balance / 1_000_000_000 : null; // Convert lamports to SOL
+        const username = userData?.username;
+        const user_id = userData?.user_id;
+        const email = userData?.email;
+        const publicKey = userData?.publicKey;
+        const has_password = userData?.has_password;
+        const diamond_count = userData?.diamond_count;
+        const nickname = userData?.nickname;
+        const solBalance = balanceInSol;
+        setSolBalance(balanceInSol);
+        setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count, solBalance});
+      };
+      fetchBalance();
     }
   }, [userData?.publicKey]);
 
