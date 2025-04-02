@@ -79,36 +79,55 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
       throw error; // Re-throw error after max retries
     }
   };
-  
+
   const interpolateDataPoints = (dataPoints: PriceData[], targetCount: number): PriceData[] => {
-    if (dataPoints.length === 0) return [];
-  
-    const interpolatedPoints: PriceData[] = [];
-    const step = (dataPoints[dataPoints.length - 1].timestamp - dataPoints[0].timestamp) / (targetCount - 1);
-  
-    for (let i = 0; i < targetCount; i++) {
-      const timestamp = dataPoints[0].timestamp + i * step;
-  
-      // Find the two nearest points
-      const index = dataPoints.findIndex((point) => point.timestamp >= timestamp);
-      const prevPoint = dataPoints[index - 1];
-      const nextPoint = dataPoints[index];
-  
-      // Linear interpolation
-      if (prevPoint && nextPoint) {
-        const ratio = (timestamp - prevPoint.timestamp) / (nextPoint.timestamp - prevPoint.timestamp);
-        const price = prevPoint.price + (nextPoint.price - prevPoint.price) * ratio;
-        const average = prevPoint.average + (nextPoint.average - prevPoint.average) * ratio;
-  
-        interpolatedPoints.push({ timestamp, price, average });
-      } else {
-        // Use the last point if no next point is found
-        interpolatedPoints.push(dataPoints[dataPoints.length - 1]);
-      }
+  if (dataPoints.length === 0) return [];
+
+  const interpolatedPoints: PriceData[] = [];
+  const step = (dataPoints[dataPoints.length - 1].timestamp - dataPoints[0].timestamp) / (targetCount - 1);
+
+  for (let i = 0; i < targetCount; i++) {
+    const timestamp = dataPoints[0].timestamp + i * step;
+
+    // Find the two nearest points
+    const index = dataPoints.findIndex((point) => point.timestamp >= timestamp);
+    const prevPoint = dataPoints[index - 1];
+    const nextPoint = dataPoints[index];
+
+    if (prevPoint && nextPoint) {
+      const ratio = (timestamp - prevPoint.timestamp) / (nextPoint.timestamp - prevPoint.timestamp);
+      
+      // Base interpolation
+      let price = prevPoint.price + (nextPoint.price - prevPoint.price) * ratio;
+      let average = prevPoint.average + (nextPoint.average - prevPoint.average) * ratio;
+
+      // Add realistic fluctuations (about 10% of the price difference)
+      const fluctuationRange = Math.abs(nextPoint.price - prevPoint.price) * 0.1;
+      const fluctuation = (Math.random() - 0.5) * fluctuationRange;
+      
+      // Apply fluctuation while keeping the trend
+      price += fluctuation;
+      average += fluctuation;
+
+      interpolatedPoints.push({ timestamp, price, average });
+    } else {
+      // Use the last point if no next point is found
+      interpolatedPoints.push(dataPoints[dataPoints.length - 1]);
     }
-  
-    return interpolatedPoints;
-  };
+  }
+
+  // Ensure the base points are preserved
+  dataPoints.forEach(basePoint => {
+    const index = interpolatedPoints.findIndex(
+      point => point.timestamp === basePoint.timestamp
+    );
+    if (index !== -1) {
+      interpolatedPoints[index] = { ...basePoint };
+    }
+  });
+
+  return interpolatedPoints;
+};
   // Fetch real-time price from Coinbase
   const fetchBitcoinPrice = async (retryCount = 0): Promise<number | null> => {
     try {
