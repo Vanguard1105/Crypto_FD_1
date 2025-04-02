@@ -88,9 +88,9 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   for (let i = 0; i < targetCount; i++) {
     let percent;
-    if (i % 10 == 4) percent = 1;
-    else if (i % 10 == 6 || i%10 == 0) percent = 0.5;
-    else percent = 0.2;
+    if (i % 10 == 4) percent = 1.2;
+    else if (i % 10 == 6 || i%10 == 0) percent = 0.8;
+    else percent = 0.3;
     const timestamp = dataPoints[0].timestamp + i * step;
 
     // Find the two nearest points
