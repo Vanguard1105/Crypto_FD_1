@@ -102,7 +102,7 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
       let average = prevPoint.average + (nextPoint.average - prevPoint.average) * ratio;
 
       // Add realistic fluctuations (about 10% of the price difference)
-      const fluctuationRange = Math.abs(nextPoint.price - prevPoint.price) * 0.1;
+      const fluctuationRange = Math.abs(nextPoint.price - prevPoint.price);
       const fluctuation = (Math.random() - 0.5) * fluctuationRange;
       
       // Apply fluctuation while keeping the trend
