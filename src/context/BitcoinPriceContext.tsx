@@ -52,12 +52,14 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
       const data = JSON.parse(response.data.contents); // Parse the response
   
       const points = data.data.points;
-      const dataPoints = Object.entries(points).map(([timestamp, value]: [string, any]) => ({
+      const rawDataPoints = Object.entries(points).map(([timestamp, value]: [string, any]) => ({
         timestamp: parseInt(timestamp) * 1000, // Convert to milliseconds
         price: value.v[0], // First value in the array is the price
         average: value.v[0], // Use the same value for average
       }));
-  
+
+      const dataPoints = range === '1H' ? interpolateDataPoints(rawDataPoints, 360) : rawDataPoints;
+      
       // Map the range to the correct period
       const period = {
         '1H': '1h',
@@ -68,13 +70,41 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
       setPriceHistory(prev => ({
         ...prev,
         [period]: dataPoints,
-        '5m': range === '1H' ? dataPoints : prev['5m'], // Initialize 5m with 1h data
+        // '5m': range === '1H' ? dataPoints : prev['5m'], // Initialize 5m with 1h data
       }));
     } catch (error) {
       console.error('Error fetching Bitcoin historical data:', error);
     }
   };
-
+  const interpolateDataPoints = (dataPoints: PriceData[], targetCount: number): PriceData[] => {
+    if (dataPoints.length === 0) return [];
+  
+    const interpolatedPoints: PriceData[] = [];
+    const step = (dataPoints[dataPoints.length - 1].timestamp - dataPoints[0].timestamp) / (targetCount - 1);
+  
+    for (let i = 0; i < targetCount; i++) {
+      const timestamp = dataPoints[0].timestamp + i * step;
+  
+      // Find the two nearest points
+      const index = dataPoints.findIndex((point) => point.timestamp >= timestamp);
+      const prevPoint = dataPoints[index - 1];
+      const nextPoint = dataPoints[index];
+  
+      // Linear interpolation
+      if (prevPoint && nextPoint) {
+        const ratio = (timestamp - prevPoint.timestamp) / (nextPoint.timestamp - prevPoint.timestamp);
+        const price = prevPoint.price + (nextPoint.price - prevPoint.price) * ratio;
+        const average = prevPoint.average + (nextPoint.average - prevPoint.average) * ratio;
+  
+        interpolatedPoints.push({ timestamp, price, average });
+      } else {
+        // Use the last point if no next point is found
+        interpolatedPoints.push(dataPoints[dataPoints.length - 1]);
+      }
+    }
+  
+    return interpolatedPoints;
+  };
   // Fetch real-time price from Coinbase
   const fetchBitcoinPrice = async (retryCount = 0): Promise<number | null> => {
     try {
@@ -115,10 +145,10 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
         }
       };
 
-      updatePeriod('5m', 300000, 12); // 5 minutes interval
-      updatePeriod('1h', 3600000, 60); // 1 hour interval
-      updatePeriod('1d', 86400000, 288); // 1 day interval
-      updatePeriod('7d', 604800000, 336); // 7 days interval
+      updatePeriod('5m', 1000, 300); // 5 minutes interval
+      updatePeriod('1h', 10000, 360); // 1 hour interval
+      updatePeriod('1d', 300000, 288); // 1 day interval
+      updatePeriod('7d', 1800000, 336); // 7 days interval
 
       return newData;
     });

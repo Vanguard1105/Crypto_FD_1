@@ -81,7 +81,7 @@ export const EthereumPriceProvider: React.FC<{ children: React.ReactNode }> = ({
       setPriceHistory(prev => ({
         ...prev,
         [period]: dataPoints,
-        '5m': period === '1h' ? dataPoints : prev['5m'], // Initialize 5m with 1h data
+        // '5m': period === '1h' ? dataPoints : prev['5m'], // Initialize 5m with 1h data
       }));
     } catch (error) {
       console.error('Error fetching Ethereum historical data:', error);
