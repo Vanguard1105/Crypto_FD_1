@@ -5,6 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 import PriceChart from '../components/PriceChart';
 import { usePrice } from '../context/PriceContext';
 import { useEthereumPrice } from '../context/EthereumPriceContext';
+import { useBitcoinPrice } from '../context/BitcoinPriceContext';
 import { PriceData, TimePeriod } from '../types';
 import { FaUserCog } from "react-icons/fa";
 import { CgChevronLeft } from "react-icons/cg";
@@ -25,7 +26,7 @@ const Lottery = () => {
   const lotteryType = searchParams.get('type');
   const { priceHistory: solanaHistory, latestPrice: solanaLatestPrice, previousPrice: solanaPreviousPrice } = usePrice();
   const { priceHistory: ethereumHistory, latestPrice: ethereumLatestPrice, previousPrice: ethereumPreviousPrice } = useEthereumPrice();
-
+  const { priceHistory: bitcoinHistory, latestPrice: bitcoinLatestPrice, previousPrice: bitcoinPreviousPrice } = useBitcoinPrice();
   let priceHistory: PriceData[], latestPrice, previousPrice;
 
   switch (lotteryType) {
@@ -40,9 +41,9 @@ const Lottery = () => {
       previousPrice = ethereumPreviousPrice;
       break;
     case 'BTC':
-      priceHistory = ethereumHistory[selectedPeriod];
-      latestPrice = ethereumLatestPrice;
-      previousPrice = ethereumPreviousPrice;
+      priceHistory = bitcoinHistory[selectedPeriod];
+      latestPrice = bitcoinLatestPrice;
+      previousPrice = bitcoinPreviousPrice;
       break;
     default:
       priceHistory = [];

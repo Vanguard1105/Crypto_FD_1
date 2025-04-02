@@ -11,6 +11,7 @@ import { useUser } from '../context/UserContext';
 import { useState, useEffect} from 'react';
 import { fetchSolanaBalance } from '../utils/fetchSolanaBalance';
 import { useEthereumPrice } from '../context/EthereumPriceContext';
+import { useBitcoinPrice } from '../context/BitcoinPriceContext';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Home = () => {
   const { userData, setUserData} = useUser();
   const [solBalance, setSolBalance] = useState<number | null>(null);
   const {latestPrice: ethereumLatestPrice} = useEthereumPrice();
+  const {latestPrice: bitcoinLatestPrice} = useBitcoinPrice();
   const carouselImages = [
     './home_1.png',
     './home_2.jpg',
@@ -52,7 +54,7 @@ const Home = () => {
   const lotteries = [
     { name: 'SOL', count: 4, value: latestPrice, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full" height="25" width="25" alt="SOL" loading="lazy" decoding="async"/> },
     { name: 'ETH', count: 3, value: ethereumLatestPrice, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png" height="25" width="25" alt="ETH" loading="lazy" decoding="async"  /> },
-    { name: 'BTC', count: 3, value: 84297.15, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1.png" height="25" width="25" alt="BTC" loading="lazy" decoding="async" /> },
+    { name: 'BTC', count: 3, value: bitcoinLatestPrice, icon: <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1.png" height="25" width="25" alt="BTC" loading="lazy" decoding="async" /> },
   ];
 
   const winners = [

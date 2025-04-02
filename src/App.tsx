@@ -11,23 +11,26 @@ import Track from './pages/Track';
 import Lottery from './pages/Lottery';
 import { PriceProvider } from './context/PriceContext';
 import { EthereumPriceProvider } from './context/EthereumPriceContext';
+import { BitcoinPriceProvider } from './context/BitcoinPriceContext';
 function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
         <PriceProvider>
           <EthereumPriceProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Welcome />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/set-password" element={<SetPassword />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/track" element={<Track />} />
-                <Route path="/lottery" element={<Lottery />} />
-                <Route path="/profile" element={<Profile />} />
-              </Routes>
-            </BrowserRouter>
+            <BitcoinPriceProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Welcome />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/set-password" element={<SetPassword />} />
+                  <Route path="/home" element={<Home />} />
+                  <Route path="/track" element={<Track />} />
+                  <Route path="/lottery" element={<Lottery />} />
+                  <Route path="/profile" element={<Profile />} />
+                </Routes>
+              </BrowserRouter>
+            </BitcoinPriceProvider>
           </EthereumPriceProvider>
         </PriceProvider>
       </AuthProvider>
