@@ -41,26 +41,25 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const [previousPrice, setPreviousPrice] = useState(0);
 
   // Fetch historical data from CoinMarketCap API
-  const fetchHistoricalData = async (range: '1H' | '1D' | '7D') => {
+  const fetchHistoricalData = async (range: '1H' | '1D' | '7D', retryCount = 0): Promise<void> => {
     try {
-      const proxyUrl = 'https://api.allorigins.win/get?url='; // Use AllOrigins proxy
+      const proxyUrl = 'https://api.allorigins.win/get?url=';
       const apiUrl = encodeURIComponent(
         `https://api.coinmarketcap.com/data-api/v3/cryptocurrency/detail/chart?id=1&range=${range}`
       );
       
       const response = await axios.get(proxyUrl + apiUrl);
-      const data = JSON.parse(response.data.contents); // Parse the response
+      const data = JSON.parse(response.data.contents);
   
       const points = data.data.points;
       const rawDataPoints = Object.entries(points).map(([timestamp, value]: [string, any]) => ({
-        timestamp: parseInt(timestamp) * 1000, // Convert to milliseconds
-        price: value.v[0], // First value in the array is the price
-        average: value.v[0], // Use the same value for average
+        timestamp: parseInt(timestamp) * 1000,
+        price: value.v[0],
+        average: value.v[0],
       }));
-
+  
       const dataPoints = range === '1H' ? interpolateDataPoints(rawDataPoints, 360) : rawDataPoints;
       
-      // Map the range to the correct period
       const period = {
         '1H': '1h',
         '1D': '1d',
@@ -70,12 +69,17 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
       setPriceHistory(prev => ({
         ...prev,
         [period]: dataPoints,
-        // '5m': range === '1H' ? dataPoints : prev['5m'], // Initialize 5m with 1h data
       }));
     } catch (error) {
       console.error('Error fetching Bitcoin historical data:', error);
+      if (retryCount < 3) {
+        await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1))); // Exponential backoff
+        return fetchHistoricalData(range, retryCount + 1);
+      }
+      throw error; // Re-throw error after max retries
     }
   };
+  
   const interpolateDataPoints = (dataPoints: PriceData[], targetCount: number): PriceData[] => {
     if (dataPoints.length === 0) return [];
   
