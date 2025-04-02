@@ -48,6 +48,7 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
       );
 
       const points = response.data.data.points;
+      console.log("points:", points.length)
       const dataPoints = Object.entries(points).map(([timestamp, value]: [string, any]) => ({
         timestamp: parseInt(timestamp) * 1000, // Convert to milliseconds
         price: value.v[0], // First value in the array is the price
