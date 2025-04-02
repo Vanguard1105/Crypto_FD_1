@@ -87,6 +87,10 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const step = (dataPoints[dataPoints.length - 1].timestamp - dataPoints[0].timestamp) / (targetCount - 1);
 
   for (let i = 0; i < targetCount; i++) {
+    let percent;
+    if (i % 10 <4) percent = 1;
+    else if (i % 10 < 8) percent = 0.2;
+    else percent = 0.5;
     const timestamp = dataPoints[0].timestamp + i * step;
 
     // Find the two nearest points
@@ -102,7 +106,7 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
       let average = prevPoint.average + (nextPoint.average - prevPoint.average) * ratio;
 
       // Add realistic fluctuations (about 10% of the price difference)
-      const fluctuationRange = Math.abs(nextPoint.price - prevPoint.price);
+      const fluctuationRange = Math.abs(nextPoint.price - prevPoint.price) * percent;
       const fluctuation = (Math.random() - 0.5) * fluctuationRange;
       
       // Apply fluctuation while keeping the trend
