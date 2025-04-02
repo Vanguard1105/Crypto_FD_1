@@ -43,12 +43,15 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
   // Fetch historical data from CoinMarketCap API
   const fetchHistoricalData = async (range: '1H' | '1D' | '7D') => {
     try {
-      const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // Use a CORS proxy
-      const apiUrl = `https://api.coinmarketcap.com/data-api/v3/cryptocurrency/detail/chart?id=1&range=${range}`;
+      const proxyUrl = 'https://api.allorigins.win/get?url='; // Use AllOrigins proxy
+      const apiUrl = encodeURIComponent(
+        `https://api.coinmarketcap.com/data-api/v3/cryptocurrency/detail/chart?id=1&range=${range}`
+      );
       
       const response = await axios.get(proxyUrl + apiUrl);
+      const data = JSON.parse(response.data.contents); // Parse the response
   
-      const points = response.data.data.points;
+      const points = data.data.points;
       const dataPoints = Object.entries(points).map(([timestamp, value]: [string, any]) => ({
         timestamp: parseInt(timestamp) * 1000, // Convert to milliseconds
         price: value.v[0], // First value in the array is the price
