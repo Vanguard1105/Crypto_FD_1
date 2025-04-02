@@ -104,7 +104,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, latestPrice, period, titl
               }`}> / </span>
               <span className='text-lg text-[#811f1a] font-semibold'>USD</span>
             </div>
-            <p className='text-[#286e34] font-bold'>${latestPrice}</p>
+            <p className='text-[#286e34] font-bold text-md'>${latestPrice}</p>
           </div>
           <div className="flex p-1">
             {timeFilters.map(({ label, value }) => (
