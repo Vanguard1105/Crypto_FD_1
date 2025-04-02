@@ -43,25 +43,25 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
   // Fetch historical data from CoinMarketCap API
   const fetchHistoricalData = async (range: '1H' | '1D' | '7D') => {
     try {
-      const response = await axios.get(
-        `https://api.coinmarketcap.com/data-api/v3/cryptocurrency/detail/chart?id=1&range=${range}`
-      );
-
+      const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // Use a CORS proxy
+      const apiUrl = `https://api.coinmarketcap.com/data-api/v3/cryptocurrency/detail/chart?id=1&range=${range}`;
+      
+      const response = await axios.get(proxyUrl + apiUrl);
+  
       const points = response.data.data.points;
-      console.log("points:", points.length)
       const dataPoints = Object.entries(points).map(([timestamp, value]: [string, any]) => ({
         timestamp: parseInt(timestamp) * 1000, // Convert to milliseconds
         price: value.v[0], // First value in the array is the price
         average: value.v[0], // Use the same value for average
       }));
-
+  
       // Map the range to the correct period
       const period = {
         '1H': '1h',
         '1D': '1d',
         '7D': '7d',
       }[range];
-
+  
       setPriceHistory(prev => ({
         ...prev,
         [period]: dataPoints,
