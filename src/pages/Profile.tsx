@@ -23,6 +23,17 @@ const Profile = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const [claimedBonuses, setClaimedBonuses] = useState<number[]>([]);
   const [solBalance, setSolBalance] = useState<number | null>(null);
+  
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        // You can add a toast or notification here if you want
+        console.log('Wallet address copied to clipboard!');
+      })
+      .catch((err) => {
+        console.error('Failed to copy text: ', err);
+      });
+  };
 
   useEffect(() => {
     if (userData?.publicKey) {
@@ -247,7 +258,7 @@ const Profile = () => {
                       {solBalance !== null ? solBalance.toFixed(2): "0.00"}
                     </span>
                   </div>
-                  <div className={`mt-1 text-xs ${theme === 'dark' ? 'text-slate-200' : 'text-slate-600'}`}>
+                  <div className={`cursor-pointer mt-1 text-xs ${theme === 'dark' ? 'text-slate-200' : 'text-slate-600'}`} onClick={() => copyToClipboard(userData?.publicKey || '')}>
                     {userData?.publicKey}
                   </div>
                 </div>
