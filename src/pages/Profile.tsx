@@ -127,13 +127,13 @@ const Profile = () => {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className="space-y-3"
+      className="space-y-2"
     >
       {/* Account Settings */}
       <div className={`rounded-lg ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'}`}>
         <button
           onClick={() => toggleSection('account')}
-          className="w-full py-2 px-4 flex items-center justify-between"
+          className="w-full py-3 px-4 flex items-center justify-between"
         >
           <div className="flex items-center gap-2">
             <User className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
@@ -212,7 +212,7 @@ const Profile = () => {
       <div className={`rounded-lg ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'}`}>
         <button
           onClick={() => toggleSection('wallet')}
-          className="w-full py-2 px-4 flex items-center justify-between"
+          className="w-full py-3 px-4 flex items-center justify-between"
         >
           <div className="flex items-center gap-2">
             <Wallet className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
@@ -274,7 +274,7 @@ const Profile = () => {
       <div className={`rounded-lg ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'}`}>
         <button
           onClick={() => toggleSection('security')}
-          className="w-full py-2 px-4 flex items-center justify-between"
+          className="w-full py-3 px-4 flex items-center justify-between"
         >
           <div className="flex items-center gap-2">
             <Lock className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={16} />
