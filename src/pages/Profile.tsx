@@ -42,12 +42,12 @@ const Profile = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
-          className={`fixed top-8 right transform  px-4 py-2 rounded-md flex items-center gap-2 ${
+          className={`fixed top-8 left transform  px-4 py-2 rounded-md flex items-center gap-2 ${
             theme === 'dark' ? 'bg-slate-800 text-green-400' : 'bg-green-50 text-green-600'
           } shadow-lg`}
         >
           <Check size={16} className="text-green-500" />
-          <span className="text-sm font-medium">Address copied to clipboard!</span>
+          <span className="text-sm font-medium">Your wallet address copied!</span>
         </motion.div>
       )}
     </AnimatePresence>
