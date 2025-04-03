@@ -276,9 +276,7 @@ const Profile = () => {
                     </span>
                   </div>
                   <motion.div
-                    className={`cursor-pointer mt-1 text-xs ${
-                      theme === 'dark' ? 'text-slate-200 hover:text-blue-400' : 'text-slate-600 hover:text-blue-600'
-                    } transition-colors duration-200`}
+                    className={`cursor-pointer mt-1 text-xs text-blue-400 hover:text-blue-600 transition-colors duration-200`}
                     onClick={() => copyToClipboard(userData?.publicKey || '')}
                     whileTap={{ scale: 0.95 }}
                   >
