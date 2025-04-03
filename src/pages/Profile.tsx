@@ -1,11 +1,12 @@
 import React, { useState, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sun, Moon, ChevronDown, ChevronUp, Lock, Wallet, User } from 'lucide-react';
+import { Sun, Moon, ChevronDown, ChevronUp, Mail, Lock, Wallet, User , CheckCircle} from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { CgChevronLeft } from "react-icons/cg";
 import { useUser } from '../context/UserContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import GemAnimation from '../components/GemAnimation';
+import { FaUserEdit } from "react-icons/fa";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -20,7 +21,8 @@ const Profile = () => {
   const [topGemCount, setTopGemCount] = useState(1000);
   const headerRef = useRef<HTMLDivElement>(null);
   const [claimedBonuses, setClaimedBonuses] = useState<number[]>([]);
-
+  const [email, setEmail] = useState(userData?.email);
+  const [error, setError] = useState('');
   const bonusItems = [
     {
       title: 'INVITE FRIENDS',
@@ -103,7 +105,7 @@ const Profile = () => {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className="space-y-4"
+      className="space-y-3"
     >
       {/* Account Settings */}
       <div className={`rounded-lg ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'}`}>
@@ -133,36 +135,50 @@ const Profile = () => {
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <div className="p-4 pt-0 space-y-3">
+              <div className="p-2 pt-0 space-y-2">
+                
                 <div>
-                  <label className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                    <label className={`block text-sm font-medium mb-1 ${
+                    theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
+                    }`}>
                     Username *
-                  </label>
-                  <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className={`mt-1 w-full p-2 rounded-lg border ${
-                      theme === 'dark' 
-                        ? 'bg-slate-700 border-slate-600 text-white' 
-                        : 'bg-white border-slate-300 text-slate-900'
-                    }`}
-                  />
+                    </label>
+                    <div className="relative">
+                    <input
+                        type="text"
+                        placeholder="Enter your email"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        className={`w-full px-4 py-2 rounded-lg text-sm ${
+                        theme === 'dark'
+                            ? 'bg-slate-800 text-white border-slate-700'
+                            : 'bg-slate-50 text-slate-900 border-slate-200'
+                        } border focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                    />
+                    <FaUserEdit className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    </div>
                 </div>
                 
                 <div>
-                  <label className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                    <label className={`block text-sm font-medium mb-1 ${
+                    theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
+                    }`}>
                     Email *
-                  </label>
-                  <div className={`mt-1 p-2 rounded-lg border ${
-                    theme === 'dark' 
-                      ? 'bg-slate-700 border-slate-600' 
-                      : 'bg-white border-slate-300'
-                  }`}>
-                    <span className={theme === 'dark' ? 'text-white' : 'text-slate-900'}>
-                      {userData?.email || 'vanguard951105@gmail.com'}
-                    </span>
-                  </div>
+                    </label>
+                    <div className="relative">
+                    <input
+                        type="email"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className={`w-full px-4 py-2 rounded-lg text-sm ${
+                        theme === 'dark'
+                            ? 'bg-slate-800 text-white border-slate-700'
+                            : 'bg-slate-50 text-slate-900 border-slate-200'
+                        } border focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                    />
+                    <Mail className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    </div>
                 </div>
               </div>
             </motion.div>
@@ -204,12 +220,12 @@ const Profile = () => {
                     <span className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
                       Sol wallet address
                     </span>
-                    <span className={`text-sm ${theme === 'dark' ? 'text-slate-300' : 'text-slate-900'}`}>
+                    <span className={`text-sm text-bold ${theme === 'dark' ? 'text-slate-300' : 'text-slate-900'}`}>
                       available: 2.53
                     </span>
                   </div>
                   <div className={`mt-1 text-xs ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'}`}>
-                    HfA6GS1mZN6PrcFpxSuHYWuoX1cj9DASkMKgkdgyid
+                    {userData?.publicKey}
                   </div>
                 </div>
 
@@ -219,7 +235,7 @@ const Profile = () => {
                       Available Diamonds
                     </span>
                     <span className={`text-sm ${theme === 'dark' ? 'text-red-400' : 'text-red-500'}`}>
-                      {topGemCount}
+                      1000
                     </span>
                   </div>
                   <button className="mt-2 w-full py-1 px-4 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">
@@ -239,15 +255,15 @@ const Profile = () => {
           className="w-full p-4 flex items-center justify-between"
         >
           <div className="flex items-center gap-2">
-            <Lock className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
+            <Lock className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={16} />
             <h3 className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
               Security
             </h3>
           </div>
           {expandedSection === 'security' ? (
-            <ChevronUp className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
+            <ChevronUp className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={16} />
           ) : (
-            <ChevronDown className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={20} />
+            <ChevronDown className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} size={16} />
           )}
         </button>
 
@@ -260,41 +276,58 @@ const Profile = () => {
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <div className="p-4 pt-0 space-y-3">
+              <div className="px-4 pt-0 space-y-2">
                 <div>
-                  <label className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
-                    Password *
-                  </label>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Please input your password"
-                    className={`mt-1 w-full p-2 rounded-lg border ${
-                      theme === 'dark' 
-                        ? 'bg-slate-700 border-slate-600 text-white' 
-                        : 'bg-white border-slate-300 text-slate-900'
-                    }`}
-                  />
+                    <label className={`block text-sm font-medium mb-1 ${
+                    theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
+                    }`}>
+                    New Password *
+                    </label>
+                    <div className="relative">
+                    <input
+                        type="password"
+                        placeholder="Create New password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className={`w-full pr-8 pl-4 py-2 rounded-lg text-sm ${
+                        theme === 'dark'
+                            ? 'bg-slate-800 text-white border-slate-700'
+                            : 'bg-slate-50 text-slate-900 border-slate-200'
+                        } border focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                    />
+                    <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    </div>
                 </div>
 
                 <div>
-                  <label className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
-                    Confirm *
-                  </label>
-                  <input
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Please confirm your password"
-                    className={`mt-1 w-full p-2 rounded-lg border ${
-                      theme === 'dark' 
-                        ? 'bg-slate-700 border-slate-600 text-white' 
-                        : 'bg-white border-slate-300 text-slate-900'
-                    }`}
-                  />
+                    <label className={`block text-sm font-medium mb-1 ${
+                    theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
+                    }`}>
+                    Confirm Password *
+                    </label>
+                    <div className="relative">
+                    <input
+                        type="password"
+                        placeholder="Confirm your password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className={`w-full pr-8 pl-4 py-2 rounded-lg text-sm ${
+                        theme === 'dark'
+                            ? 'bg-slate-800 text-white border-slate-700'
+                            : 'bg-slate-50 text-slate-900 border-slate-200'
+                        } border focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                    />
+                    <CheckCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    </div>
                 </div>
-              </div>
+                {error? (
+                    <div className="text-red-500 text-sm text-center h-[20px]">
+                    {error}
+                    </div>
+                    ): <div className = "h-[20px]">
+                    </div>
+                    }
+                </div>
             </motion.div>
           )}
         </AnimatePresence>
