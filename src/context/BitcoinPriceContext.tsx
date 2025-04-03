@@ -40,7 +40,6 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const [latestPrice, setLatestPrice] = useState(0);
   const [previousPrice, setPreviousPrice] = useState(0);
 
-  // Fetch historical data from CoinMarketCap API
   const fetchHistoricalData = async (range: '1H' | '1D' | '7D', retryCount = 0): Promise<void> => {
     try {
       const proxyUrl = 'https://api.allorigins.win/get?url=';
@@ -58,8 +57,34 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
         average: value.v[0],
       }));
   
-      const dataPoints = range === '1H' ? interpolateDataPoints(rawDataPoints, 360) : rawDataPoints;
+      let dataPoints = rawDataPoints;
       
+      // For 1H range, use 1D data as base and modify it
+      if (range === '1H') {
+        // Get 1D data points
+        const oneDayPoints = priceHistory['1d'];
+        if (oneDayPoints.length > 0) {
+          // Scale down 1D data to 1H timeframe
+          const startTime = Date.now() - 3600 * 1000; // Last 1 hour
+          const scaledPoints = oneDayPoints
+            .filter(point => point.timestamp >= startTime)
+            .map(point => ({
+              ...point,
+              timestamp: point.timestamp - (oneDayPoints[0].timestamp - startTime)
+            }));
+  
+          // Apply 5-10% variation to each point
+          dataPoints = scaledPoints.map(point => {
+            const variation = 1 + (Math.random() * 0.1 - 0.05); // -5% to +5%
+            return {
+              ...point,
+              price: point.price * variation,
+              average: point.average * variation
+            };
+          });
+        }
+      }
+  
       const period = {
         '1H': '1h',
         '1D': '1d',
@@ -73,65 +98,12 @@ export const BitcoinPriceProvider: React.FC<{ children: React.ReactNode }> = ({ 
     } catch (error) {
       console.error('Error fetching Bitcoin historical data:', error);
       if (retryCount < 3) {
-        await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1))); // Exponential backoff
+        await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1)));
         return fetchHistoricalData(range, retryCount + 1);
       }
-      throw error; // Re-throw error after max retries
+      throw error;
     }
   };
-
-  const interpolateDataPoints = (dataPoints: PriceData[], targetCount: number): PriceData[] => {
-  if (dataPoints.length === 0) return [];
-
-  const interpolatedPoints: PriceData[] = [];
-  const step = (dataPoints[dataPoints.length - 1].timestamp - dataPoints[0].timestamp) / (targetCount - 1);
-
-  for (let i = 0; i < targetCount; i++) {
-    let percent;
-    if (i % 10 == 4) percent = 1;
-    else if (i % 10 == 6 || i%10 == 0) percent = 0.5;
-    else percent = 0.3;
-    const timestamp = dataPoints[0].timestamp + i * step;
-
-    // Find the two nearest points
-    const index = dataPoints.findIndex((point) => point.timestamp >= timestamp);
-    const prevPoint = dataPoints[index - 1];
-    const nextPoint = dataPoints[index];
-
-    if (prevPoint && nextPoint) {
-      const ratio = (timestamp - prevPoint.timestamp) / (nextPoint.timestamp - prevPoint.timestamp);
-      
-      // Base interpolation
-      let price = prevPoint.price + (nextPoint.price - prevPoint.price) * ratio;
-      let average = prevPoint.average + (nextPoint.average - prevPoint.average) * ratio;
-
-      // Add realistic fluctuations (about 10% of the price difference)
-      const fluctuationRange = Math.abs(nextPoint.price - prevPoint.price) * percent;
-      const fluctuation = (Math.random() - 0.5) * fluctuationRange;
-      
-      // Apply fluctuation while keeping the trend
-      price += fluctuation;
-      average += fluctuation;
-
-      interpolatedPoints.push({ timestamp, price, average });
-    } else {
-      // Use the last point if no next point is found
-      interpolatedPoints.push(dataPoints[dataPoints.length - 1]);
-    }
-  }
-
-  // Ensure the base points are preserved
-  dataPoints.forEach(basePoint => {
-    const index = interpolatedPoints.findIndex(
-      point => point.timestamp === basePoint.timestamp
-    );
-    if (index !== -1) {
-      interpolatedPoints[index] = { ...basePoint };
-    }
-  });
-
-  return interpolatedPoints;
-};
   // Fetch real-time price from Coinbase
   const fetchBitcoinPrice = async (retryCount = 0): Promise<number | null> => {
     try {
