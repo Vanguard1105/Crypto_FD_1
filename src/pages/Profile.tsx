@@ -239,25 +239,25 @@ const Profile = () => {
               <div className="py-4 px-2 pt-0 space-y-2">
                 <div className={`p-2 rounded-lg ${theme === 'dark' ? 'bg-slate-700' : 'bg-white'}`}>
                   <div className="flex items-center justify-between py-2">
-                    <span className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                    <span className={`text-sm text-bold ${theme === 'dark' ? 'text-slate-100' : 'text-slate-600'}`}>
                       Sol wallet address
                     </span>
-                    <span className={`text-sm ${theme === 'dark' ? 'text-red-400' : 'text-red-500'} flex`}>
+                    <span className={`text-sm ${theme === 'dark' ? 'text-red-400' : 'text-red-500'} flex flex-row`}>
                       <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full cursor-pointer" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
                       {solBalance !== null ? solBalance.toFixed(2): "0.00"}
                     </span>
                   </div>
-                  <div className={`mt-1 text-xs ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'}`}>
+                  <div className={`mt-1 text-xs ${theme === 'dark' ? 'text-slate-200' : 'text-slate-600'}`}>
                     {userData?.publicKey}
                   </div>
                 </div>
 
                 <div className={`p-2 rounded-lg ${theme === 'dark' ? 'bg-slate-700' : 'bg-white'}`}>
                   <div className="flex items-center justify-between py-2">
-                    <span className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                    <span className={`text-sm text-bold ${theme === 'dark' ? 'text-slate-100' : 'text-slate-600'}`}>
                       Available Diamonds
                     </span>
-                    <span className={`text-sm ${theme === 'dark' ? 'text-red-400' : 'text-red-500'} flex`}>
+                    <span className={`text-sm ${theme === 'dark' ? 'text-red-400' : 'text-red-500'} flex flew-row`}>
                       <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer' width="16" height="16" />
                       {userData?.diamond_count}
                     </span>
