@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sun, Moon, ChevronDown, ChevronUp, Mail, Lock, Wallet, User , CheckCircle} from 'lucide-react';
+import { Sun, Moon, ChevronDown, ChevronUp, Mail, Lock, Wallet, User , CheckCircle, Check } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { CgChevronLeft } from "react-icons/cg";
 import { useUser } from '../context/UserContext';
@@ -23,18 +23,35 @@ const Profile = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const [claimedBonuses, setClaimedBonuses] = useState<number[]>([]);
   const [solBalance, setSolBalance] = useState<number | null>(null);
-  
+  const [isCopied, setIsCopied] = useState(false);
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
       .then(() => {
-        // You can add a toast or notification here if you want
-        console.log('Wallet address copied to clipboard!');
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000); // Hide after 2 seconds
       })
       .catch((err) => {
         console.error('Failed to copy text: ', err);
       });
   };
-
+  const CopyNotification = () => (
+    <AnimatePresence>
+      {isCopied && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          className={`fixed bottom-8 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg flex items-center gap-2 ${
+            theme === 'dark' ? 'bg-slate-800 text-green-400' : 'bg-green-50 text-green-600'
+          } shadow-lg`}
+        >
+          <Check size={18} className="text-green-500" />
+          <span className="text-sm font-medium">Address copied to clipboard!</span>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
   useEffect(() => {
     if (userData?.publicKey) {
       const fetchBalance = async () => {
@@ -258,10 +275,17 @@ const Profile = () => {
                       {solBalance !== null ? solBalance.toFixed(2): "0.00"}
                     </span>
                   </div>
-                  <div className={`cursor-pointer mt-1 text-xs ${theme === 'dark' ? 'text-slate-200' : 'text-slate-600'}`} onClick={() => copyToClipboard(userData?.publicKey || '')}>
+                  <motion.div
+                    className={`cursor-pointer mt-1 text-xs ${
+                      theme === 'dark' ? 'text-slate-200 hover:text-blue-400' : 'text-slate-600 hover:text-blue-600'
+                    } transition-colors duration-200`}
+                    onClick={() => copyToClipboard(userData?.publicKey || '')}
+                    whileTap={{ scale: 0.95 }}
+                  >
                     {userData?.publicKey}
-                  </div>
+                  </motion.div>
                 </div>
+                <CopyNotification />
 
                 <div className={`p-2 rounded-lg ${theme === 'dark' ? 'bg-slate-700' : 'bg-white'}`}>
                   <div className="flex items-center justify-between py-[6px]">
