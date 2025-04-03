@@ -42,7 +42,7 @@ const Profile = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
-          className={`fixed top-8 left transform  px-4 py-2 rounded-md flex items-center gap-2 ${
+          className={`fixed top-8 end-2 transform  px-4 py-2 rounded-md flex items-center gap-2 ${
             theme === 'dark' ? 'bg-slate-800 text-green-400' : 'bg-green-50 text-green-600'
           } shadow-lg`}
         >
