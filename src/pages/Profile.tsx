@@ -1,4 +1,4 @@
-import React, { useState, useRef} from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sun, Moon, ChevronDown, ChevronUp, Mail, Lock, Wallet, User , CheckCircle} from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
@@ -7,20 +7,42 @@ import { useUser } from '../context/UserContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import GemAnimation from '../components/GemAnimation';
 import { FaUserEdit } from "react-icons/fa";
+import { fetchSolanaBalance } from '../utils/fetchSolanaBalance';
 
 const Profile = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
-  const { userData } = useUser();
+  const { userData, setUserData} = useUser();
   const [activeTab, setActiveTab] = useState<'settings' | 'bonuses'>('settings');
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [username, setUsername] = useState(userData?.username || 'Peter Coiner');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [animatingGems, setAnimatingGems] = useState<{ id: number; startX: number; startY: number }[]>([]);
-  const [topGemCount, setTopGemCount] = useState(1000);
+  const [topGemCount, setTopGemCount] = useState(userData?.diamond_count);
   const headerRef = useRef<HTMLDivElement>(null);
   const [claimedBonuses, setClaimedBonuses] = useState<number[]>([]);
+  const [solBalance, setSolBalance] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (userData?.publicKey) {
+      const fetchBalance = async () => {
+        const balance = await fetchSolanaBalance(userData.publicKey);
+        const balanceInSol = balance !== null ? balance : 0; // Convert lamports to SOL
+        const username = userData?.username;
+        const user_id = userData?.user_id;
+        const email = userData?.email;
+        const publicKey = userData?.publicKey;
+        const has_password = userData?.has_password;
+        const diamond_count = userData?.diamond_count;
+        const nickname = userData?.nickname;
+        const solBalance = balanceInSol;
+        setSolBalance(balanceInSol);
+        setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count, solBalance});
+      };
+      fetchBalance();
+    }
+  }, [userData?.publicKey]);
   const [email, setEmail] = useState(userData?.email);
   const [error, setError] = useState('');
   const bonusItems = [
@@ -89,7 +111,7 @@ const Profile = () => {
         
         if (i === gemsToAnimate.length - 1) {
           setTimeout(() => {
-            setTopGemCount(prev => prev + reward);
+            setTopGemCount(prev => prev? prev + reward: reward);
           }, 800);
         }
       }, i * 200);
@@ -429,7 +451,7 @@ const Profile = () => {
           <div className="flex items-center gap-3 py-1">
             <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full cursor-pointer" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
             <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'} cursor-pointer`}>
-              2.53
+              {solBalance}
             </span>
             <img 
               src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" 
