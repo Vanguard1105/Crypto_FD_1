@@ -35,7 +35,7 @@ const PriceContext = createContext<PriceContextType>({
   previousPrice: 0,
 });
 
-const BIRDEYE_API_KEY = 'b59a1173ffe2443fb6a0b37b11ad892a';
+const BIRDEYE_API_KEY = '95f8c867ae794645a9f5a6c8c8146a31';
 const SOLANA_TOKEN_ADDRESS = 'So11111111111111111111111111111111111111112';
 
 export const PriceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
