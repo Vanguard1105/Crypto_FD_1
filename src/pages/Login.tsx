@@ -47,8 +47,9 @@ const Login = () => {
       await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/auth/login', {
         user_id,
         password
+      }).then((res) =>{
+        login(res.data.token);
       });
-      login("token");
       navigate('/home');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Invalid email or password');
