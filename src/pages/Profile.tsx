@@ -214,6 +214,15 @@ const Profile = () => {
       setTimeout(() => setShowError(false), 3000);
       return;
     }
+    
+    // Old Password validation
+    const oldPasswordErrors = validatePassword(oldPassword);
+    if (oldPasswordErrors.length > 0) {
+      setError(oldPasswordErrors.join(', '));
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
+      return;
+    }
 
     if (password != "" && confirmPassword != ""){
       // Password validation
@@ -238,7 +247,8 @@ const Profile = () => {
       const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/user/user-update', {
         username,
         email,
-        password
+        password,
+        oldPassword,
       });
       
       if (response.status === 200) {
@@ -464,7 +474,7 @@ const Profile = () => {
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <div className="px-4 pt-0 space-y-2 pb-2">
+              <div className="px-4 pt-0 space-y-1 pb-2">
                 <div>
                     <label className={`block text-sm font-medium mb-1 ${
                     theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
@@ -477,7 +487,7 @@ const Profile = () => {
                         placeholder="Enter old password"
                         value={oldPassword}
                         onChange={(e) => setOldPassword(e.target.value)}
-                        className={`w-full pr-8 pl-4 py-2 rounded-lg text-sm ${
+                        className={`w-full pr-8 pl-4 py-1 rounded-lg text-sm ${
                         theme === 'dark'
                             ? 'bg-slate-800 text-white border-slate-700'
                             : 'bg-slate-50 text-slate-900 border-slate-200'
@@ -499,7 +509,7 @@ const Profile = () => {
                         placeholder="Create New password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className={`w-full pr-8 pl-4 py-2 rounded-lg text-sm ${
+                        className={`w-full pr-8 pl-4 py-1 rounded-lg text-sm ${
                         theme === 'dark'
                             ? 'bg-slate-800 text-white border-slate-700'
                             : 'bg-slate-50 text-slate-900 border-slate-200'
@@ -521,7 +531,7 @@ const Profile = () => {
                         placeholder="Confirm your password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className={`w-full pr-8 pl-4 py-2 rounded-lg text-sm ${
+                        className={`w-full pr-8 pl-4 py-1 rounded-lg text-sm ${
                         theme === 'dark'
                             ? 'bg-slate-800 text-white border-slate-700'
                             : 'bg-slate-50 text-slate-900 border-slate-200'
