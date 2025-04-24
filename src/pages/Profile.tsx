@@ -216,9 +216,8 @@ const Profile = () => {
     }
     
     // Old Password validation
-    const oldPasswordErrors = validatePassword(oldPassword);
-    if (oldPasswordErrors.length > 0) {
-      setError(oldPasswordErrors.join(', '));
+    if (oldPassword.length < 8) {
+      setError("Please input old password correctly..");
       setShowError(true);
       setTimeout(() => setShowError(false), 3000);
       return;
