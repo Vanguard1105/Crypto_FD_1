@@ -242,7 +242,7 @@ const Profile = () => {
       });
       
       if (response.status === 200) {
-        const username = response?.data?.username;
+        const username = response?.data?.user.username;
         const publicKey = userData?.publicKey;
         const has_password = userData?.has_password;
         const diamond_count = userData?.diamond_count;
