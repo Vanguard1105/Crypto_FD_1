@@ -24,11 +24,11 @@ const Welcome = () => {
   const checkPasswordStatus = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`https://crypto-bet-backend-nine.vercel.app/api/user/${user_id}`);
+      const response = await axios.get(`https://crypto-bet-backend-fawn.vercel.app/api/user/${user_id}`);
       console.log(response)
-      const { username, email, publicKey, has_password, nickname, diamond_count } = response.data;
+      const { username, email, publicKey, has_password, nickname, diamond_count, avatar } = response.data;
       const solBalance = 0;
-      setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count, solBalance});
+      setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count, avatar, solBalance});
 
       if (has_password) {
         navigate('/login');

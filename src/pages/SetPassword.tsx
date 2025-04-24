@@ -59,7 +59,7 @@ const SetPassword = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('https://crypto-bet-backend-nine.vercel.app/api/auth/set-password', {
+      const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/auth/set-password', {
         user_id,
         email,
         password
