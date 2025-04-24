@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import GemAnimation from '../components/GemAnimation';
 import { FaUserEdit } from "react-icons/fa";
 import { fetchSolanaBalance } from '../utils/fetchSolanaBalance';
+import axios from 'axios';
 
 interface GemAnimationState {
   id: number;
@@ -35,7 +36,22 @@ const Profile = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [email, setEmail] = useState(userData?.email);
   const [error, setError] = useState('');
+  const user_id = userData?.user_id; 
+  const [loading, setLoading] = useState(false);
+  const validateEmail = (email: string | undefined) => {
+    if (email == undefined) return false;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
+  const validatePassword = (password: string) => {
+    const errors = [];
+    if (password.length < 8) errors.push("Password must be at least 8 characters long");
+    else if (!/[A-Z]/.test(password)) errors.push("Password must contain at least one uppercase letter");
+    else if (!/[a-z]/.test(password)) errors.push("Password must contain at least one lowercase letter");
+    else if (!/[0-9]/.test(password)) errors.push("Password must contain at least one number");
+    return errors;
+  };
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
       .then(() => {
@@ -168,8 +184,55 @@ const Profile = () => {
     }
   ];
 
-  const handleSaveChanges = () => {
-    console.log('Saving changes...', { username, password });
+  const handleSaveChanges = async () => {
+    setError('');
+    
+    // Email validation
+    if (!validateEmail(email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    // Password validation
+    const passwordErrors = validatePassword(password);
+    if (passwordErrors.length > 0) {
+      setError(passwordErrors.join(', '));
+      return;
+    }
+    
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/auth/set-password', {
+        user_id,
+        email,
+        password
+      });
+      
+      if (response.status === 200) {
+        const username = userData?.username;
+        const publicKey = userData?.publicKey;
+        const has_password = userData?.has_password;
+        const diamond_count = userData?.diamond_count;
+        const nickname = userData?.nickname;
+        const avatar = userData?.avatar;
+        const solBalance = 0;
+
+        setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count, avatar, solBalance});
+        setTimeout(() => {
+          navigate('/login');
+        }, 100); 
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Failed to set password. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const toggleSection = (section: string) => {
@@ -500,6 +563,12 @@ const Profile = () => {
 
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
+      {loading && (  
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50">  
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>  
+        </div>  
+      )}  
+
       <div ref={headerRef} className={`px-3 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
         <div className={`flex flex-row justify-between w-full`}>
           <div className='flex flex-row gap-3 items-center py-1 px-2'>
