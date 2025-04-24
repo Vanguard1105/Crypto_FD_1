@@ -449,7 +449,7 @@ const Profile = () => {
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <div className="px-4 pt-0 space-y-2">
+              <div className="px-4 pt-0 space-y-2 pb-2">
                 <div>
                     <label className={`block text-sm font-medium mb-1 ${
                     theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
