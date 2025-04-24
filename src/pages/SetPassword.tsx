@@ -71,9 +71,10 @@ const SetPassword = () => {
         const has_password = userData?.has_password;
         const diamond_count = userData?.diamond_count;
         const nickname = userData?.nickname;
+        const avatar = userData?.avatar;
         const solBalance = 0;
 
-        setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count, solBalance});
+        setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count, avatar, solBalance});
         setTimeout(() => {
           navigate('/login');
         }, 100); 

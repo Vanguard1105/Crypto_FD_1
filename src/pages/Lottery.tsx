@@ -66,16 +66,12 @@ const Lottery = () => {
       const fetchBalance = async () => {
         const balance = await fetchSolanaBalance(userData.publicKey);
         const balanceInSol = balance !== null ? balance  : 0; // Convert lamports to SOL
-        const username = userData?.username;
-        const user_id = userData?.user_id;
-        const email = userData?.email;
-        const publicKey = userData?.publicKey;
-        const has_password = userData?.has_password;
-        const diamond_count = userData?.diamond_count;
-        const nickname = userData?.nickname;
-        const solBalance = balanceInSol;
         setSolBalance(balanceInSol);
-        setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count, solBalance});
+        setUserData({ 
+          ...userData,
+          solBalance: balanceInSol
+        });
+        // setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count, avatar, solBalance});
       };
       fetchBalance();
     }
