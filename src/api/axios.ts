@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with base URL
 const instance = axios.create({
-  baseURL: 'https://crypto-bet-backend.vercel.app/api/',
+  baseURL: 'https://crypto-bet-backend-fawn.vercel.app/api',
   timeout: 600000, // 10 seconds timeout
   headers: {
     'Content-Type': 'application/json',
