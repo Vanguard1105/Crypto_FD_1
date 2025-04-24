@@ -26,6 +26,7 @@ const Profile = () => {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [username, setUsername] = useState(userData?.username || 'Peter Coiner');
   const [password, setPassword] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [animatingGems, setAnimatingGems] = useState<GemAnimationState[]>([]);
   const [currentGemCount, setCurrentGemCount] = useState(userData?.diamond_count || 0);
@@ -235,7 +236,6 @@ const Profile = () => {
 
     try {
       const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/user/user-update', {
-        user_id,
         username,
         email,
         password
@@ -464,7 +464,29 @@ const Profile = () => {
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <div className="px-4 pt-0 space-y-2 pb-4">
+              <div className="px-4 pt-0 space-y-2 pb-2">
+                <div>
+                    <label className={`block text-sm font-medium mb-1 ${
+                    theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
+                    }`}>
+                    Old Password *
+                    </label>
+                    <div className="relative">
+                    <input
+                        type="password"
+                        placeholder="Enter old password"
+                        value={oldPassword}
+                        onChange={(e) => setOldPassword(e.target.value)}
+                        className={`w-full pr-8 pl-4 py-2 rounded-lg text-sm ${
+                        theme === 'dark'
+                            ? 'bg-slate-800 text-white border-slate-700'
+                            : 'bg-slate-50 text-slate-900 border-slate-200'
+                        } border focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                    />
+                    <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    </div>
+                </div>
+
                 <div>
                     <label className={`block text-sm font-medium mb-1 ${
                     theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
