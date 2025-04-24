@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import GemAnimation from '../components/GemAnimation';
 import { FaUserEdit } from "react-icons/fa";
 import { fetchSolanaBalance } from '../utils/fetchSolanaBalance';
-import axios from 'axios';
+import axios from '../api/axios';
 
 interface GemAnimationState {
   id: number;
