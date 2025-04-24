@@ -9,6 +9,14 @@ import GemAnimation from '../components/GemAnimation';
 import { FaUserEdit } from "react-icons/fa";
 import { fetchSolanaBalance } from '../utils/fetchSolanaBalance';
 
+interface GemAnimationState {
+  id: number;
+  startX: number;
+  startY: number;
+  arrived: boolean;
+  value: number;
+}
+
 const Profile = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
@@ -18,22 +26,98 @@ const Profile = () => {
   const [username, setUsername] = useState(userData?.username || 'Peter Coiner');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [animatingGems, setAnimatingGems] = useState<{ id: number; startX: number; startY: number }[]>([]);
-  const [topGemCount, setTopGemCount] = useState(userData?.diamond_count);
+  const [animatingGems, setAnimatingGems] = useState<GemAnimationState[]>([]);
+  const [currentGemCount, setCurrentGemCount] = useState(userData?.diamond_count || 0);
+  const [targetGemCount, setTargetGemCount] = useState(userData?.diamond_count || 0);
   const headerRef = useRef<HTMLDivElement>(null);
   const [claimedBonuses, setClaimedBonuses] = useState<number[]>([]);
   const [solBalance, setSolBalance] = useState<number | null>(null);
   const [isCopied, setIsCopied] = useState(false);
+  const [email, setEmail] = useState(userData?.email);
+  const [error, setError] = useState('');
+
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
       .then(() => {
         setIsCopied(true);
-        setTimeout(() => setIsCopied(false), 2000); // Hide after 2 seconds
+        setTimeout(() => setIsCopied(false), 2000);
       })
       .catch((err) => {
         console.error('Failed to copy text: ', err);
       });
   };
+
+  useEffect(() => {
+    if (userData?.publicKey) {
+      const fetchBalance = async () => {
+        const balance = await fetchSolanaBalance(userData.publicKey);
+        const balanceInSol = balance !== null ? balance : 0;
+        setSolBalance(balanceInSol);
+        setUserData({ 
+          ...userData,
+          solBalance: balanceInSol
+        });
+      };
+      fetchBalance();
+    }
+  }, [userData?.publicKey]);
+
+  const handleGemAnimationComplete = (gemId: number) => {
+    setAnimatingGems(prev => {
+      const updatedGems = prev.map(gem => {
+        if (gem.id === gemId) {
+          // Calculate the increment value based on the remaining distance to target
+          const remainingGems = prev.filter(g => !g.arrived).length;
+          const remainingDistance = targetGemCount - currentGemCount;
+          const increment = Math.ceil(remainingDistance / remainingGems);
+          
+          setCurrentGemCount(current => Math.min(current + increment, targetGemCount));
+          return { ...gem, arrived: true };
+        }
+        return gem;
+      });
+      
+      // Remove all gems if they've all arrived
+      if (updatedGems.every(gem => gem.arrived)) {
+        return [];
+      }
+      
+      return updatedGems;
+    });
+  };
+
+  const handleClaimBonus = (index: number, reward: number, event: React.MouseEvent<HTMLDivElement>) => {
+    if (claimedBonuses.includes(index)) return;
+
+    const buttonRect = event.currentTarget.getBoundingClientRect();
+    const targetGemElement = headerRef.current?.querySelector('.target-gem');
+    const targetRect = targetGemElement?.getBoundingClientRect();
+
+    if (!targetRect) return;
+
+    const startX = buttonRect.left + buttonRect.width / 2;
+    const startY = buttonRect.top + buttonRect.height / 2;
+
+    setClaimedBonuses(prev => [...prev, index]);
+    setTargetGemCount(currentGemCount + reward);
+
+    // Create 5 gems for the animation
+    const gemsToAnimate = Array.from({ length: 5 }, (_, i) => ({
+      id: Date.now() + i,
+      startX,
+      startY,
+      arrived: false,
+      value: Math.ceil(reward / 5)
+    }));
+
+    // Stagger the animation of each gem
+    gemsToAnimate.forEach((gem, i) => {
+      setTimeout(() => {
+        setAnimatingGems(prev => [...prev, gem]);
+      }, i * 200);
+    });
+  };
+
   const CopyNotification = () => (
     <AnimatePresence>
       {isCopied && (
@@ -52,27 +136,7 @@ const Profile = () => {
       )}
     </AnimatePresence>
   );
-  useEffect(() => {
-    if (userData?.publicKey) {
-      const fetchBalance = async () => {
-        const balance = await fetchSolanaBalance(userData.publicKey);
-        const balanceInSol = balance !== null ? balance : 0; // Convert lamports to SOL
-        const username = userData?.username;
-        const user_id = userData?.user_id;
-        const email = userData?.email;
-        const publicKey = userData?.publicKey;
-        const has_password = userData?.has_password;
-        const diamond_count = userData?.diamond_count;
-        const nickname = userData?.nickname;
-        const solBalance = balanceInSol;
-        setSolBalance(balanceInSol);
-        setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count, solBalance});
-      };
-      fetchBalance();
-    }
-  }, [userData?.publicKey]);
-  const [email, setEmail] = useState(userData?.email);
-  const [error, setError] = useState('');
+
   const bonusItems = [
     {
       title: 'INVITE FRIENDS',
@@ -110,44 +174,6 @@ const Profile = () => {
 
   const toggleSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section);
-  };
-
-  const handleClaimBonus = (index: number, reward: number, event: React.MouseEvent<HTMLDivElement>) => {
-    if (claimedBonuses.includes(index)) return;
-
-    const buttonRect = event.currentTarget.getBoundingClientRect();
-    const headerRect = headerRef.current?.getBoundingClientRect();
-    const targetGemElement = headerRef.current?.querySelector('.target-gem');
-    const targetRect = targetGemElement?.getBoundingClientRect();
-
-    if (!headerRect || !targetRect) return;
-
-    const startX = buttonRect.left + buttonRect.width / 2;
-    const startY = buttonRect.top + buttonRect.height / 2;
-
-    const gemsToAnimate = Array.from({ length: Math.min(5, reward) }, (_, i) => ({
-      id: Date.now() + i,
-      startX,
-      startY
-    }));
-
-    setClaimedBonuses(prev => [...prev, index]);
-    
-    gemsToAnimate.forEach((gem, i) => {
-      setTimeout(() => {
-        setAnimatingGems(prev => [...prev, gem]);
-        
-        if (i === gemsToAnimate.length - 1) {
-          setTimeout(() => {
-            setTopGemCount(prev => prev? prev + reward: reward);
-          }, 800);
-        }
-      }, i * 200);
-    });
-  };
-
-  const handleGemAnimationComplete = (gemId: number) => {
-    setAnimatingGems(prev => prev.filter(gem => gem.id !== gemId));
   };
 
   const renderSettings = () => (
@@ -474,19 +500,25 @@ const Profile = () => {
 
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
-      {/* Header */}
-      <div 
-        ref={headerRef}
-        className={`px-3 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}
-      >
+      <div ref={headerRef} className={`px-3 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
         <div className={`flex flex-row justify-between w-full`}>
           <div className='flex flex-row gap-3 items-center py-1 px-2'>
-            <CgChevronLeft size={16} className={`text-${theme === 'dark' ? 'slate-400 hover:text-slate-300' : 'slate-900 hover:text-slate-800'} cursor-pointer`} onClick={() => navigate("/home")}/>
+            <CgChevronLeft 
+              size={16} 
+              className={`text-${theme === 'dark' ? 'slate-400 hover:text-slate-300' : 'slate-900 hover:text-slate-800'} cursor-pointer`} 
+              onClick={() => navigate("/home")}
+            />
           </div>
           <div className="flex items-center gap-3 py-1">
-            <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full cursor-pointer" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
+            <img 
+              src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" 
+              className="rounded-full cursor-pointer" 
+              height="16" 
+              width="16" 
+              alt="SOL" 
+            />
             <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'} cursor-pointer`}>
-              {solBalance !== null ? solBalance.toFixed(2): "0.00"}
+              {solBalance !== null ? solBalance.toFixed(2) : "0.00"}
             </span>
             <img 
               src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" 
@@ -495,13 +527,13 @@ const Profile = () => {
               height="16" 
             />
             <motion.span 
-              key={topGemCount}
+              key={currentGemCount}
               initial={{ scale: 1 }}
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 0.3 }}
               className={`text-sm font-semibold ${theme === 'dark' ? 'text-red-400' : 'text-red-500'} cursor-pointer`}
             >
-              {topGemCount}
+              {currentGemCount}
             </motion.span>
             <button
               onClick={toggleTheme}

@@ -145,7 +145,7 @@ const Lottery = () => {
                 : 'text-slate-600 hover:text-slate-800'
             }`}
           >
-            Vote
+            Predict
           </button>
           <button
             onClick={() => setSelectedType('predict')}
@@ -159,7 +159,7 @@ const Lottery = () => {
                 : 'text-slate-600 hover:text-slate-800'
             }`}
           >
-            Predict
+            Lottery
           </button>
         </div>
       </div>
