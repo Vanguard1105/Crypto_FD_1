@@ -573,7 +573,7 @@ const Profile = () => {
       <div className="px-4 py-2">
         <div className="flex items-center gap-4 mb-6">
           <img
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=96&h=96&fit=crop"
+            src="https://api.telegram.org/file/bot7616908940:AAG6lS1nOPuZ47HxQLtWm9b2kEw8RrmOFm0/photos/file_1.jpg"
             alt="Profile"
             className="w-20 h-20 rounded-full object-cover"
           />
