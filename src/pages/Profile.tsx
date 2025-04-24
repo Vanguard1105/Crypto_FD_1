@@ -214,27 +214,29 @@ const Profile = () => {
       return;
     }
 
-    // Password validation
-    const passwordErrors = validatePassword(password);
-    if (passwordErrors.length > 0) {
-      setError(passwordErrors.join(', '));
-      setShowError(true);
-      setTimeout(() => setShowError(false), 3000);
-      return;
+    if (password != "" && confirmPassword != ""){
+      // Password validation
+      const passwordErrors = validatePassword(password);
+      if (passwordErrors.length > 0) {
+        setError(passwordErrors.join(', '));
+        setShowError(true);
+        setTimeout(() => setShowError(false), 3000);
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        setError('Passwords do not match');
+        setShowError(true);
+        setTimeout(() => setShowError(false), 3000);
+        return;
+      }
     }
-    
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      setShowError(true);
-      setTimeout(() => setShowError(false), 3000);
-      return;
-    }
-
     setLoading(true);
 
     try {
-      const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/auth/set-password', {
+      const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/user/user-update', {
         user_id,
+        username,
         email,
         password
       });
@@ -246,11 +248,24 @@ const Profile = () => {
         const diamond_count = userData?.diamond_count;
         const nickname = userData?.nickname;
         const avatar = userData?.avatar;
-        const solBalance = 0;
+        const solBalance = userData?.solBalance? userData?.solBalance: 0;
 
         setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count, avatar, solBalance});
         setTimeout(() => {
-          navigate('/login');
+          <AnimatePresence>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className={`fixed top-8 end-2 transform  px-4 py-2 rounded-md flex items-center gap-2 ${
+                theme === 'dark' ? 'bg-slate-800 text-green-400' : 'bg-green-50 text-green-600'
+              } shadow-lg`}
+            >
+              <Check size={16} className="text-green-500" />
+              <span className="text-sm font-medium">Successfully updated!</span>
+            </motion.div>
+          </AnimatePresence>
         }, 100); 
       }
     } catch (err: any) {
@@ -449,7 +464,7 @@ const Profile = () => {
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <div className="px-4 pt-0 space-y-2 pb-2">
+              <div className="px-4 pt-0 space-y-2 pb-4">
                 <div>
                     <label className={`block text-sm font-medium mb-1 ${
                     theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
