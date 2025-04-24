@@ -36,6 +36,7 @@ const Profile = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [email, setEmail] = useState(userData?.email);
   const [error, setError] = useState('');
+  const [showError, setShowError] = useState(false);
   const user_id = userData?.user_id; 
   const [loading, setLoading] = useState(false);
   const validateEmail = (email: string | undefined) => {
@@ -43,6 +44,23 @@ const Profile = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+  const ErrorNotification = () => (
+    <AnimatePresence>
+      {showError && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          className={`fixed top-8 end-2 transform px-4 py-2 rounded-md flex items-center gap-2 ${
+            theme === 'dark' ? 'bg-red-900 text-red-300' : 'bg-red-50 text-red-600'
+          } shadow-lg`}
+        >
+          <span className="text-sm font-medium">{error}</span>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 
   const validatePassword = (password: string) => {
     const errors = [];
@@ -186,10 +204,13 @@ const Profile = () => {
 
   const handleSaveChanges = async () => {
     setError('');
+    setShowError(false);
     
     // Email validation
     if (!validateEmail(email)) {
       setError('Please enter a valid email address');
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
       return;
     }
 
@@ -197,11 +218,15 @@ const Profile = () => {
     const passwordErrors = validatePassword(password);
     if (passwordErrors.length > 0) {
       setError(passwordErrors.join(', '));
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
       return;
     }
     
     if (password !== confirmPassword) {
       setError('Passwords do not match');
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
       return;
     }
 
@@ -230,6 +255,8 @@ const Profile = () => {
       }
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to set password. Please try again.');
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
     } finally {
       setLoading(false);
     }
@@ -466,14 +493,7 @@ const Profile = () => {
                     <CheckCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                     </div>
                 </div>
-                {error? (
-                    <div className="text-red-500 text-sm text-center h-[20px]">
-                    {error}
-                    </div>
-                    ): <div className = "h-[20px]">
-                    </div>
-                    }
-                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -568,7 +588,7 @@ const Profile = () => {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>  
         </div>  
       )}  
-
+      <ErrorNotification />
       <div ref={headerRef} className={`px-3 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
         <div className={`flex flex-row justify-between w-full`}>
           <div className='flex flex-row gap-3 items-center py-1 px-2'>
