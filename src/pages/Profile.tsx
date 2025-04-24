@@ -24,7 +24,7 @@ const Profile = () => {
   const { userData, setUserData} = useUser();
   const [activeTab, setActiveTab] = useState<'settings' | 'bonuses'>('settings');
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
-  const [username, setUsername] = useState(userData?.username || 'Peter Coiner');
+  const [username, setUsername] = useState(userData?.username || 'User' + userData?.user_id);
   const [password, setPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -718,7 +718,7 @@ const Profile = () => {
               {username}
             </h2>
             <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
-              @{userData?.username || 'cryptoboss009'}
+              @{userData?.nickname || 'User' + userData?.user_id}
             </p>
           </div>
         </div>
