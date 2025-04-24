@@ -487,7 +487,7 @@ const Profile = () => {
                         placeholder="Enter old password"
                         value={oldPassword}
                         onChange={(e) => setOldPassword(e.target.value)}
-                        className={`w-full pr-8 pl-4 py-1 rounded-lg text-sm ${
+                        className={`w-full pr-8 pl-4 py-1.5 rounded-lg text-sm ${
                         theme === 'dark'
                             ? 'bg-slate-800 text-white border-slate-700'
                             : 'bg-slate-50 text-slate-900 border-slate-200'
@@ -509,7 +509,7 @@ const Profile = () => {
                         placeholder="Create New password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className={`w-full pr-8 pl-4 py-1 rounded-lg text-sm ${
+                        className={`w-full pr-8 pl-4 py-1.5 rounded-lg text-sm ${
                         theme === 'dark'
                             ? 'bg-slate-800 text-white border-slate-700'
                             : 'bg-slate-50 text-slate-900 border-slate-200'
@@ -531,7 +531,7 @@ const Profile = () => {
                         placeholder="Confirm your password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className={`w-full pr-8 pl-4 py-1 rounded-lg text-sm ${
+                        className={`w-full pr-8 pl-4 py-1.5 rounded-lg text-sm ${
                         theme === 'dark'
                             ? 'bg-slate-800 text-white border-slate-700'
                             : 'bg-slate-50 text-slate-900 border-slate-200'
@@ -552,7 +552,7 @@ const Profile = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
           onClick={handleSaveChanges}
-          className="w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+          className="w-full py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
         >
           Save Changes
         </motion.button>
