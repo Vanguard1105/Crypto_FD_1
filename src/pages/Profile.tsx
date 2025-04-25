@@ -176,8 +176,28 @@ const Profile = () => {
     });
   };
 
-  const handleClaimBonus = (index: number, reward: number, event: React.MouseEvent<HTMLDivElement>) => {
+  const handleClaimBonus = async (index: number, reward: number, event: React.MouseEvent<HTMLDivElement>) => {
     if (claimedBonuses.includes(index) || !reward) return;
+    // Update backend
+    await axios.get(`https://crypto-bet-backend-fawn.vercel.app/api/user/get-bonus/:${index}`);
+
+    // Update local state
+    setBonuses(prevBonuses => {
+      const updatedBonuses = [...prevBonuses];
+      if (updatedBonuses[index]) {
+        updatedBonuses[index] = {
+          ...updatedBonuses[index],
+          current_ref_count: 0
+        };
+      }
+      return updatedBonuses;
+    });
+
+    // Update userData with the new diamond_count from the server
+    if (userData) setUserData({ 
+      ...userData,
+      diamond_count: (userData.diamond_count || 0) + reward
+    });
 
     const buttonRect = event.currentTarget.getBoundingClientRect();
     const targetGemElement = headerRef.current?.querySelector('.target-gem');
