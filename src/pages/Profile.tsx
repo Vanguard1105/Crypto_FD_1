@@ -105,16 +105,27 @@ const Profile = () => {
     }
   }, [userData?.publicKey]);
   
-
   useEffect(() => {
-    const getBonus = async () =>{
-      const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/user/get-bonus');
-      console.log("get_bonus", response.data)
-      setBonuses(response.data.referral_bonuses);
-    }
-    getBonus();
-  }, []);
+    const fetchBonuses = async () => {
+      try {
+        const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/user/get-bonus');
+        // Ensure the response data is an array
+        console.log("get_bonus", response.data)
 
+        if (Array.isArray(response.data)) {
+          setBonuses(response.data);
+        } else {
+          console.error('Invalid bonuses data format:', response.data);
+          setBonuses([]);
+        }
+      } catch (error) {
+        console.error('Error fetching bonuses:', error);
+        setBonuses([]);
+      }
+    };
+    fetchBonuses();
+  }, []);
+  
   const handleGemAnimationComplete = (gemId: number) => {
     setAnimatingGems(prev => {
       const updatedGems = prev.map(gem => {
@@ -192,6 +203,10 @@ const Profile = () => {
 
   // Update bonusItems whenever bonuses changes
   useEffect(() => {
+    if (!bonuses || !Array.isArray(bonuses)) {
+      setBonusItems([]);
+      return;
+    }
     setIsUpdatingBonuses(true);
     const updatedBonusItems = bonuses.map((bonus, index) => {
       const titles = [
