@@ -177,7 +177,7 @@ const Profile = () => {
   };
 
   const handleClaimBonus = (index: number, reward: number, event: React.MouseEvent<HTMLDivElement>) => {
-    if (claimedBonuses.includes(index)) return;
+    if (claimedBonuses.includes(index) || !reward) return;
 
     const buttonRect = event.currentTarget.getBoundingClientRect();
     const targetGemElement = headerRef.current?.querySelector('.target-gem');
@@ -676,7 +676,7 @@ const Profile = () => {
                     src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
                     width="16"
                     height="16"
-                    className={item.reward ? 'opacity-50' : ''}
+                    className={!item.reward ? 'opacity-50' : ''}
                   />
                 </div>
                 <div className="text-xs text-white text-center">+ {item.reward}</div>
