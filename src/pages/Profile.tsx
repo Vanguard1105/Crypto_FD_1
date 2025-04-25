@@ -47,6 +47,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [bonuses, setBonuses] = useState<BonusItem[]>([]);
   const [bonusItems, setBonusItems] = useState<any[]>([]);
+  const [isUpdatingBonuses, setIsUpdatingBonuses] = useState(false);
   const validateEmail = (email: string | undefined) => {
     if (email == undefined) return false;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -191,6 +192,7 @@ const Profile = () => {
 
   // Update bonusItems whenever bonuses changes
   useEffect(() => {
+    setIsUpdatingBonuses(true);
     const updatedBonusItems = bonuses.map((bonus, index) => {
       const titles = [
         'INVITE FRIENDS',
@@ -212,7 +214,11 @@ const Profile = () => {
       };
     });
 
-    setBonusItems(updatedBonusItems);
+    setTimeout(() => {
+      setBonusItems(updatedBonusItems);
+      setIsUpdatingBonuses(false);
+    }, 300); // Adjust the delay as needed
+
   }, [bonuses]);
 
   const handleSaveChanges = async () => {
@@ -578,64 +584,71 @@ const Profile = () => {
       exit={{ opacity: 0, x: -20 }}
       className="space-y-2"
     >
-      {bonusItems.map((item, index) => (
-        <div
-          key={index}
-          className={`px-4 py-2 rounded-lg flex flex-row justify-between cursor-pointer ${
-            theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'
-          }`}
-        >
-          <div className="items-center mb-2">
-            <span className={`text-sm font-medium ${
-              theme === 'dark' ? 'text-green-400' : 'text-green-600'
-            }`}>
-              ✓ {item.title}
-            </span>
-            <div className="flex flex-row items-center gap-3 py-2">
-              <span className={`text-sm font-large px-2 w-[90px] ${
-                theme === 'dark' ? 'text-white' : 'text-slate-900'
+      {isUpdatingBonuses ? (
+        <div className="flex justify-center items-center h-40">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+        </div>
+      ) : (
+        bonusItems.map((item, index) => (
+          <div
+            key={index}
+            className={`px-4 py-2 rounded-lg flex flex-row justify-between cursor-pointer ${
+              theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'
+            }`}
+          >
+            <div className="items-center mb-2">
+              <span className={`text-sm font-medium ${
+                theme === 'dark' ? 'text-green-400' : 'text-green-600'
               }`}>
-                {item.count}
+                ✓ {item.title}
               </span>
-              <span className={`text-md w-[50px] ${
-                theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-              }`}>
-                {item.multiplier}
-              </span>
-              <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer' width="16" height="16" />
+              <div className="flex flex-row items-center gap-3 py-2">
+                <span className={`text-sm font-large px-2 w-[90px] ${
+                  theme === 'dark' ? 'text-white' : 'text-slate-900'
+                }`}>
+                  {item.count}
+                </span>
+                <span className={`text-md w-[50px] ${
+                  theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
+                }`}>
+                  {item.multiplier}
+                </span>
+                <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer' width="16" height="16" />
+              </div>
+            </div>
+            <div 
+              className="flex items-center justify-center cursor-pointer py-0.5"
+              onClick={(e) => handleClaimBonus(index, item.reward, e)}
+            >
+              <motion.div 
+                className={`px-1 my-[6px] rounded-lg w-[80px] items-center ${
+                  claimedBonuses.includes(index)
+                    ? theme === 'dark'
+                      ? 'bg-slate-700'
+                      : 'bg-slate-300'
+                    : theme === 'dark'
+                      ? 'bg-blue-600'
+                      : 'bg-blue-500'
+                }`}
+                whileHover={!claimedBonuses.includes(index) ? { scale: 1.05 } : {}}
+                whileTap={!claimedBonuses.includes(index) ? { scale: 0.95 } : {}}
+              >
+                <div className="text-xs text-white text-center">{item.bonus}</div>
+                <div className='w-full flex justify-center py-1'>
+                  <motion.img 
+                    src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
+                    width="16"
+                    height="16"
+                    className={claimedBonuses.includes(index) ? 'opacity-50' : ''}
+                  />
+                </div>
+                <div className="text-xs text-white text-center">+ {item.reward}</div>
+              </motion.div>
             </div>
           </div>
-          <div 
-            className="flex items-center justify-center cursor-pointer py-0.5"
-            onClick={(e) => handleClaimBonus(index, item.reward, e)}
-          >
-            <motion.div 
-              className={`px-1 my-[6px] rounded-lg w-[80px] items-center ${
-                claimedBonuses.includes(index)
-                  ? theme === 'dark'
-                    ? 'bg-slate-700'
-                    : 'bg-slate-300'
-                  : theme === 'dark'
-                    ? 'bg-blue-600'
-                    : 'bg-blue-500'
-              }`}
-              whileHover={!claimedBonuses.includes(index) ? { scale: 1.05 } : {}}
-              whileTap={!claimedBonuses.includes(index) ? { scale: 0.95 } : {}}
-            >
-              <div className="text-xs text-white text-center">{item.bonus}</div>
-              <div className='w-full flex justify-center py-1'>
-                <motion.img 
-                  src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
-                  width="16"
-                  height="16"
-                  className={claimedBonuses.includes(index) ? 'opacity-50' : ''}
-                />
-              </div>
-              <div className="text-xs text-white text-center">+ {item.reward}</div>
-            </motion.div>
-          </div>
-        </div>
-      ))}
+        ))
+      )}
+        
     </motion.div>
   );
 
