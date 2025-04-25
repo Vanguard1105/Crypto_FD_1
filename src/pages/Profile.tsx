@@ -136,7 +136,7 @@ const Profile = () => {
       try {
         const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/user/get-bonus');
         // Ensure the response data is an array
-        console.log("get_bonus", response.data)
+        console.log("get_bonus", response.data.bonuses)
 
         if (Array.isArray(response.data.bonuses)) {
           setBonuses(response.data.bonuses);
@@ -659,7 +659,7 @@ const Profile = () => {
             >
               <motion.div 
                 className={`px-1 my-[6px] rounded-lg w-[80px] items-center ${
-                  claimedBonuses.includes(index)
+                  item.reward
                     ? theme === 'dark'
                       ? 'bg-slate-700'
                       : 'bg-slate-300'
@@ -667,8 +667,8 @@ const Profile = () => {
                       ? 'bg-blue-600'
                       : 'bg-blue-500'
                 }`}
-                whileHover={!claimedBonuses.includes(index) ? { scale: 1.05 } : {}}
-                whileTap={!claimedBonuses.includes(index) ? { scale: 0.95 } : {}}
+                whileHover={item.reward ? { scale: 1.05 } : {}}
+                whileTap={item.reward ? { scale: 0.95 } : {}}
               >
                 <div className="text-xs text-white text-center">{item.bonus}</div>
                 <div className='w-full flex justify-center py-1'>
@@ -676,7 +676,7 @@ const Profile = () => {
                     src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
                     width="16"
                     height="16"
-                    className={claimedBonuses.includes(index) ? 'opacity-50' : ''}
+                    className={item.reward ? 'opacity-50' : ''}
                   />
                 </div>
                 <div className="text-xs text-white text-center">+ {item.reward}</div>
