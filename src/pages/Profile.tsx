@@ -659,7 +659,7 @@ const Profile = () => {
             >
               <motion.div 
                 className={`px-1 my-[6px] rounded-lg w-[80px] items-center ${
-                  item.reward
+                  !item.reward
                     ? theme === 'dark'
                       ? 'bg-slate-700'
                       : 'bg-slate-300'
