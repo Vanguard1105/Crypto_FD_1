@@ -177,6 +177,7 @@ const Profile = () => {
   };
 
   const handleClaimBonus = async (index: number, reward: number, event: React.MouseEvent<HTMLDivElement>) => {
+    console.log("TESTING...", index, reward)
     if (claimedBonuses.includes(index) || !reward) return;
     // Update backend
     await axios.get(`https://crypto-bet-backend-fawn.vercel.app/api/user/get-bonus/:${index}`);
@@ -220,7 +221,7 @@ const Profile = () => {
       }
       return updatedBonuses;
     });
-    
+
     // Update userData with the new diamond_count from the server
     if (userData) setUserData({ 
       ...userData,
