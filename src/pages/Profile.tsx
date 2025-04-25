@@ -138,8 +138,8 @@ const Profile = () => {
         // Ensure the response data is an array
         console.log("get_bonus", response.data)
 
-        if (Array.isArray(response.data)) {
-          setBonuses(response.data);
+        if (Array.isArray(response.data.bonuses)) {
+          setBonuses(response.data.bonuses);
         } else {
           console.error('Invalid bonuses data format:', response.data);
           setBonuses([]);
