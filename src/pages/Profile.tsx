@@ -101,7 +101,8 @@ const Profile = () => {
 
   useEffect(() => {
     const getBonus = async () =>{
-      const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/user/user-update');
+      const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/user/get-bonus');
+      console.log(response.data)
       setBonuses(response.data.referral_bonuses);
     }
     getBonus();
