@@ -46,6 +46,7 @@ const Profile = () => {
   const user_id = userData?.user_id; 
   const [loading, setLoading] = useState(false);
   const [bonuses, setBonuses] = useState<BonusItem[]>([]);
+  const [bonusItems, setBonusItems] = useState<any[]>([]);
   const validateEmail = (email: string | undefined) => {
     if (email == undefined) return false;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -188,36 +189,31 @@ const Profile = () => {
     </AnimatePresence>
   );
 
-  const bonusItems = bonuses?.length ? [
-    {
-      title: 'INVITE FRIENDS',
-      count: `${bonuses[0]?.total_ref_count || 0} friends`,
-      multiplier: `x ${bonuses[0]?.diamond_per_ref || 0}`,
-      bonus: `+${bonuses[0]?.current_ref_count || 0} Friends`,
-      reward: (bonuses[0]?.current_ref_count || 0) * (bonuses[0]?.diamond_per_ref || 0)
-    },
-    {
-      title: 'TICKETS PURCHASED BY FRIENDS',
-      count: `${bonuses[1]?.total_ref_count || 0} tickets`,
-      multiplier: `x ${bonuses[1]?.diamond_per_ref || 0}`,
-      bonus: `${bonuses[1]?.current_ref_count || 0} Tickets`,
-      reward: (bonuses[1]?.current_ref_count || 0) * (bonuses[1]?.diamond_per_ref || 0)
-    },
-    {
-      title: 'DAILY BETTING',
-      count: `${bonuses[2]?.total_ref_count || 0} days`,
-      multiplier: `x ${bonuses[2]?.diamond_per_ref || 0}`,
-      bonus: `${bonuses[2]?.current_ref_count || 0} Day`,
-      reward: (bonuses[2]?.current_ref_count || 0) * (bonuses[2]?.diamond_per_ref || 0)
-    },
-    {
-      title: 'TOP BUYER IN LOTTERY',
-      count: `${bonuses[3]?.total_ref_count || 0} times`,
-      multiplier: `x ${bonuses[3]?.diamond_per_ref || 0}`,
-      bonus: `${bonuses[3]?.current_ref_count || 0} Times`,
-      reward: (bonuses[3]?.current_ref_count || 0) * (bonuses[3]?.diamond_per_ref || 0)
-    }
-  ] : [];
+  // Update bonusItems whenever bonuses changes
+  useEffect(() => {
+    const updatedBonusItems = bonuses.map((bonus, index) => {
+      const titles = [
+        'INVITE FRIENDS',
+        'TICKETS PURCHASED BY FRIENDS',
+        'DAILY BETTING',
+        'TOP BUYER IN LOTTERY'
+      ];
+      const units = ['friends', 'tickets', 'days', 'times'];
+      const unitLabels = ['Friends', 'Tickets', 'Day', 'Times'];
+      
+      return {
+        title: titles[index] || 'BONUS',
+        count: `${bonus.total_ref_count || 0} ${units[index] || ''}`,
+        multiplier: `x ${bonus.diamond_per_ref || 0}`,
+        bonus: index === 0 ? 
+          `+${bonus.current_ref_count || 0} ${unitLabels[index] || ''}` : 
+          `${bonus.current_ref_count || 0} ${unitLabels[index] || ''}`,
+        reward: (bonus.current_ref_count || 0) * (bonus.diamond_per_ref || 0)
+      };
+    });
+
+    setBonusItems(updatedBonusItems);
+  }, [bonuses]);
 
   const handleSaveChanges = async () => {
     setError('');
