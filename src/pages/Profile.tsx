@@ -40,6 +40,7 @@ const Profile = () => {
   const [showError, setShowError] = useState(false);
   const user_id = userData?.user_id; 
   const [loading, setLoading] = useState(false);
+  const [bonuses, setBonuses] = useState([]);
   const validateEmail = (email: string | undefined) => {
     if (email == undefined) return false;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -96,6 +97,15 @@ const Profile = () => {
       fetchBalance();
     }
   }, [userData?.publicKey]);
+  
+
+  useEffect(() => {
+    const getBonus = async () =>{
+      const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/user/user-update');
+      setBonuses(response.data.referral_bonuses);
+    }
+    getBonus();
+  }, []);
 
   const handleGemAnimationComplete = (gemId: number) => {
     setAnimatingGems(prev => {
@@ -175,31 +185,31 @@ const Profile = () => {
   const bonusItems = [
     {
       title: 'INVITE FRIENDS',
-      count: '4 friends',
-      multiplier: 'x 10',
-      bonus: '+2 Friends',
-      reward: 20
+      count: bonuses[0]['total_ref_count'] + 'friends',
+      multiplier: 'x ' + bonuses[0]['diamond_per_ref'],
+      bonus: '+' + bonuses[0]['current_ref_count'] + 'Friends',
+      reward: Number(bonuses[0]['current_ref_count']? bonuses[0]['current_ref_count']: 0) * Number(bonuses[0]['diamond_per_ref']? bonuses[0]['diamond_per_ref']: 0)
     },
     {
       title: 'TICKETS PURCHASED BY FRIENDS',
-      count: '24 tickets',
-      multiplier: 'x 5',
-      bonus: '24 Tickets',
-      reward: 120
+      count: bonuses[1]['total_ref_count'] + 'tickets',
+      multiplier: 'x ' + bonuses[1]['diamond_per_ref'],
+      bonus: bonuses[1]['current_ref_count'] + 'Tickets',
+      reward: Number(bonuses[1]['current_ref_count']? bonuses[1]['current_ref_count']: 0) * Number(bonuses[1]['diamond_per_ref']? bonuses[1]['diamond_per_ref']: 0)
     },
     {
       title: 'DAILY BETTING',
-      count: '6 days',
-      multiplier: 'x 2',
-      bonus: '7 Day',
-      reward: 14
+      count: bonuses[2]['total_ref_count'] + 'days',
+      multiplier: 'x ' + bonuses[2]['diamond_per_ref'],
+      bonus: bonuses[2]['current_ref_count'] + 'Day',
+      reward: Number(bonuses[2]['current_ref_count']? bonuses[2]['current_ref_count']: 0) * Number(bonuses[2]['diamond_per_ref']? bonuses[2]['diamond_per_ref']: 0)
     },
     {
       title: 'TOP BUYER IN LOTTERY',
-      count: '2 times',
-      multiplier: 'x 200',
-      bonus: '2 Times',
-      reward: 400
+      count: bonuses[3]['total_ref_count'] + 'times',
+      multiplier: 'x ' + bonuses[3]['diamond_per_ref'],
+      bonus: bonuses[0]['current_ref_count'] + 'Times',
+      reward: Number(bonuses[3]['current_ref_count']? bonuses[3]['current_ref_count']: 0) * Number(bonuses[3]['diamond_per_ref']? bonuses[3]['diamond_per_ref']: 0)
     }
   ];
 
