@@ -187,29 +187,29 @@ const Profile = () => {
     {
       title: 'INVITE FRIENDS',
       count: bonuses[0]['total_ref_count'] || '0' + 'friends',
-      multiplier: 'x ' + bonuses[0]['diamond_per_ref'],
-      bonus: '+' + bonuses[0]['current_ref_count'] + 'Friends',
+      multiplier: 'x ' + bonuses[0]['diamond_per_ref']? bonuses[0]['diamond_per_ref'] : 0,
+      bonus: '+' + bonuses[0]['current_ref_count']? bonuses[0]['current_ref_count'] : 0 + 'Friends',
       reward: Number(bonuses[0]['current_ref_count']? bonuses[0]['current_ref_count']: 0) * Number(bonuses[0]['diamond_per_ref']? bonuses[0]['diamond_per_ref']: 0)
     },
     {
       title: 'TICKETS PURCHASED BY FRIENDS',
       count: bonuses[1]['total_ref_count'] || '0' + 'tickets',
-      multiplier: 'x ' + bonuses[1]['diamond_per_ref'],
-      bonus: bonuses[1]['current_ref_count'] + 'Tickets',
+      multiplier: 'x ' + bonuses[1]['diamond_per_ref']? bonuses[1]['diamond_per_ref'] : 0,
+      bonus: bonuses[1]['current_ref_count']? bonuses[1]['current_ref_count'] : 0 + 'Tickets',
       reward: Number(bonuses[1]['current_ref_count']? bonuses[1]['current_ref_count']: 0) * Number(bonuses[1]['diamond_per_ref']? bonuses[1]['diamond_per_ref']: 0)
     },
     {
       title: 'DAILY BETTING',
       count: bonuses[2]['total_ref_count'] || '0'+ 'days',
-      multiplier: 'x ' + bonuses[2]['diamond_per_ref'],
-      bonus: bonuses[2]['current_ref_count'] + 'Day',
+      multiplier: 'x ' + bonuses[2]['diamond_per_ref']? bonuses[2]['diamond_per_ref'] : 0,
+      bonus: bonuses[2]['current_ref_count']? bonuses[2]['current_ref_count'] : 0 + 'Day',
       reward: Number(bonuses[2]['current_ref_count']? bonuses[2]['current_ref_count']: 0) * Number(bonuses[2]['diamond_per_ref']? bonuses[2]['diamond_per_ref']: 0)
     },
     {
       title: 'TOP BUYER IN LOTTERY',
       count: bonuses[3]['total_ref_count'] || '0' + 'times',
-      multiplier: 'x ' + bonuses[3]['diamond_per_ref'],
-      bonus: bonuses[0]['current_ref_count'] + 'Times',
+      multiplier: 'x ' + bonuses[3]['diamond_per_ref']? bonuses[3]['diamond_per_ref'] : 0,
+      bonus: bonuses[3]['current_ref_count']? bonuses[3]['current_ref_count'] : 0 + 'Times',
       reward: Number(bonuses[3]['current_ref_count']? bonuses[3]['current_ref_count']: 0) * Number(bonuses[3]['diamond_per_ref']? bonuses[3]['diamond_per_ref']: 0)
     }
   ];
