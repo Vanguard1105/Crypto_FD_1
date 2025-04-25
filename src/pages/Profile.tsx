@@ -45,7 +45,28 @@ const Profile = () => {
   const [showError, setShowError] = useState(false);
   const user_id = userData?.user_id; 
   const [loading, setLoading] = useState(false);
-  const [bonuses, setBonuses] = useState<BonusItem[]>([]);
+  const [bonuses, setBonuses] = useState<BonusItem[]>([
+    {  
+      total_ref_count: 0,
+      diamond_per_ref: 0,
+      current_ref_count: 10,
+    },
+    {  
+      total_ref_count: 0,
+      diamond_per_ref: 0,
+      current_ref_count: 5,
+    },
+    {  
+      total_ref_count: 0,
+      diamond_per_ref: 0,
+      current_ref_count: 2,
+    },
+    {  
+      total_ref_count: 0,
+      diamond_per_ref: 0,
+      current_ref_count: 100,
+    },
+  ]);
   const [bonusItems, setBonusItems] = useState<any[]>([]);
   const [isUpdatingBonuses, setIsUpdatingBonuses] = useState(false);
   const validateEmail = (email: string | undefined) => {
@@ -125,7 +146,7 @@ const Profile = () => {
     };
     fetchBonuses();
   }, []);
-  
+
   const handleGemAnimationComplete = (gemId: number) => {
     setAnimatingGems(prev => {
       const updatedGems = prev.map(gem => {
