@@ -21,6 +21,7 @@ interface BonusItem {
   total_ref_count: number;
   diamond_per_ref: number;
   current_ref_count: number;
+  index: number;
   // Add other properties if needed
 }
 const Profile = () => {
@@ -47,21 +48,25 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [bonuses, setBonuses] = useState<BonusItem[]>([
     {  
+      index: 0,
       total_ref_count: 0,
       diamond_per_ref: 0,
       current_ref_count: 10,
     },
     {  
+      index: 1,
       total_ref_count: 0,
       diamond_per_ref: 0,
       current_ref_count: 5,
     },
     {  
+      index: 2,
       total_ref_count: 0,
       diamond_per_ref: 0,
       current_ref_count: 2,
     },
     {  
+      index: 3,
       total_ref_count: 0,
       diamond_per_ref: 0,
       current_ref_count: 100,
