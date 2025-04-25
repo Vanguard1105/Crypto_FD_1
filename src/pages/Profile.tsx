@@ -224,10 +224,6 @@ const Profile = () => {
 
   // Update bonusItems whenever bonuses changes
   useEffect(() => {
-    if (!bonuses || !Array.isArray(bonuses)) {
-      setBonusItems([]);
-      return;
-    }
     setIsUpdatingBonuses(true);
     const updatedBonusItems = bonuses.map((bonus, index) => {
       const titles = [
