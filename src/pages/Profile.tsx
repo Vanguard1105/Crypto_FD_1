@@ -181,24 +181,6 @@ const Profile = () => {
     // Update backend
     await axios.get(`https://crypto-bet-backend-fawn.vercel.app/api/user/get-bonus/:${index}`);
 
-    // Update local state
-    setBonuses(prevBonuses => {
-      const updatedBonuses = [...prevBonuses];
-      if (updatedBonuses[index]) {
-        updatedBonuses[index] = {
-          ...updatedBonuses[index],
-          current_ref_count: 0
-        };
-      }
-      return updatedBonuses;
-    });
-
-    // Update userData with the new diamond_count from the server
-    if (userData) setUserData({ 
-      ...userData,
-      diamond_count: (userData.diamond_count || 0) + reward
-    });
-
     const buttonRect = event.currentTarget.getBoundingClientRect();
     const targetGemElement = headerRef.current?.querySelector('.target-gem');
     const targetRect = targetGemElement?.getBoundingClientRect();
@@ -225,6 +207,24 @@ const Profile = () => {
       setTimeout(() => {
         setAnimatingGems(prev => [...prev, gem]);
       }, i * 200);
+    });
+
+    // Update local state
+    setBonuses(prevBonuses => {
+      const updatedBonuses = [...prevBonuses];
+      if (updatedBonuses[index]) {
+        updatedBonuses[index] = {
+          ...updatedBonuses[index],
+          current_ref_count: 0
+        };
+      }
+      return updatedBonuses;
+    });
+    
+    // Update userData with the new diamond_count from the server
+    if (userData) setUserData({ 
+      ...userData,
+      diamond_count: (userData.diamond_count || 0) + reward
     });
   };
 
