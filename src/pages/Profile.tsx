@@ -216,7 +216,8 @@ const Profile = () => {
       if (updatedBonuses[index]) {
         updatedBonuses[index] = {
           ...updatedBonuses[index],
-          current_bonus_count: 0
+          total_bonus_count: updatedBonuses[index].total_bonus_count + updatedBonuses[index].current_bonus_count,
+          current_bonus_count: 0,
         };
       }
       return updatedBonuses;
