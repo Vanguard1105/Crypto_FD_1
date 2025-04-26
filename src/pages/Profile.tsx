@@ -209,7 +209,7 @@ const Profile = () => {
 
     // Update backend
     await axios.get(`https://crypto-bet-backend-fawn.vercel.app/api/user/update-bonus/${index + 1}`);
-    
+
     // Update local state
     setBonuses(prevBonuses => {
       const updatedBonuses = [...prevBonuses];
@@ -250,7 +250,7 @@ const Profile = () => {
 
   // Update bonusItems whenever bonuses changes
   useEffect(() => {
-    setIsUpdatingBonuses(true);
+    setIsUpdatingBonuses(false);
     const updatedBonusItems = bonuses.map((bonus, index) => {
       const titles = [
         'INVITE FRIENDS',
