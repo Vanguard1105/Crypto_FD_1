@@ -272,7 +272,7 @@ const Profile = () => {
       };
     });
 
-    console.log("UPDATED", updatedBonusItems)
+    console.log("UPDATED", bonuses, updatedBonusItems)
     setTimeout(() => {
       setBonusItems(updatedBonusItems);
       setIsUpdatingBonuses(false);
