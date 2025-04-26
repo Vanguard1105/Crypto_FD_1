@@ -19,7 +19,7 @@ interface GemAnimationState {
 }
 interface BonusItem {
   total_bonus_count: number;
-  diamond_per_ref: number;
+  diamond_per_bonus: number;
   current_bonus_count: number;
   index: number;
   // Add other properties if needed
@@ -50,25 +50,25 @@ const Profile = () => {
     {  
       index: 0,
       total_bonus_count: 0,
-      diamond_per_ref: 0,
+      diamond_per_bonus: 0,
       current_bonus_count: 10,
     },
     {  
       index: 1,
       total_bonus_count: 0,
-      diamond_per_ref: 0,
+      diamond_per_bonus: 0,
       current_bonus_count: 5,
     },
     {  
       index: 2,
       total_bonus_count: 0,
-      diamond_per_ref: 0,
+      diamond_per_bonus: 0,
       current_bonus_count: 2,
     },
     {  
       index: 3,
       total_bonus_count: 0,
-      diamond_per_ref: 0,
+      diamond_per_bonus: 0,
       current_bonus_count: 100,
     },
   ]);
@@ -264,11 +264,11 @@ const Profile = () => {
       return {
         title: titles[index] || 'BONUS',
         count: `${bonus.total_bonus_count || 0} ${units[index] || ''}`,
-        multiplier: `x ${bonus.diamond_per_ref || 0}`,
+        multiplier: `x ${bonus.diamond_per_bonus || 0}`,
         bonus: index === 0 ? 
           `+${bonus.current_bonus_count || 0} ${unitLabels[index] || ''}` : 
           `${bonus.current_bonus_count || 0} ${unitLabels[index] || ''}`,
-        reward: (bonus.current_bonus_count || 0) * (bonus.diamond_per_ref || 0)
+        reward: (bonus.current_bonus_count || 0) * (bonus.diamond_per_bonus || 0)
       };
     });
 
