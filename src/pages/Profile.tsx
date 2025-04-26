@@ -177,10 +177,10 @@ const Profile = () => {
   };
 
   const handleClaimBonus = async (index: number, reward: number, event: React.MouseEvent<HTMLDivElement>) => {
-    console.log("TESTING...", index, reward)
+    console.log(bonusItems)
     if (claimedBonuses.includes(index) || !reward) return;
     // Update backend
-    await axios.get(`https://crypto-bet-backend-fawn.vercel.app/api/user/update-bonus/:${index}`);
+    await axios.get(`https://crypto-bet-backend-fawn.vercel.app/api/user/update-bonus/:${index + 1}`);
 
     const buttonRect = event.currentTarget.getBoundingClientRect();
     const targetGemElement = headerRef.current?.querySelector('.target-gem');
