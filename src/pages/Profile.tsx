@@ -18,9 +18,9 @@ interface GemAnimationState {
   value: number;
 }
 interface BonusItem {
-  total_ref_count: number;
+  total_bonus_count: number;
   diamond_per_ref: number;
-  current_ref_count: number;
+  current_bonus_count: number;
   index: number;
   // Add other properties if needed
 }
@@ -49,27 +49,27 @@ const Profile = () => {
   const [bonuses, setBonuses] = useState<BonusItem[]>([
     {  
       index: 0,
-      total_ref_count: 0,
+      total_bonus_count: 0,
       diamond_per_ref: 0,
-      current_ref_count: 10,
+      current_bonus_count: 10,
     },
     {  
       index: 1,
-      total_ref_count: 0,
+      total_bonus_count: 0,
       diamond_per_ref: 0,
-      current_ref_count: 5,
+      current_bonus_count: 5,
     },
     {  
       index: 2,
-      total_ref_count: 0,
+      total_bonus_count: 0,
       diamond_per_ref: 0,
-      current_ref_count: 2,
+      current_bonus_count: 2,
     },
     {  
       index: 3,
-      total_ref_count: 0,
+      total_bonus_count: 0,
       diamond_per_ref: 0,
-      current_ref_count: 100,
+      current_bonus_count: 100,
     },
   ]);
   const [bonusItems, setBonusItems] = useState<any[]>([]);
@@ -216,7 +216,7 @@ const Profile = () => {
       if (updatedBonuses[index]) {
         updatedBonuses[index] = {
           ...updatedBonuses[index],
-          current_ref_count: 0
+          current_bonus_count: 0
         };
       }
       return updatedBonuses;
@@ -263,12 +263,12 @@ const Profile = () => {
       
       return {
         title: titles[index] || 'BONUS',
-        count: `${bonus.total_ref_count || 0} ${units[index] || ''}`,
+        count: `${bonus.total_bonus_count || 0} ${units[index] || ''}`,
         multiplier: `x ${bonus.diamond_per_ref || 0}`,
         bonus: index === 0 ? 
-          `+${bonus.current_ref_count || 0} ${unitLabels[index] || ''}` : 
-          `${bonus.current_ref_count || 0} ${unitLabels[index] || ''}`,
-        reward: (bonus.current_ref_count || 0) * (bonus.diamond_per_ref || 0)
+          `+${bonus.current_bonus_count || 0} ${unitLabels[index] || ''}` : 
+          `${bonus.current_bonus_count || 0} ${unitLabels[index] || ''}`,
+        reward: (bonus.current_bonus_count || 0) * (bonus.diamond_per_ref || 0)
       };
     });
 
