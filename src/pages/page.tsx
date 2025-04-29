@@ -12,7 +12,6 @@ import { PriceData, TimePeriod, DrawingState } from '../types';
 import { FaUserCog } from "react-icons/fa";
 import { CgChevronLeft } from "react-icons/cg";
 import { useUser } from '../context/UserContext';
-import { fetchSolanaBalance } from '../utils/fetchSolanaBalance';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -48,16 +47,8 @@ const Lottery = () => {
   const { priceHistory: solanaHistory, latestPrice: solanaLatestPrice, previousPrice: solanaPreviousPrice } = usePrice();
   const { priceHistory: ethereumHistory, latestPrice: ethereumLatestPrice, previousPrice: ethereumPreviousPrice } = useEthereumPrice();
   const { priceHistory: bitcoinHistory, latestPrice: bitcoinLatestPrice, previousPrice: bitcoinPreviousPrice } = useBitcoinPrice();
-  
-  let priceHistory: PriceData[], latestPrice, previousPrice;
 
-  // List of available lotteries
-  const lotteries = [
-    { id: 26, date: '2025.03.24', startTime: '12:00:00', status: 'upcoming', type: 'lottery' },
-    { id: 25, date: '2025.03.24', startTime: '09:00:00', status: 'upcoming', type: 'lottery' },
-    { id: 24, date: '2025.03.23', startTime: '11:20:00', status: 'ended', type: 'lottery' },
-    { id: 23, date: '2025.03.23', startTime: '09:20:00', status: 'ended', type: 'lottery' },
-  ];
+  let priceHistory: PriceData[], latestPrice, previousPrice;
 
   switch (lotteryType) {
     case 'SOL':
@@ -101,22 +92,6 @@ const Lottery = () => {
 
   // Handle drawing state and countdown
   useEffect(() => {
-    if (userData?.publicKey) {
-      const fetchBalance = async () => {
-        const balance = await fetchSolanaBalance(userData.publicKey);
-        const balanceInSol = balance !== null ? balance  : 0; // Convert lamports to SOL
-        setSolBalance(balanceInSol);
-        setUserData({ 
-          ...userData,
-          solBalance: balanceInSol
-        });
-        // setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count, avatar, solBalance});
-      };
-      fetchBalance();
-    }
-  }, [userData?.publicKey]);
-
-  useEffect(() => {
     if (!drawingState.isActive) {
       const timer = setInterval(() => {
         setCountdown(prev => {
@@ -148,9 +123,7 @@ const Lottery = () => {
       return () => clearInterval(timer);
     }
   }, [drawingState.isActive, drawingState.endTime, latestPrice]);
-  
 
-  
   const handleVote = (type: VoteType) => {
     if (!drawingState.isActive || selectedVote !== null) return;
     
@@ -158,10 +131,18 @@ const Lottery = () => {
     setShowVoteSuccess(true);
     setTimeout(() => setShowVoteSuccess(false), 2000);
   };
-  
+
   const handlePeriodChange = (period: TimePeriod) => {
     setSelectedPeriod(period);
   };
+
+  // List of available lotteries
+  const lotteries = [
+    { id: 26, date: '2025.03.24', startTime: '12:00:00', status: 'upcoming', type: 'lottery' },
+    { id: 25, date: '2025.03.24', startTime: '09:00:00', status: 'upcoming', type: 'lottery' },
+    { id: 24, date: '2025.03.23', startTime: '11:20:00', status: 'ended', type: 'lottery' },
+    { id: 23, date: '2025.03.23', startTime: '09:20:00', status: 'ended', type: 'lottery' },
+  ];
 
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
@@ -180,13 +161,24 @@ const Lottery = () => {
             />
           </div>
           <div className="flex items-center gap-3 py-1">
-            <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" className="rounded-full cursor-pointer" height="16" width="16" alt="SOL" loading="lazy" decoding="async"  />
-            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'} cursor-pointer`}>
-              {solBalance? solBalance.toFixed(2): "0.00"}
+            <img 
+              src="https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png" 
+              className="rounded-full cursor-pointer" 
+              height="16" 
+              width="16" 
+              alt="SOL" 
+            />
+            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-blue-900'}`}>
+              {solBalance?.toFixed(2) || "0.00"}
             </span>
-            <img src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" className='cursor-pointer' width="16" height="16" />
-            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-red-400' : 'text-red-500'} cursor-pointer`}>
-              {userData?.diamond_count? userData?.diamond_count : 0 }
+            <img 
+              src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg" 
+              className='cursor-pointer' 
+              width="16" 
+              height="16" 
+            />
+            <span className={`text-sm font-semibold ${theme === 'dark' ? 'text-red-400' : 'text-red-500'}`}>
+              {userData?.diamond_count}
             </span>
             <button
               onClick={toggleTheme}
@@ -195,7 +187,7 @@ const Lottery = () => {
                 ? 'text-slate-400 hover:text-slate-200'
                 : 'text-slate-600 hover:text-slate-800'
               }`}
-              >
+            >
               {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
             </button>
           </div>
@@ -340,60 +332,61 @@ const Lottery = () => {
         /* Lottery List */
         <div className="px-4 space-y-1 mt-4">
           {lotteries.map((lottery) => (
-          <div
-          key={lottery.id}
-          className={`relative rounded-xl overflow-hidden group cursor-pointer border ${
-            theme === 'dark' ? 'bg-slate-800 border-slate-800' : 'bg-slate-100 border-slate-400'
-          } shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-md ${
-            lottery.status === 'ended' ? 'opacity-80' : ''
-          } hover:shadow-purple-500/20`}
-        >
-          <div className={`px-2 py-1 h-full flex flex-col justify-between relative ${
-            theme === 'dark' ? 'text-white' : 'text-slate-900'
-          }`}>
-            <div className="flex justify-between items-start">
-              <div className="space-y-1">
-                <div className="flex items-center space-x-2">
-                  <Calendar size={16} className="text-purple-400" />
-                  <span className="text-sm font-medium text-purple-400">
-                    {lottery.date}
-                  </span>
+            <div
+              key={lottery.id}
+              className={`relative rounded-xl overflow-hidden group cursor-pointer border ${
+                theme === 'dark' ? 'bg-slate-800 border-slate-800' : 'bg-slate-100 border-slate-400'
+              } shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-md ${
+                lottery.status === 'ended' ? 'opacity-80' : ''
+              } hover:shadow-purple-500/20`}
+            >
+              <div className={`px-2 py-1 h-full flex flex-col justify-between relative ${
+                theme === 'dark' ? 'text-white' : 'text-slate-900'
+              }`}>
+                <div className="flex justify-between items-start">
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <Calendar size={16} className="text-purple-400" />
+                      <span className="text-sm font-medium text-purple-400">
+                        {lottery.date}
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Timer size={16} className={`
+                        ${lottery.status === 'ended' 
+                          ? theme === 'dark' ? 'text-red-400' : 'text-red-500'
+                          : theme === 'dark' ? 'text-green-400' : 'text-green-500'
+                        }
+                      `} />
+                      <span className={`text-sm font-medium ${
+                        lottery.status === 'ended' 
+                          ? theme === 'dark' ? 'text-red-400' : 'text-red-500'
+                          : theme === 'dark' ? 'text-green-400' : 'text-green-500'
+                      }`}>
+                        {lottery.status === 'ended' ? 'Ended:' : 'Start:'} {lottery.startTime}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Trophy size={20} className="text-yellow-500" />
+                    <span className="text-2xl font-bold text-yellow-500">
+                      #{lottery.id}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <Timer size={16} className={`
-                    ${lottery.status === 'ended' 
-                      ? theme === 'dark' ? 'text-red-400' : 'text-red-500'
-                      : theme === 'dark' ? 'text-green-400' : 'text-green-500'
-                    }
-                  `} />
-                  <span className={`text-sm font-medium ${
-                    lottery.status === 'ended' 
-                      ? theme === 'dark' ? 'text-red-400' : 'text-red-500'
-                      : theme === 'dark' ? 'text-green-400' : 'text-green-500'
-                  }`}>
-                    {lottery.status === 'ended' ? 'Ended:' : 'Start:'} {lottery.startTime}
+                
+                <div className="flex justify-between items-end">
+                  <span className={`px-4 py-1 rounded-md text-sm font-medium bg-purple-500/10 text-purple-500`}>
+                    3rd SOL Lottery
                   </span>
+                  <div className={`w-24 h-24 absolute bottom-4 right-4 rounded-lg bg-purple-500/5 transition-transform duration-300 group-hover:scale-110`} />
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <Trophy size={20} className="text-yellow-500" />
-                <span className="text-2xl font-bold text-yellow-500">
-                  #{lottery.id}
-                </span>
-              </div>
             </div>
-            
-            <div className="flex justify-between items-end">
-              <span className={`px-4 py-1 rounded-md text-sm font-medium bg-purple-500/10 text-purple-500`}>
-              3rd SOL Lottery
-              </span>
-              <div className={`w-24 h-24 absolute bottom-4 right-4 rounded-lg bg-purple-500/5 transition-transform duration-300 group-hover:scale-110`} />
-            </div>
-          </div>
+          ))}
         </div>
-        ))}
-      </div>
       )}
+
       {/* Vote Success Message */}
       <AnimatePresence>
         {showVoteSuccess && (

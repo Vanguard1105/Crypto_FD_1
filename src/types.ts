@@ -11,3 +11,10 @@ export interface TimeSeriesData {
 }
 
 export type Theme = 'dark' | 'light';
+
+export interface DrawingState {
+  isActive: boolean;
+  startTime: number;
+  endTime: number;
+  startPrice: number;
+}

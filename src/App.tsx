@@ -12,6 +12,7 @@ import Lottery from './pages/Lottery';
 import { PriceProvider } from './context/PriceContext';
 import { EthereumPriceProvider } from './context/EthereumPriceContext';
 import { BitcoinPriceProvider } from './context/BitcoinPriceContext';
+import { PredictionProvider } from './context/PredictionContext';
 function App() {
   return (
     <ThemeProvider>
@@ -19,17 +20,19 @@ function App() {
         <PriceProvider>
           <EthereumPriceProvider>
             <BitcoinPriceProvider>
-              <BrowserRouter>
-                <Routes>
-                  <Route path="/" element={<Welcome />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/set-password" element={<SetPassword />} />
-                  <Route path="/home" element={<Home />} />
-                  <Route path="/track" element={<Track />} />
-                  <Route path="/lottery" element={<Lottery />} />
-                  <Route path="/profile" element={<Profile />} />
-                </Routes>
-              </BrowserRouter>
+              <PredictionProvider>
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="/" element={<Welcome />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/set-password" element={<SetPassword />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/track" element={<Track />} />
+                    <Route path="/lottery" element={<Lottery />} />
+                    <Route path="/profile" element={<Profile />} />
+                  </Routes>
+                </BrowserRouter>
+              </PredictionProvider>
             </BitcoinPriceProvider>
           </EthereumPriceProvider>
         </PriceProvider>
