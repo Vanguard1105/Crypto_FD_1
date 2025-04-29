@@ -25,7 +25,21 @@ export const PredictionService: React.FC = () => {
       // Update price data
       const updateInterval = setInterval(() => {
         const now = Date.now();
-        const variation = (Math.random() - 0.5) * 0.2; // Random variation
+        let variation: number;
+        switch (token) {
+          case 'SOL':
+            variation = (Math.random() - 0.5) * 0.01; // ±0.01
+            break;
+          case 'ETH':
+            variation = (Math.random() - 0.5) * 0.1; // ±0.1
+            break;
+          case 'BTC':
+            variation = (Math.random() - 0.5); // ±1
+            break;
+          default:
+            variation = 0;
+        }
+
         const newPoint: PriceData = {
           timestamp: now,
           price: latestPrice + variation,
