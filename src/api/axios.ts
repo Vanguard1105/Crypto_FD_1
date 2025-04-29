@@ -1,8 +1,6 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 // Create axios instance with base URL
-const navigate = useNavigate();
 const instance = axios.create({
   baseURL: 'https://crypto-bet-backend-fawn.vercel.app/api',
   timeout: 600000, // 10 seconds timeout
@@ -32,7 +30,7 @@ instance.interceptors.response.use(
         
         // Use window.location for navigation outside React components
         window.location.href = '/login';
-        navigate('/login');
+        
         // Optionally, you can add a query parameter to indicate token expiration
         window.location.href = '/login?expired=true';
       }
