@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState , useEffect} from 'react';
+import { useNavigate , useLocation } from 'react-router-dom';
 import { Sun, Moon, Mail, Lock } from 'lucide-react';
 import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
@@ -17,7 +17,16 @@ const Login = () => {
   const { user, user_id } = useTelegram();  
   const { userData } = useUser();
   const [email, setEmail] = useState(userData?.email == undefined? '': userData?.email);
+  // In your Login component
+  const location = useLocation();
+  const isExpired = new URLSearchParams(location.search).get('expired') === 'true';
 
+  useEffect(() => {
+    if (isExpired) {
+      // Show a notification that the session has expired
+      alert('Your session has expired. Please log in again.');
+    }
+  }, [isExpired]);
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
