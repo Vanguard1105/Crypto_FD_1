@@ -15,7 +15,7 @@ import { useUser } from '../context/UserContext';
 import { fetchSolanaBalance } from '../utils/fetchSolanaBalance';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import { useGlobalPrediction } from '../context/GlobalPredictionContext';
 type LotteryType = 'predict' | 'lottery';
 type VoteType = 'up' | 'down' | null;
 
@@ -31,7 +31,7 @@ const Lottery = () => {
   const [solBalance, setSolBalance] = useState<number | null | undefined>(userData?.solBalance);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const lotteryType = searchParams.get('type');
+  const lotteryType = searchParams.get('type') || 'SOL';
   const [selectedVote, setSelectedVote] = useState<VoteType>(null);
   const [betAmount, setBetAmount] = useState<string>('1');
   const [showVoteSuccess, setShowVoteSuccess] = useState(false);
@@ -43,6 +43,14 @@ const Lottery = () => {
   });
   const [countdown, setCountdown] = useState(30);
   const { predictData, setPredictData } = usePrediction();
+  const { solPrediction, ethPrediction, btcPrediction, setVote } = useGlobalPrediction();
+
+  // Get current token prediction based on lottery type
+  const currentPrediction = lotteryType === 'ETH' 
+    ? ethPrediction 
+    : lotteryType === 'BTC' 
+      ? btcPrediction 
+      : solPrediction;
 
   // Get price data based on token type
   const { priceHistory: solanaHistory, latestPrice: solanaLatestPrice, previousPrice: solanaPreviousPrice } = usePrice();
@@ -152,9 +160,9 @@ const Lottery = () => {
 
   
   const handleVote = (type: VoteType) => {
-    if (!drawingState.isActive || selectedVote !== null) return;
+    if (!currentPrediction.drawingState.isActive || currentPrediction.selectedVote !== null) return;
     
-    setSelectedVote(type);
+    setVote(lotteryType as 'SOL' | 'ETH' | 'BTC', type);
     setShowVoteSuccess(true);
     setTimeout(() => setShowVoteSuccess(false), 2000);
   };
@@ -206,13 +214,13 @@ const Lottery = () => {
       <div className="pb-2 px-4">
         {selectedType === 'predict' ? (
           <PredictChart
-            data={predictData}
+            data={currentPrediction.predictData}
             latestPrice={latestPrice}
             theme={theme}
-            isDrawing={drawingState.isActive}
-            startTime={drawingState.startTime}
-            endTime={drawingState.endTime}
-            startPrice={drawingState.startPrice}
+            isDrawing={currentPrediction.drawingState.isActive}
+            startTime={currentPrediction.drawingState.startTime}
+            endTime={currentPrediction.drawingState.endTime}
+            startPrice={currentPrediction.drawingState.startPrice}
           />
         ) : (
           <PriceChart
@@ -264,17 +272,17 @@ const Lottery = () => {
       {/* Content based on selected type */}
       {selectedType === 'predict' ? (
         <div className="px-4 mt-4 space-y-4">
-          {/* Timer */}
+          {/* Timer section */}
           <div className={`relative overflow-hidden rounded-xl ${theme === 'dark' ? 'bg-blue-900/20' : 'bg-blue-100'}`}>
             <div className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className={`font-bold ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`}>
-                  {drawingState.isActive ? 'DRAWING' : 'NEXT DRAW IN'}
+                  {currentPrediction.drawingState.isActive ? 'DRAWING' : 'NEXT DRAW IN'}
                 </span>
                 <Timer className={theme === 'dark' ? 'text-blue-400' : 'text-blue-600'} size={20} />
               </div>
               <div className={`text-3xl font-bold ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'} mb-1`}>
-                {Math.floor(countdown / 60)}:{(countdown % 60).toString().padStart(2, '0')}
+                {Math.floor(currentPrediction.countdown / 60)}:{(currentPrediction.countdown % 60).toString().padStart(2, '0')}
               </div>
             </div>
           </div>
