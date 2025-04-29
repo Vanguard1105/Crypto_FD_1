@@ -29,7 +29,12 @@ instance.interceptors.response.use(
       if (error.response.status === 401) {
         // Unauthorized - token expired or invalid
         localStorage.removeItem('authToken');
+        
+        // Use window.location for navigation outside React components
+        window.location.href = '/login';
         navigate('/login');
+        // Optionally, you can add a query parameter to indicate token expiration
+        window.location.href = '/login?expired=true';
       }
     }
     return Promise.reject(error);
