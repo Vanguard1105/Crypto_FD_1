@@ -1,41 +1,46 @@
-import React, { useState , useEffect} from 'react';
-import { useNavigate , useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Sun, Moon, Mail, Lock } from 'lucide-react';
 import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
-import { useTelegram } from '../components/useTelegram';  
+import { useTelegram } from '../components/useTelegram';
 import { useUser } from '../context/UserContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [showExpiredAlert, setShowExpiredAlert] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
   const { theme, toggleTheme } = useTheme();
   const { login } = useAuth();
-  const { user, user_id } = useTelegram();  
+  const { user, user_id } = useTelegram();
   const { userData } = useUser();
-  const [email, setEmail] = useState(userData?.email == undefined? '': userData?.email);
-  // In your Login component
-  const location = useLocation();
-  const isExpired = new URLSearchParams(location.search).get('expired') === 'true';
+  const [email, setEmail] = useState(userData?.email || '');
 
+  // Handle session expiration
   useEffect(() => {
+    const isExpired = new URLSearchParams(location.search).get('expired') === 'true';
     if (isExpired) {
-      // Show a notification that the session has expired
-      alert('Your session has expired. Please log in again.');
+      setShowExpiredAlert(true);
+      setTimeout(() => setShowExpiredAlert(false), 5000);
     }
-  }, [isExpired]);
+  }, [location]);
+
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+
   const handleSignUpNavigation = () => {
     if (!userData?.email) {
       navigate('/set-password');
     }
   };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -53,12 +58,11 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/auth/login', {
+      const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/auth/login', {
         user_id,
         password
-      }).then((res) =>{
-        login(res.data.token);
       });
+      login(response.data.token, userData);
       navigate('/home');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Invalid email or password');
@@ -71,13 +75,15 @@ const Login = () => {
     <div className={`flex flex-col items-center justify-between min-h-screen p-1 ${  
       theme === 'dark' ? 'bg-slate-900' : 'bg-white'  
     }`}>  
+      {/* Loading Spinner */}
       {loading && (  
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50">  
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>  
         </div>  
       )}  
 
-      <div className="w-full flex justify-end">  
+      {/* Theme Toggle */}
+      <div className="w-full flex justify-end p-2">  
         <button  
           onClick={toggleTheme}  
           className={`p-2 rounded-full transition-colors ${  
@@ -91,7 +97,7 @@ const Login = () => {
       </div>   
 
       {/* Main Content */}  
-      <div className="flex flex-col items-center max-w-sm w-full pt-2 px-5 flex-grow px-[30px]">  
+      <div className="flex flex-col items-center max-w-sm w-full pt-2 px-5 flex-grow">  
         {/* Hero Image */}  
         <div className="w-full h-[173px] aspect-[4/3] relative rounded-md overflow-hidden">  
           <img  
@@ -118,7 +124,7 @@ const Login = () => {
       </div>  
 
       {/* Login Form */}
-      <div className="w-full max-w-sm mb-2  px-[30px]">
+      <div className="w-full max-w-sm mb-2 px-[30px]">
         <form onSubmit={handleLogin} className="space-y-3">
           <div>
             <label className={`block text-sm font-medium mb-1 ${
@@ -129,8 +135,7 @@ const Login = () => {
             <div className="relative">
               <input
                 type="email"
-                placeholder={userData?.email}
-                disabled
+                placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={`w-full px-4 py-2 rounded-lg text-sm ${
@@ -165,11 +170,11 @@ const Login = () => {
             </div>
           </div>
 
-          {error? (
+          {error && (
             <div className="text-red-500 text-sm text-center h-[20px]">
               {error}
             </div>
-          ): <div className = "h-[20px]"></div>}
+          )}
 
           <button
             type="submit"
@@ -192,6 +197,27 @@ const Login = () => {
           </button>
         </p>
       </div>
+
+      {/* Session Expired Alert */}
+      <AnimatePresence>
+        {showExpiredAlert && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-xl shadow-lg ${
+              theme === 'dark' ? 'bg-slate-800' : 'bg-white'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-red-500" />
+              <span className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
+                Your session has expired. Please log in again.
+              </span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

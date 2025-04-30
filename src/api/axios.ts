@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 // Create axios instance with base URL
 const instance = axios.create({
@@ -26,12 +27,16 @@ instance.interceptors.response.use(
       // Handle specific status codes
       if (error.response.status === 401) {
         // Unauthorized - token expired or invalid
+        const { logout } = useAuth();
+        
+        // Clear local storage
         localStorage.removeItem('authToken');
+        localStorage.removeItem('userData');
         
-        // Use window.location for navigation outside React components
-        window.location.href = '/login';
+        // Clear auth state
+        logout();
         
-        // Optionally, you can add a query parameter to indicate token expiration
+        // Redirect to login page with expired flag
         window.location.href = '/login?expired=true';
       }
     }

@@ -13,6 +13,9 @@ import { PriceProvider } from './context/PriceContext';
 import { EthereumPriceProvider } from './context/EthereumPriceContext';
 import { BitcoinPriceProvider } from './context/BitcoinPriceContext';
 import { PredictionProvider } from './context/PredictionContext';
+import { GlobalPredictionProvider } from './context/GlobalPredictionContext';
+import { PredictionService } from './services/PredictionService';
+
 function App() {
   return (
     <ThemeProvider>
@@ -21,17 +24,20 @@ function App() {
           <EthereumPriceProvider>
             <BitcoinPriceProvider>
               <PredictionProvider>
-                <BrowserRouter>
-                  <Routes>
-                    <Route path="/" element={<Welcome />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/set-password" element={<SetPassword />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/track" element={<Track />} />
-                    <Route path="/lottery" element={<Lottery />} />
-                    <Route path="/profile" element={<Profile />} />
-                  </Routes>
-                </BrowserRouter>
+                <GlobalPredictionProvider>
+                  <PredictionService />
+                  <BrowserRouter>
+                    <Routes>
+                      <Route path="/" element={<Welcome />} />
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/set-password" element={<SetPassword />} />
+                      <Route path="/home" element={<Home />} />
+                      <Route path="/track" element={<Track />} />
+                      <Route path="/lottery" element={<Lottery />} />
+                      <Route path="/profile" element={<Profile />} />
+                    </Routes>
+                  </BrowserRouter>
+                </GlobalPredictionProvider>
               </PredictionProvider>
             </BitcoinPriceProvider>
           </EthereumPriceProvider>
