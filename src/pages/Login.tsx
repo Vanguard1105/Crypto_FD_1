@@ -7,6 +7,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTelegram } from '../components/useTelegram';
 import { useUser } from '../context/UserContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import { div } from 'framer-motion/client';
 
 const Login = () => {
   const [password, setPassword] = useState('');
@@ -170,11 +171,11 @@ const Login = () => {
             </div>
           </div>
 
-          {error && (
+          {error?  (
             <div className="text-red-500 text-sm text-center h-[20px]">
               {error}
             </div>
-          )}
+          ) : <div className='h-[20px]'></div>}
 
           <button
             type="submit"
