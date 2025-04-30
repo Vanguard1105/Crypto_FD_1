@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Track from './pages/Track';
 import Lottery from './pages/Lottery';
+import BuyTicket from './pages/BuyTicket';
 import { PriceProvider } from './context/PriceContext';
 import { EthereumPriceProvider } from './context/EthereumPriceContext';
 import { BitcoinPriceProvider } from './context/BitcoinPriceContext';
@@ -34,6 +35,7 @@ function App() {
                       <Route path="/home" element={<Home />} />
                       <Route path="/track" element={<Track />} />
                       <Route path="/lottery" element={<Lottery />} />
+                      <Route path="/buy-ticket" element={<BuyTicket />} />
                       <Route path="/profile" element={<Profile />} />
                     </Routes>
                   </BrowserRouter>
