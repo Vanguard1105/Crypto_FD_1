@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { PriceData, DrawingState } from '../types';
 
 // Define types for each token's prediction state
