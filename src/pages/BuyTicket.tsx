@@ -292,11 +292,11 @@ const BuyTicket = () => {
             }`}>
               My tickets:
             </h3>
-            <div className={`text-lg font-semibold space-y-2 flex items-center gap-2${
-              theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-            }`}>
+            <div className={`text-lg font-semibold space-y-2 gap-2`}>
               {ticketHistory.map((ticket) => (
-                <span className=''>{ticket.prediction}</span>
+                <span className={`${
+                theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
+                }`}>{ticket.prediction}</span>
               ))}
             </div>
           </div>
