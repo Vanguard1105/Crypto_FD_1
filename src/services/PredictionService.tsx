@@ -4,6 +4,7 @@ import { usePrice } from '../context/PriceContext';
 import { useEthereumPrice } from '../context/EthereumPriceContext';
 import { useBitcoinPrice } from '../context/BitcoinPriceContext';
 import { PriceData } from '../types';
+import { usePrediction } from '../context/PredictionContext';
 
 const DRAW_DURATION = 90000; // 1.5 minutes in milliseconds
 const PREPARATION_TIME = 30000; // 30 seconds in milliseconds
@@ -13,7 +14,7 @@ export const PredictionService: React.FC = () => {
   const { latestPrice: solLatestPrice } = usePrice();
   const { latestPrice: ethLatestPrice } = useEthereumPrice();
   const { latestPrice: btcLatestPrice } = useBitcoinPrice();
-
+  const { setPredictData } = usePrediction();
   // Run SOL prediction
   useEffect(() => {
     const runPrediction = (
@@ -55,6 +56,9 @@ export const PredictionService: React.FC = () => {
         const updatedData = [...currentData, newPoint].slice(-300);
         updatePrediction(token, {
           predictData: updatedData,
+        });
+        if (token == "SOL") setPredictData(prev => {
+          return [...prev, newPoint].slice(-300); // Keep last 300 points
         });
       }, 400);
 
