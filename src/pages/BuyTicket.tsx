@@ -13,8 +13,6 @@ import FlipNumber from '../components/FlipNumber';
 import { FaUserCog } from "react-icons/fa";
 import { CgChevronLeft } from "react-icons/cg";
 import { PriceData, TimePeriod } from '../types';
-import { span } from 'framer-motion/client';
-
 
 interface Ticket {
   id: number;
@@ -289,12 +287,12 @@ const BuyTicket = () => {
         {/* Ticket History */}
         {ticketHistory.length > 0 && (
           <div className="mb-8">
-            <h3 className={`text-lg font-semibold mb-4 ${
+            <h3 className={`text-lg font-semibold mb-2 ${
               theme === 'dark' ? 'text-white' : 'text-slate-900'
             }`}>
               My tickets:
             </h3>
-            <div className={`text-lg font-semibold mb-4 space-y-2 flex ${
+            <div className={`text-lg font-semibold space-y-2 ${
               theme === 'dark' ? 'text-white' : 'text-slate-900'
             }`}>
               {ticketHistory.map((ticket) => (
