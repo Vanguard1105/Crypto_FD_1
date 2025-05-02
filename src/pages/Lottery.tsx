@@ -87,7 +87,7 @@ const Lottery = () => {
     const updateInterval = setInterval(() => {
       const now = Date.now();
       setPredictData(prev => {
-        const variation = (Math.random() - 0.5) * 0.2; // Random variation between -0.1 and 0.1
+        const variation = (Math.random() - 0.5) * 0.01; // Random variation between -0.1 and 0.1
         const newPoint = {
           timestamp: now,
           price: latestPrice + variation,
