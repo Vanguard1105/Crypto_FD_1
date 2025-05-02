@@ -224,16 +224,16 @@ const BuyTicket = () => {
           <div className={`p-2 rounded-lg ${
             theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'
           }`}>
-            <div className="flex items-center mb-2">
-              <span className={`text-xl font-semibold ${
+            <div className="flex text-md items-center mb-2">
+              <span className={`font-semibold ${
                 theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
               }`}>
                 Current Price:
               </span>
-              <span className={`text-xl font-bold px-2 text-[#32bb4a]`}>
+              <span className={`font-bold px-2 text-[#32bb4a]`}>
                 {latestPrice.toFixed(3)}
               </span>
-              <span className={`text-xl font-semibold ${
+              <span className={`font-semibold ${
                 theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
               }`}>USD</span>
             </div>
@@ -246,18 +246,6 @@ const BuyTicket = () => {
                   }`}>
                     <span className='text-[#286e34]'>{lotteryType} prediction</span> for Mar 26, 12:00
                   </span>
-                  <div className="flex items-center gap-1">
-                    <span className={`px-2 ${
-                        theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                    }`}>With</span>
-                    <img 
-                      src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
-                      className="w-4 h-4"
-                    />
-                    <span className={`text-[#007aff]`}>
-                      50
-                    </span>
-                  </div>
                 </div>
 
                 <div className="flex">
@@ -294,7 +282,14 @@ const BuyTicket = () => {
                 onClick={handleSubmit}
                 className="w-full py-3 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors"
               >
-                Predict
+                Buy Ticket with 
+                <img 
+                    src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
+                    className="w-4 h-4"
+                />
+                <span className={`text-[#007aff]`}>
+                    50
+                </span>
               </button>
             </div>
           </div>
