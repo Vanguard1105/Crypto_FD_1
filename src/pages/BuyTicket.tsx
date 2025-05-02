@@ -228,17 +228,20 @@ const BuyTicket = () => {
           <div className={`p-4 rounded-lg ${
             theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'
           }`}>
-            <div className="flex justify-between items-center mb-6">
-              <span className={`text-sm ${
+            <div className="flex items-center mb-6">
+              <span className={`text-xl ${
                 theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
               }`}>
                 Current Price:
               </span>
-              <span className={`text-xl font-bold ${
+              <span className={`text-xl font-bold text-[#32bb4a] ${
                 theme === 'dark' ? 'text-white' : 'text-slate-900'
               }`}>
-                {latestPrice.toFixed(3)} USD
+                {latestPrice.toFixed(3)} 
               </span>
+              <span className={`text-xl font-bold ${
+                theme === 'dark' ? 'text-white' : 'text-slate-900'
+              }`}>USD</span>
             </div>
 
             <div className="space-y-4">
@@ -247,9 +250,10 @@ const BuyTicket = () => {
                   <span className={`text-sm ${
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                   }`}>
-                    {lotteryType} prediction for Mar 26, 12:00
+                    <span className='text-[#286e34]'>{lotteryType} prediction</span> for Mar 26, 12:00
                   </span>
                   <div className="flex items-center gap-1">
+                    <span>with </span>
                     <img 
                       src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
                       className="w-4 h-4"
