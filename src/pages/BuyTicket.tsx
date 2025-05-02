@@ -203,7 +203,7 @@ const BuyTicket = () => {
 
       {/* Content */}
       <div className="px-4">
-        <div className="mb-4">
+        <div className="mb-2">
           <h2 className={`text-xl font-bold mb-4 text-[#814c02]`}>
             {lotteryType} PREDICTION
           </h2>
@@ -254,9 +254,7 @@ const BuyTicket = () => {
                       src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
                       className="w-4 h-4"
                     />
-                    <span className={`text-sm ${
-                      theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                    }`}>
+                    <span className={`text-xl text-[#007aff]`}>
                       50
                     </span>
                   </div>
