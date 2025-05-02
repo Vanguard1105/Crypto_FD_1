@@ -8,7 +8,7 @@ interface FlipNumberProps {
 
 const FlipNumber: React.FC<FlipNumberProps> = ({ value, theme }) => {
   return (
-    <div className="relative w-16 h-[64px]">
+    <div className="relative w-16 h-[60px]">
       <AnimatePresence mode="popLayout">
         <motion.div
           key={value}

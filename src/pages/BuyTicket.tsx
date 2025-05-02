@@ -143,7 +143,7 @@ const BuyTicket = () => {
   const renderTimeUnit = (value: number, label: string) => (
     <div className="flex flex-col items-center">
       <FlipNumber value={value} theme={theme} />
-      <span className={`text-sm ${
+      <span className={`text-[10px] ${
         theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
       }`}>
         {label}
