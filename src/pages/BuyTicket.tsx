@@ -277,7 +277,7 @@ const BuyTicket = () => {
                 Buy Ticket with 
                 <img 
                     src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
-                    className="w-4 h-4 items-center self-center px-2"
+                    className="w-4 h-4 items-center self-center mx-2"
                 />
                 <span className={`text-white`}>
                     50
