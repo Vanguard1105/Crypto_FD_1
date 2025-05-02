@@ -255,11 +255,11 @@ const BuyTicket = () => {
                     type="text"
                     value={prediction || latestPrice.toFixed(3)}
                     onChange={handlePredictionChange}
-                    className={`flex-1 text-center py-2 rounded-lg ${
-                      theme === 'dark'
-                        ? 'bg-slate-700 text-white'
-                        : 'bg-white text-slate-900'
-                    }`}
+                    className={`flex-1 text-center w-full pr-8 pl-4 py-2 rounded-lg text-sm ${
+                        theme === 'dark'
+                          ? 'bg-slate-800 text-white border-slate-700'
+                          : 'bg-slate-50 text-slate-900 border-slate-200'
+                      } border focus:outline-none focus:ring-2 focus:ring-blue-500`}
                   />
                   <button
                     onClick={() => setPrediction((Number(prediction || latestPrice) + 0.001).toFixed(3))}
