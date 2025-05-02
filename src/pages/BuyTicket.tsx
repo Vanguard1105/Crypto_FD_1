@@ -160,7 +160,7 @@ const BuyTicket = () => {
             <CgChevronLeft 
               size={16} 
               className={`text-${theme === 'dark' ? 'slate-400 hover:text-slate-300' : 'slate-900 hover:text-slate-800'} cursor-pointer`} 
-              onClick={() => navigate(`/lottery?predictType=${"lottery"}`)}
+              onClick={() => navigate(`/lottery?predictType=${"lottery"}&type=${lotteryType}`)}
             />
             <FaUserCog 
               className={`text-${theme === 'dark' ? 'slate-400 hover:text-slate-300' : 'slate-900 hover:text-slate-800'} cursor-pointer`} 
