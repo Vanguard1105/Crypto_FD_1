@@ -205,7 +205,7 @@ const BuyTicket = () => {
       <div className="px-4">
         <div className="mb-2">
           <h2 className={`text-xl font-bold mb-4 text-[#814c02]`}>
-            {lotteryType} PREDICTION
+            {lotteryType} PREDICTION for Mar 26, 12:00
           </h2>
           
           <div className="flex justify-between items-center mb-4 px-3">
@@ -224,13 +224,6 @@ const BuyTicket = () => {
           <div className={`p-2 rounded-lg ${
             theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'
           }`}>
-            <div className="flex justify-between items-center mb-2 text-lg font-bold">
-                <span className={`${
-                theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                }`}>
-                <span className='text-[#286e34]'>{lotteryType} prediction</span> for Mar 26, 12:00
-                </span>
-            </div>
             <div className="space-y-4">
               <div>
                 <div className="flex text-md items-center mb-2">
