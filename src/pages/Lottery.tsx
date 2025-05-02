@@ -15,6 +15,7 @@ import { useUser } from '../context/UserContext';
 import { fetchSolanaBalance } from '../utils/fetchSolanaBalance';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useWebSocket } from '../context/WebSocketContext';
 
 type LotteryType = 'predict' | 'lottery';
 type VoteType = 'up' | 'down' | null;
@@ -24,6 +25,7 @@ const PREPARATION_TIME = 30000; // 30 seconds in milliseconds
 
 const Lottery = () => {
   const navigate = useNavigate();
+  const { lotteryUpdates } = useWebSocket();
   const { theme, toggleTheme } = useTheme();
   const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>('5m');
   const { userData, setUserData} = useUser();
@@ -36,6 +38,7 @@ const Lottery = () => {
   const [selectedVote, setSelectedVote] = useState<VoteType>(null);
   const [betAmount, setBetAmount] = useState<string>('1');
   const [showVoteSuccess, setShowVoteSuccess] = useState(false);
+  
   const [drawingState, setDrawingState] = useState<DrawingState>({
     isActive: false,
     startTime: 0,
@@ -98,6 +101,10 @@ const Lottery = () => {
       fetchBalance();
     }
   }, [userData?.publicKey]);
+
+  useEffect(() => {
+    console.log(lotteryUpdates)
+  }, [lotteryUpdates]);
 
   useEffect(() => {
     if (!drawingState.isActive) {

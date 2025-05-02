@@ -13,6 +13,7 @@ import FlipNumber from '../components/FlipNumber';
 import { FaUserCog } from "react-icons/fa";
 import { CgChevronLeft } from "react-icons/cg";
 import { PriceData, TimePeriod } from '../types';
+import axios from "../api/axios";
 
 interface Ticket {
   id: number;
@@ -36,7 +37,26 @@ const BuyTicket = () => {
   const timePeriod = searchParams.get('timePeriod') || '5m';
   const lotteryId = searchParams.get('id');
   const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>(timePeriod as TimePeriod);
+  const [error, setError] = useState('');
+  const [showError, setShowError] = useState(false);
 
+  const ErrorNotification = () => (
+    <AnimatePresence>
+      {showError && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          className={`fixed top-8 end-2 transform px-4 py-2 rounded-md flex items-center gap-2 ${
+            theme === 'dark' ? 'bg-red-900 text-red-300' : 'bg-red-50 text-red-600'
+          } shadow-lg`}
+        >
+          <span className="text-sm font-medium">{error}</span>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
   // Get price data based on token type
   const { priceHistory: solanaHistory, latestPrice: solanaLatestPrice, previousPrice: solanaPreviousPrice } = usePrice();
   const { priceHistory: ethereumHistory, latestPrice: ethereumLatestPrice, previousPrice: ethereumPreviousPrice } = useEthereumPrice();
@@ -140,13 +160,21 @@ const BuyTicket = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!prediction || !userData?.diamond_count || userData?.diamond_count < 50) return;
-    
-    setShowSuccess(true);
-    setTimeout(() => {
-      setShowSuccess(false);
-    }, 2000);
+    try {
+        const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/lottery/buy-ticket', {
+          lotteryId,
+        });
+        setShowSuccess(true);
+        setTimeout(() => {
+            setShowSuccess(false);
+        }, 2000);
+      } catch (err: any) {
+        setError(err.response?.data?.message || 'Your request is failed..');
+        setShowError(true);
+        setTimeout(() => setShowError(false), 3000);
+      }    
   };
 
   const handlePeriodChange = (period: TimePeriod) => {
@@ -164,6 +192,7 @@ const BuyTicket = () => {
 
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
+      <ErrorNotification />
       {/* Header */}
       <div className={`px-3 flex flex-col items-center sticky top-0 z-10 ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
         <div className={`flex flex-row justify-between w-full`}>

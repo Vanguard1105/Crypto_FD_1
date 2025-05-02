@@ -16,6 +16,7 @@ import { BitcoinPriceProvider } from './context/BitcoinPriceContext';
 import { PredictionProvider } from './context/PredictionContext';
 import { GlobalPredictionProvider } from './context/GlobalPredictionContext';
 import { PredictionService } from './services/PredictionService';
+import { WebSocketProvider } from './context/WebSocketContext';
 
 function App() {
   return (
@@ -26,21 +27,24 @@ function App() {
             <BitcoinPriceProvider>
               <PredictionProvider>
                 <GlobalPredictionProvider>
-                  <PredictionService />
-                  <BrowserRouter>
-                    <Routes>
-                      <Route path="/" element={<Welcome />} />
-                      <Route path="/login" element={<Login />} />
-                      <Route path="/set-password" element={<SetPassword />} />
-                      <Route path="/home" element={<Home />} />
-                      <Route path="/track" element={<Track />} />
-                      <Route path="/lottery" element={<Lottery />} />
-                      <Route path="/buy-ticket" element={<BuyTicket />} />
-                      <Route path="/profile" element={<Profile />} />
-                    </Routes>
-                  </BrowserRouter>
+                  <WebSocketProvider>
+                    <PredictionService />
+                    <BrowserRouter>
+                      <Routes>
+                        <Route path="/" element={<Welcome />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/set-password" element={<SetPassword />} />
+                        <Route path="/home" element={<Home />} />
+                        <Route path="/track" element={<Track />} />
+                        <Route path="/lottery" element={<Lottery />} />
+                        <Route path="/buy-ticket" element={<BuyTicket />} />
+                        <Route path="/profile" element={<Profile />} />
+                      </Routes>
+                    </BrowserRouter>
+                  </WebSocketProvider>
                 </GlobalPredictionProvider>
               </PredictionProvider>
+              
             </BitcoinPriceProvider>
           </EthereumPriceProvider>
         </PriceProvider>
