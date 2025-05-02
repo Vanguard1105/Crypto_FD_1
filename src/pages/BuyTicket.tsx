@@ -143,7 +143,7 @@ const BuyTicket = () => {
   const renderTimeUnit = (value: number, label: string) => (
     <div className="flex flex-col items-center">
       <FlipNumber value={value} theme={theme} />
-      <span className={`text-[11px]  text-[#814c02]`}>
+      <span className={`text-[11px]  text-[#814c02] font-semibold pt-1`}>
         {label}
       </span>
     </div>
@@ -247,7 +247,9 @@ const BuyTicket = () => {
                     <span className='text-[#286e34]'>{lotteryType} prediction</span> for Mar 26, 12:00
                   </span>
                   <div className="flex items-center gap-1">
-                    <span>with </span>
+                    <span className={`text-sm px-2 ${
+                        theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
+                    }`}>with</span>
                     <img 
                       src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
                       className="w-4 h-4"
