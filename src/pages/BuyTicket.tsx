@@ -28,15 +28,15 @@ const BuyTicket = () => {
   const { theme, toggleTheme } = useTheme();
   const { userData, setUserData } = useUser();
   const [solBalance, setSolBalance] = useState<number | null>(null);
-  const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>('5m');
   const [prediction, setPrediction] = useState<string>('');
   const [showSuccess, setShowSuccess] = useState(false);
   const [countdown, setCountdown] = useState({ hours: 16, minutes: 43, seconds: 27 });
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const lotteryType = searchParams.get('type') || 'SOL';
+  const timePeriod = searchParams.get('timePeriod') || '5m';
   const lotteryId = searchParams.get('id');
-  const status = searchParams.get('status');
+  const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>(timePeriod as TimePeriod);
 
   // Get price data based on token type
   const { priceHistory: solanaHistory, latestPrice: solanaLatestPrice, previousPrice: solanaPreviousPrice } = usePrice();
@@ -133,7 +133,6 @@ const BuyTicket = () => {
     setShowSuccess(true);
     setTimeout(() => {
       setShowSuccess(false);
-      navigate('/lottery');
     }, 2000);
   };
 
