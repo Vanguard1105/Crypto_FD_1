@@ -96,58 +96,6 @@ const BuyTicket = () => {
         prediction: 137.845,
         status: 'lost',
         actualPrice: 136.982
-      },{
-        id: 1,
-        date: '2025.03.23 09:00',
-        prediction: 138.245,
-        status: 'won',
-        actualPrice: 138.251
-      },
-      {
-        id: 2,
-        date: '2025.03.23 12:00',
-        prediction: 137.845,
-        status: 'lost',
-        actualPrice: 136.982
-      },{
-        id: 1,
-        date: '2025.03.23 09:00',
-        prediction: 138.245,
-        status: 'won',
-        actualPrice: 138.251
-      },
-      {
-        id: 2,
-        date: '2025.03.23 12:00',
-        prediction: 137.845,
-        status: 'lost',
-        actualPrice: 136.982
-      },{
-        id: 1,
-        date: '2025.03.23 09:00',
-        prediction: 10038.245,
-        status: 'won',
-        actualPrice: 138.251
-      },
-      {
-        id: 2,
-        date: '2025.03.23 12:00',
-        prediction: 137.845,
-        status: 'lost',
-        actualPrice: 136.982
-      },{
-        id: 1,
-        date: '2025.03.23 09:00',
-        prediction: 138.245,
-        status: 'won',
-        actualPrice: 138.251
-      },
-      {
-        id: 2,
-        date: '2025.03.23 12:00',
-        prediction: 137.845,
-        status: 'lost',
-        actualPrice: 136.982
       }
   ]);
 
