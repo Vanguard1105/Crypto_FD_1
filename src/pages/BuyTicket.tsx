@@ -13,6 +13,7 @@ import FlipNumber from '../components/FlipNumber';
 import { FaUserCog } from "react-icons/fa";
 import { CgChevronLeft } from "react-icons/cg";
 import { PriceData, TimePeriod } from '../types';
+import { span } from 'framer-motion/client';
 
 
 interface Ticket {
@@ -128,7 +129,7 @@ const BuyTicket = () => {
   };
 
   const handleSubmit = () => {
-    if (!prediction) return;
+    if (!prediction || !userData?.diamond_count || userData?.diamond_count < 50) return;
     
     setShowSuccess(true);
     setTimeout(() => {
@@ -293,49 +294,11 @@ const BuyTicket = () => {
             }`}>
               My tickets:
             </h3>
-            <div className="space-y-3">
+            <div className={`text-lg font-semibold mb-4 space-y-2 flex ${
+              theme === 'dark' ? 'text-white' : 'text-slate-900'
+            }`}>
               {ticketHistory.map((ticket) => (
-                <div
-                  key={ticket.id}
-                  className={`p-4 rounded-lg ${
-                    theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'
-                  }`}
-                >
-                  <div className="flex justify-between items-center mb-2">
-                    <span className={`text-sm ${
-                      theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                    }`}>
-                      {ticket.date}
-                    </span>
-                    <span className={`text-sm font-medium ${
-                      ticket.status === 'won'
-                        ? 'text-green-500'
-                        : ticket.status === 'lost'
-                        ? 'text-red-500'
-                        : theme === 'dark'
-                        ? 'text-slate-400'
-                        : 'text-slate-600'
-                    }`}>
-                      {ticket.status.toUpperCase()}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className={`text-sm ${
-                        theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                      }`}>
-                        Prediction: ${ticket.prediction.toFixed(3)}
-                      </p>
-                      {ticket.actualPrice && (
-                        <p className={`text-sm ${
-                          theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                        }`}>
-                          Actual: ${ticket.actualPrice.toFixed(3)}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                <span className=''>{ticket.prediction}</span>
               ))}
             </div>
           </div>
