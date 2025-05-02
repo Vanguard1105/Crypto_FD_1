@@ -26,12 +26,13 @@ const Lottery = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>('5m');
-  const [selectedType, setSelectedType] = useState<LotteryType>("predict");
   const { userData, setUserData} = useUser();
   const [solBalance, setSolBalance] = useState<number | null | undefined>(userData?.solBalance);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const lotteryType = searchParams.get('type') || 'SOL';
+  const predictType = searchParams.get('predictType') || 'predict';
+  const [selectedType, setSelectedType] = useState<LotteryType>(predictType as LotteryType);
   const [selectedVote, setSelectedVote] = useState<VoteType>(null);
   const [betAmount, setBetAmount] = useState<string>('1');
   const [showVoteSuccess, setShowVoteSuccess] = useState(false);
@@ -341,7 +342,7 @@ const Lottery = () => {
           {lotteries.map((lottery) => (
           <div
           key={lottery.id}
-          onClick={() => navigate(`/buy-ticket?type=${lotteryType}&id=${lottery.id}&status=${lottery.status}`)}
+          onClick={() => navigate(`/buy-ticket?type=${lotteryType}&id=${lottery.id}&timePeriod=${selectedPeriod}`)}
           className={`relative rounded-xl overflow-hidden group cursor-pointer border ${
             theme === 'dark' ? 'bg-slate-800 border-slate-800' : 'bg-slate-100 border-slate-400'
           } shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-md ${
