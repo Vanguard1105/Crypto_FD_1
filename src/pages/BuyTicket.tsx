@@ -240,21 +240,21 @@ const BuyTicket = () => {
 
             <div className="space-y-4">
               <div>
-                <div className="flex justify-between items-center mb-2 font-bold">
-                  <span className={`text-xl ${
+                <div className="flex justify-between items-center mb-2 text-md font-bold">
+                  <span className={`${
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                   }`}>
                     <span className='text-[#286e34]'>{lotteryType} prediction</span> for Mar 26, 12:00
                   </span>
                   <div className="flex items-center gap-1">
-                    <span className={`text-xl px-2 ${
+                    <span className={`px-2 ${
                         theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                    }`}>with</span>
+                    }`}>With</span>
                     <img 
                       src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
                       className="w-4 h-4"
                     />
-                    <span className={`text-xl text-[#007aff]`}>
+                    <span className={`text-[#007aff]`}>
                       50
                     </span>
                   </div>
