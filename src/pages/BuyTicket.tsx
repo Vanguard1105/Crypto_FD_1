@@ -125,7 +125,7 @@ const BuyTicket = () => {
       },{
         id: 1,
         date: '2025.03.23 09:00',
-        prediction: 138.245,
+        prediction: 10038.245,
         status: 'won',
         actualPrice: 138.251
       },
