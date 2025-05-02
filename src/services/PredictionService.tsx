@@ -57,7 +57,7 @@ export const PredictionService: React.FC = () => {
         updatePrediction(token, {
           predictData: updatedData,
         });
-        if (token == "SOL") setPredictData(prev => {
+        if (token === 'SOL') setPredictData(prev => {
           return [...prev, newPoint].slice(-300); // Keep last 300 points
         });
       }, 400);
