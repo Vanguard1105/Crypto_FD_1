@@ -16,12 +16,26 @@ import { fetchSolanaBalance } from '../utils/fetchSolanaBalance';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWebSocket } from '../context/WebSocketContext';
+import axios from '../api/axios';
+import { useTimeSync } from '../context/TimeSyncContext';
 
 type LotteryType = 'predict' | 'lottery';
 type VoteType = 'up' | 'down' | null;
 
 const DRAW_DURATION = 90000; // 1.5 minutes in milliseconds
 const PREPARATION_TIME = 30000; // 30 seconds in milliseconds
+
+interface Lottery {
+  id: number;
+  date: string;
+  buyTicketTime: string;
+  startTime: number;
+  endTime: number;
+  buyersLength: number;
+  currencyType: string;
+  totalValue: number;
+  price: number;
+}
 
 const Lottery = () => {
   const navigate = useNavigate();
@@ -38,7 +52,8 @@ const Lottery = () => {
   const [selectedVote, setSelectedVote] = useState<VoteType>(null);
   const [betAmount, setBetAmount] = useState<string>('1');
   const [showVoteSuccess, setShowVoteSuccess] = useState(false);
-  
+  const [lotteries, setLotteries] = useState<Lottery [] | null>(null);
+  const { syncedTime } = useTimeSync();
   const [drawingState, setDrawingState] = useState<DrawingState>({
     isActive: false,
     startTime: 0,
@@ -54,13 +69,29 @@ const Lottery = () => {
   
   let priceHistory: PriceData[], latestPrice, previousPrice;
 
-  // List of available lotteries
-  const lotteries = [
-    { id: 26, date: '2025.03.24', startTime: '12:00:00', status: 'upcoming', type: 'lottery' },
-    { id: 25, date: '2025.03.24', startTime: '09:00:00', status: 'upcoming', type: 'lottery' },
-    { id: 24, date: '2025.03.23', startTime: '11:20:00', status: 'ended', type: 'lottery' },
-    { id: 23, date: '2025.03.23', startTime: '09:20:00', status: 'ended', type: 'lottery' },
-  ];
+  useEffect(() => {
+    const fetchLotteries = async () => {
+      try {
+        const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/lottery/get-top-lotteries', {
+          index: 1,
+          currencyType: lotteryType,
+        });
+        // Ensure the response data is an array
+        console.log("get_list", response.data)
+
+        if (Array.isArray(response.data.bonuses)) {
+          setLotteries(response.data.bonuses);
+        } else {
+          console.error('Invalid bonuses data format:', response.data);
+          setLotteries(null);
+        }
+      } catch (error) {
+        console.error('Error fetching bonuses:', error);
+        setLotteries(null);
+      }
+    };
+    fetchLotteries();
+  }, []);
 
   switch (lotteryType) {
     case 'SOL':
@@ -329,14 +360,14 @@ const Lottery = () => {
       ) : (
         /* Lottery List */
         <div className="px-4 space-y-1 mt-4">
-          {lotteries.map((lottery) => (
+          {lotteries?.map((lottery) => (
           <div
-          key={lottery.id}
+          key={lottery?.id}
           onClick={() => navigate(`/buy-ticket?type=${lotteryType}&id=${lottery.id}&timePeriod=${selectedPeriod}`)}
           className={`relative rounded-xl overflow-hidden group cursor-pointer border ${
             theme === 'dark' ? 'bg-slate-800 border-slate-800' : 'bg-slate-100 border-slate-400'
           } shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-md ${
-            lottery.status === 'ended' ? 'opacity-80' : ''
+            lottery?.endTime < syncedTime ? 'opacity-80' : ''
           } hover:shadow-purple-500/20`}
         >
           <div className={`px-2 py-1 h-full flex flex-col justify-between relative ${
@@ -347,29 +378,29 @@ const Lottery = () => {
                 <div className="flex items-center space-x-2">
                   <Calendar size={16} className="text-purple-400" />
                   <span className="text-sm font-medium text-purple-400">
-                    {lottery.date}
+                    {lottery?.date}
                   </span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Timer size={16} className={`
-                    ${lottery.status === 'ended' 
+                    ${lottery?.endTime < syncedTime 
                       ? theme === 'dark' ? 'text-red-400' : 'text-red-500'
                       : theme === 'dark' ? 'text-green-400' : 'text-green-500'
                     }
                   `} />
                   <span className={`text-sm font-medium ${
-                    lottery.status === 'ended' 
+                    lottery?.endTime < syncedTime 
                       ? theme === 'dark' ? 'text-red-400' : 'text-red-500'
                       : theme === 'dark' ? 'text-green-400' : 'text-green-500'
                   }`}>
-                    {lottery.status === 'ended' ? 'Ended:' : 'Start:'} {lottery.startTime}
+                    {lottery?.endTime < syncedTime ? 'Ended:' : 'Start:'} {lottery?.startTime}
                   </span>
                 </div>
               </div>
               <div className="flex items-center space-x-2">
                 <Trophy size={20} className="text-yellow-500" />
                 <span className="text-2xl font-bold text-yellow-500">
-                  #{lottery.id}
+                  #{lottery?.id}
                 </span>
               </div>
             </div>

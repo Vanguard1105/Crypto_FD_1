@@ -17,6 +17,7 @@ import { PredictionProvider } from './context/PredictionContext';
 import { GlobalPredictionProvider } from './context/GlobalPredictionContext';
 import { PredictionService } from './services/PredictionService';
 import { WebSocketProvider } from './context/WebSocketContext';
+import { TimeSyncProvider } from './context/TimeSyncContext';
 
 function App() {
   return (
@@ -27,21 +28,23 @@ function App() {
             <BitcoinPriceProvider>
               <PredictionProvider>
                 <GlobalPredictionProvider>
-                  <WebSocketProvider>
-                    <PredictionService />
-                    <BrowserRouter>
-                      <Routes>
-                        <Route path="/" element={<Welcome />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/set-password" element={<SetPassword />} />
-                        <Route path="/home" element={<Home />} />
-                        <Route path="/track" element={<Track />} />
-                        <Route path="/lottery" element={<Lottery />} />
-                        <Route path="/buy-ticket" element={<BuyTicket />} />
-                        <Route path="/profile" element={<Profile />} />
-                      </Routes>
-                    </BrowserRouter>
-                  </WebSocketProvider>
+                  <TimeSyncProvider>
+                    <WebSocketProvider>
+                      <PredictionService />
+                      <BrowserRouter>
+                        <Routes>
+                          <Route path="/" element={<Welcome />} />
+                          <Route path="/login" element={<Login />} />
+                          <Route path="/set-password" element={<SetPassword />} />
+                          <Route path="/home" element={<Home />} />
+                          <Route path="/track" element={<Track />} />
+                          <Route path="/lottery" element={<Lottery />} />
+                          <Route path="/buy-ticket" element={<BuyTicket />} />
+                          <Route path="/profile" element={<Profile />} />
+                        </Routes>
+                      </BrowserRouter>
+                    </WebSocketProvider>
+                  </TimeSyncProvider>
                 </GlobalPredictionProvider>
               </PredictionProvider>
               
