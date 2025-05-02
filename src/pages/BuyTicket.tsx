@@ -245,9 +245,7 @@ const BuyTicket = () => {
                 <div className="relative flex items-center">
                   <button
                     onClick={() => setPrediction((Number(prediction || latestPrice) - 0.001).toFixed(3))}
-                    className={`absolute right-1 px-4 py-2 selft-center text-md font-bold text-[#81182c] ${
-                      theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                    }`}
+                    className={`absolute right-1 px-4 py-2 selft-center text-md font-bold text-[#81182c]`}
                   >
                     -
                   </button>
@@ -263,9 +261,7 @@ const BuyTicket = () => {
                   />
                   <button
                     onClick={() => setPrediction((Number(prediction || latestPrice) + 0.001).toFixed(3))}
-                    className={`absolute left-1 px-4 py-2 selft-center text-md font-bold  text-[#286e34] ${
-                      theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                    }`}
+                    className={`absolute left-1 px-4 py-2 selft-center text-md font-bold  text-[#286e34]`}
                   >
                     +
                   </button>
