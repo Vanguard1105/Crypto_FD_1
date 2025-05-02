@@ -360,9 +360,9 @@ const BuyTicket = () => {
             </h3>
             <div className={`flex text-md font-semibold items-center`}>
               {ticketHistory.map((ticket) => (
-                <span className={`pr-2 ${
+                <div className={`pr-2 ${
                 theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                }`}>{ticket.prediction}</span>
+                }`}>{ticket.prediction}</div>
               ))}
             </div>
           </div>
