@@ -221,10 +221,10 @@ const BuyTicket = () => {
             </div>
           </div>
 
-          <div className={`p-4 rounded-lg ${
+          <div className={`p-2 rounded-lg ${
             theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'
           }`}>
-            <div className="flex items-center mb-6">
+            <div className="flex items-center mb-2">
               <span className={`text-xl font-semibold ${
                 theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
               }`}>
@@ -240,14 +240,14 @@ const BuyTicket = () => {
 
             <div className="space-y-4">
               <div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className={`text-sm ${
+                <div className="flex justify-between items-center mb-2 font-bold">
+                  <span className={`text-xl ${
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                   }`}>
                     <span className='text-[#286e34]'>{lotteryType} prediction</span> for Mar 26, 12:00
                   </span>
                   <div className="flex items-center gap-1">
-                    <span className={`text-sm px-2 ${
+                    <span className={`text-xl px-2 ${
                         theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                     }`}>with</span>
                     <img 
