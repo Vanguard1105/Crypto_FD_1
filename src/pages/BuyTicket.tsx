@@ -212,7 +212,7 @@ const BuyTicket = () => {
             {lotteryType} PREDICTION
           </h2>
           
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex justify-between items-center mb-4 px-3">
             <span className={`text-[20px] font-bold ${
               theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
             }`}>
