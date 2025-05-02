@@ -8,7 +8,6 @@ import {
   Tooltip,
   ResponsiveContainer,
   ReferenceLine,
-  Dot,
 } from 'recharts';
 import { format } from 'date-fns';
 import { PriceData, Theme } from '../types';
@@ -51,7 +50,7 @@ const PredictChart: React.FC<PredictChartProps> = ({
   endTime,
   startPrice,
 }) => {
-  const [smoothData, setSmoothData] = useState<PriceData[]>([]);
+  const [smoothData, setSmoothData] = useState<PriceData[]>(data);
   const [gradientAboveId] = useState(() => `gradient-above-${Math.random().toString(36).substr(2, 9)}`);
   const [gradientBelowId] = useState(() => `gradient-below-${Math.random().toString(36).substr(2, 9)}`);
   const [displayPrice, setDisplayPrice] = useState(initialLatestPrice);
