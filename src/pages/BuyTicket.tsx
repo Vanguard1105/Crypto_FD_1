@@ -204,8 +204,9 @@ const BuyTicket = () => {
       {/* Content */}
       <div className="px-4">
         <div className="mb-2">
-          <h2 className={`text-xl font-bold mb-4 text-[#814c02]`}>
-            {lotteryType} PREDICTION for Mar 26, 12:00
+          <h2 className={`text-xl font-bold mb-4`}>
+            <span className='text-[#814c02]'>{lotteryType} PREDICTION </span>
+            <span className='text-black'>for Mar 26, 12:00</span>
           </h2>
           
           <div className="flex justify-between items-center mb-4 px-3">
@@ -276,7 +277,7 @@ const BuyTicket = () => {
                 Buy Ticket with 
                 <img 
                     src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
-                    className="w-4 h-4 items-center self-center"
+                    className="w-4 h-4 items-center self-center px-2"
                 />
                 <span className={`text-white`}>
                     50
