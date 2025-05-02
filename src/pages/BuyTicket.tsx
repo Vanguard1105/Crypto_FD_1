@@ -292,8 +292,8 @@ const BuyTicket = () => {
             }`}>
               My tickets:
             </h3>
-            <div className={`text-lg font-semibold space-y-2 ${
-              theme === 'dark' ? 'text-white' : 'text-slate-900'
+            <div className={`text-lg font-semibold space-y-2 flex items-center gap-2${
+              theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
             }`}>
               {ticketHistory.map((ticket) => (
                 <span className=''>{ticket.prediction}</span>
