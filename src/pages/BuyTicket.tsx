@@ -278,12 +278,12 @@ const BuyTicket = () => {
 
               <button
                 onClick={handleSubmit}
-                className="w-full flex py-1.5 bg-blue-600 justify-center text-white rounded-lg font-medium hover:bg-blue-500 transition-colors"
+                className="w-full flex py-1.5 bg-blue-600 justify-center items-center text-white rounded-lg font-medium hover:bg-blue-500 transition-colors"
               >
                 Buy Ticket with 
                 <img 
                     src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
-                    className="w-4 h-4"
+                    className="w-4 h-4 items-center self-center"
                 />
                 <span className={`text-white`}>
                     50
