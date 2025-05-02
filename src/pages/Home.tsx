@@ -12,6 +12,7 @@ import { useState, useEffect} from 'react';
 import { fetchSolanaBalance } from '../utils/fetchSolanaBalance';
 import { useEthereumPrice } from '../context/EthereumPriceContext';
 import { useBitcoinPrice } from '../context/BitcoinPriceContext';
+import { usePrediction } from '../context/PredictionContext';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Home = () => {
   const [solBalance, setSolBalance] = useState<number | null>(null);
   const {latestPrice: ethereumLatestPrice} = useEthereumPrice();
   const {latestPrice: bitcoinLatestPrice} = useBitcoinPrice();
+  const { setPredictData } = usePrediction();
   const carouselImages = [
     './home_1.png',
     './home_2.jpg',
@@ -30,7 +32,24 @@ const Home = () => {
     './home_6.jpg',
     './home_7.jpg',
   ];
-  
+
+  // Handle real-time price updates for prediction mode
+  useEffect(() => {
+    const updateInterval = setInterval(() => {
+      const now = Date.now();
+      setPredictData(prev => {
+        const variation = (Math.random() - 0.5) * 0.01; // Random variation between -0.1 and 0.1
+        const newPoint = {
+          timestamp: now,
+          price: latestPrice + variation,
+        };
+        return [...prev, newPoint].slice(-300); // Keep last 300 points
+      });
+    }, 400); // Update every 400ms
+
+    return () => clearInterval(updateInterval);
+  }, [latestPrice, setPredictData]);
+
   useEffect(() => {
     if (userData?.publicKey) {
       const fetchBalance = async () => {
@@ -41,7 +60,6 @@ const Home = () => {
           ...userData,
           solBalance: balanceInSol
         });
-        // setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count, avatar, solBalance});
       };
       fetchBalance();
     }

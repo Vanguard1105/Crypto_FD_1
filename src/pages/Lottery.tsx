@@ -43,7 +43,7 @@ const Lottery = () => {
     startPrice: 0,
   });
   const [countdown, setCountdown] = useState(30);
-  const { predictData, setPredictData } = usePrediction();
+  const { predictData } = usePrediction();
   // Get price data based on token type
   const { priceHistory: solanaHistory, latestPrice: solanaLatestPrice, previousPrice: solanaPreviousPrice } = usePrice();
   const { priceHistory: ethereumHistory, latestPrice: ethereumLatestPrice, previousPrice: ethereumPreviousPrice } = useEthereumPrice();
@@ -81,23 +81,6 @@ const Lottery = () => {
       previousPrice = solanaPreviousPrice;
       break;
   }
-
-  // Handle real-time price updates for prediction mode
-  useEffect(() => {
-    const updateInterval = setInterval(() => {
-      const now = Date.now();
-      setPredictData(prev => {
-        const variation = (Math.random() - 0.5) * 0.01; // Random variation between -0.1 and 0.1
-        const newPoint = {
-          timestamp: now,
-          price: latestPrice + variation,
-        };
-        return [...prev, newPoint].slice(-300); // Keep last 300 points
-      });
-    }, 400); // Update every 400ms
-
-    return () => clearInterval(updateInterval);
-  }, [latestPrice, setPredictData]);
 
   // Handle drawing state and countdown
   useEffect(() => {
