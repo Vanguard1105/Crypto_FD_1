@@ -306,7 +306,7 @@ const BuyTicket = () => {
             }`}>
               My tickets:
             </h3>
-            <div className={`grid grid-cols-5 place-items-stretch gap-1 text-md font-semibold items-center`}>
+            <div className={`grid grid-cols-5 place-items-stretch gap-1 text-md font-semibold items-center px-2`}>
               {ticketHistory.map((ticket) => (
                 <div className={`pr-2 ${
                 theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
