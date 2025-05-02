@@ -141,7 +141,7 @@ const BuyTicket = () => {
   };
 
   const renderTimeUnit = (value: number, label: string) => (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center">
       <FlipNumber value={value} theme={theme} />
       <span className={`text-sm ${
         theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
@@ -218,7 +218,7 @@ const BuyTicket = () => {
             }`}>
               Start:
             </span>
-            <div className="flex gap-1">
+            <div className="flex gap-6">
               {renderTimeUnit(countdown.hours, 'HOURS')}
               {renderTimeUnit(countdown.minutes, 'MINUTES')}
               {renderTimeUnit(countdown.seconds, 'SECONDS')}
