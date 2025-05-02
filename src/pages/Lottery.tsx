@@ -79,8 +79,8 @@ const Lottery = () => {
         // Ensure the response data is an array
         console.log("get_list", response.data)
 
-        if (Array.isArray(response.data.bonuses)) {
-          setLotteries(response.data.bonuses);
+        if (Array.isArray(response.data)) {
+          setLotteries(response.data);
         } else {
           console.error('Invalid bonuses data format:', response.data);
           setLotteries(null);
