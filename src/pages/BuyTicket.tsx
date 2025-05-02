@@ -229,18 +229,16 @@ const BuyTicket = () => {
             theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'
           }`}>
             <div className="flex items-center mb-6">
-              <span className={`text-xl ${
+              <span className={`text-xl font-bold ${
                 theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
               }`}>
                 Current Price:
               </span>
-              <span className={`text-xl font-bold text-[#32bb4a] ${
-                theme === 'dark' ? 'text-white' : 'text-slate-900'
-              }`}>
-                {latestPrice.toFixed(3)} 
+              <span className={`text-xl font-semibold px-2 ${theme === 'dark' ? 'text-white' : 'text-[#32bb4a]'}`}>
+                {latestPrice.toFixed(3)}
               </span>
               <span className={`text-xl font-bold ${
-                theme === 'dark' ? 'text-white' : 'text-slate-900'
+                theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
               }`}>USD</span>
             </div>
 
