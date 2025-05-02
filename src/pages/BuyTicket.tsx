@@ -224,30 +224,28 @@ const BuyTicket = () => {
           <div className={`p-2 rounded-lg ${
             theme === 'dark' ? 'bg-slate-800' : 'bg-slate-100'
           }`}>
-            <div className="flex text-md items-center mb-2">
-              <span className={`font-semibold ${
+            <div className="flex justify-between items-center mb-2 text-lg font-bold">
+                <span className={`${
                 theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-              }`}>
-                Current Price:
-              </span>
-              <span className={`font-bold px-2 text-[#32bb4a]`}>
-                {latestPrice.toFixed(3)}
-              </span>
-              <span className={`font-semibold ${
-                theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-              }`}>USD</span>
+                }`}>
+                <span className='text-[#286e34]'>{lotteryType} prediction</span> for Mar 26, 12:00
+                </span>
             </div>
-
             <div className="space-y-4">
               <div>
-                <div className="flex justify-between items-center mb-2 text-md font-bold">
-                  <span className={`${
+                <div className="flex text-md items-center mb-2">
+                <span className={`font-semibold ${
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-                  }`}>
-                    <span className='text-[#286e34]'>{lotteryType} prediction</span> for Mar 26, 12:00
-                  </span>
+                }`}>
+                    Current Price:
+                </span>
+                <span className={`font-bold px-2 text-[#32bb4a]`}>
+                    {latestPrice.toFixed(3)}
+                </span>
+                <span className={`font-semibold ${
+                    theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
+                }`}>USD</span>
                 </div>
-
                 <div className="flex">
                   <button
                     onClick={() => setPrediction((Number(prediction || latestPrice) - 0.001).toFixed(3))}
@@ -280,14 +278,14 @@ const BuyTicket = () => {
 
               <button
                 onClick={handleSubmit}
-                className="w-full py-3 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors"
+                className="w-full flex py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-500 transition-colors"
               >
                 Buy Ticket with 
                 <img 
                     src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
                     className="w-4 h-4"
                 />
-                <span className={`text-[#007aff]`}>
+                <span className={`text-white`}>
                     50
                 </span>
               </button>
