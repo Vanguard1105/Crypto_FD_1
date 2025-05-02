@@ -278,7 +278,7 @@ const BuyTicket = () => {
 
               <button
                 onClick={handleSubmit}
-                className="w-full flex py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-500 transition-colors"
+                className="w-full flex py-1.5 bg-blue-600 justify-center text-white rounded-lg font-medium hover:bg-blue-500 transition-colors"
               >
                 Buy Ticket with 
                 <img 
