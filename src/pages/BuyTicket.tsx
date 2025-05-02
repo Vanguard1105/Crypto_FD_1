@@ -143,9 +143,7 @@ const BuyTicket = () => {
   const renderTimeUnit = (value: number, label: string) => (
     <div className="flex flex-col items-center">
       <FlipNumber value={value} theme={theme} />
-      <span className={`text-[11px] ${
-        theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-      }`}>
+      <span className={`text-[11px]  text-[#814c02]`}>
         {label}
       </span>
     </div>
@@ -206,9 +204,7 @@ const BuyTicket = () => {
       {/* Content */}
       <div className="px-4">
         <div className="mb-4">
-          <h2 className={`text-xl font-bold mb-4 ${
-            theme === 'dark' ? 'text-white' : 'text-slate-900'
-          }`}>
+          <h2 className={`text-xl font-bold mb-4 text-[#814c02]`}>
             {lotteryType} PREDICTION
           </h2>
           
