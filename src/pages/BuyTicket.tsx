@@ -191,7 +191,7 @@ const BuyTicket = () => {
       </div>
 
       {/* Chart */}
-      <div className="px-4 mb-6">
+      <div className="px-4 mb-2">
         <PriceChart
             data={priceHistory}
             latestPrice={latestPrice}
@@ -205,20 +205,20 @@ const BuyTicket = () => {
 
       {/* Content */}
       <div className="px-4">
-        <div className="mb-8">
+        <div className="mb-4">
           <h2 className={`text-xl font-bold mb-4 ${
             theme === 'dark' ? 'text-white' : 'text-slate-900'
           }`}>
             {lotteryType} PREDICTION
           </h2>
           
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-4">
             <span className={`text-sm ${
               theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
             }`}>
               Start:
             </span>
-            <div className="flex gap-4">
+            <div className="flex gap-1">
               {renderTimeUnit(countdown.hours, 'HOURS')}
               {renderTimeUnit(countdown.minutes, 'MINUTES')}
               {renderTimeUnit(countdown.seconds, 'SECONDS')}
