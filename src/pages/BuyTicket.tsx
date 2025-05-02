@@ -242,10 +242,10 @@ const BuyTicket = () => {
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                 }`}>USD</span>
                 </div>
-                <div className="flex">
+                <div className="relative">
                   <button
                     onClick={() => setPrediction((Number(prediction || latestPrice) - 0.001).toFixed(3))}
-                    className={`px-4 py-2 ${
+                    className={`absolute right-1 px-4 py-2 ${
                       theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                     }`}
                   >
@@ -263,7 +263,7 @@ const BuyTicket = () => {
                   />
                   <button
                     onClick={() => setPrediction((Number(prediction || latestPrice) + 0.001).toFixed(3))}
-                    className={`px-4 py-2 ${
+                    className={`absolute left-1 px-4 py-2 ${
                       theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                     }`}
                   >
@@ -279,7 +279,7 @@ const BuyTicket = () => {
                 Buy Ticket with 
                 <img 
                     src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
-                    className="w-4 h-4 items-center self-center mx-2"
+                    className="w-4 h-4 items-center self-center mr-2 ml-1"
                 />
                 <span className={`text-white`}>
                     50

@@ -7,7 +7,6 @@ import { useAuth } from '../context/AuthContext';
 import { useTelegram } from '../components/useTelegram';
 import { useUser } from '../context/UserContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { div } from 'framer-motion/client';
 
 const Login = () => {
   const [password, setPassword] = useState('');
