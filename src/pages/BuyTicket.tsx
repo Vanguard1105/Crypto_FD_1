@@ -143,7 +143,7 @@ const BuyTicket = () => {
   const renderTimeUnit = (value: number, label: string) => (
     <div className="flex flex-col items-center">
       <FlipNumber value={value} theme={theme} />
-      <span className={`text-[10px] ${
+      <span className={`text-[11px] ${
         theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
       }`}>
         {label}
@@ -213,7 +213,7 @@ const BuyTicket = () => {
           </h2>
           
           <div className="flex justify-between items-center mb-4">
-            <span className={`text-sm ${
+            <span className={`text-[20px] font-bold ${
               theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
             }`}>
               Start:
