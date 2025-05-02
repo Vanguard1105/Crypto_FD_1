@@ -352,27 +352,20 @@ const BuyTicket = () => {
 
         {/* Ticket History */}
         {ticketHistory.length > 0 && (
-            <div className="mb-8">
-                <h3 className={`text-lg font-semibold mb-2 ${
-                theme === 'dark' ? 'text-white' : 'text-slate-900'
-                }`}>
-                My tickets:
-                </h3>
-                <div className="overflow-x-auto">
-                    <div className="flex gap-2 pb-3" style={{ minWidth: 'max-content' }}>
-                        {ticketHistory.map((ticket) => (
-                        <div
-                            key={ticket.id}
-                            className={`px-3 py-2 rounded-lg ${
-                            theme === 'dark' ? 'bg-slate-800 text-slate-400' : 'bg-slate-100 text-slate-600'
-                            }`}
-                        >
-                            ${ticket.prediction.toFixed(3)}
-                        </div>
-                        ))}
-                    </div>
-                </div>
+          <div className="mb-8">
+            <h3 className={`text-lg font-semibold mb-2 ${
+              theme === 'dark' ? 'text-white' : 'text-slate-900'
+            }`}>
+              My tickets:
+            </h3>
+            <div className={`grid place-items-stretch gap-1 text-md font-semibold items-center`}>
+              {ticketHistory.map((ticket) => (
+                <div className={`pr-2 ${
+                theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
+                }`}>{ticket.prediction}</div>
+              ))}
             </div>
+          </div>
         )}
       </div>
 
