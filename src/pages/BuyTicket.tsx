@@ -235,7 +235,7 @@ const BuyTicket = () => {
                 }`}>
                     Current Price:
                 </span>
-                <span className={`font-bold px-2 text-[#32bb4a]`}>
+                <span className={`font-bold pl-2 pr-0.5 text-[#32bb4a]`}>
                     {latestPrice.toFixed(3)}
                 </span>
                 <span className={`font-semibold ${
@@ -245,7 +245,7 @@ const BuyTicket = () => {
                 <div className="relative flex items-center">
                   <button
                     onClick={() => setPrediction((Number(prediction || latestPrice) - 0.001).toFixed(3))}
-                    className={`absolute right-1 px-4 py-2 selft-center ${
+                    className={`absolute right-1 px-4 py-2 selft-center text-md font-bold text-[#81182c] ${
                       theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                     }`}
                   >
@@ -255,7 +255,7 @@ const BuyTicket = () => {
                     type="text"
                     value={prediction || latestPrice.toFixed(3)}
                     onChange={handlePredictionChange}
-                    className={`flex-1 text-center w-full pr-8 pl-4 py-2 rounded-lg text-sm ${
+                    className={`flex-1 text-center w-full pr-8 pl-4 py-2 rounded-lg text-sm font-bold ${
                         theme === 'dark'
                           ? 'bg-slate-800 text-white border-slate-700'
                           : 'bg-slate-50 text-slate-900 border-slate-200'
@@ -263,7 +263,7 @@ const BuyTicket = () => {
                   />
                   <button
                     onClick={() => setPrediction((Number(prediction || latestPrice) + 0.001).toFixed(3))}
-                    className={`absolute left-1 px-4 py-2 selft-center ${
+                    className={`absolute left-1 px-4 py-2 selft-center text-md font-bold  text-[#286e34] ${
                       theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
                     }`}
                   >
@@ -279,7 +279,7 @@ const BuyTicket = () => {
                 Buy Ticket with 
                 <img 
                     src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
-                    className="w-4 h-4 items-center self-center mr-2 ml-1"
+                    className="w-4 h-4 items-center self-center ml-2 mr-1"
                 />
                 <span className={`text-white`}>
                     50
