@@ -68,7 +68,7 @@ const Lottery = () => {
   const { priceHistory: bitcoinHistory, latestPrice: bitcoinLatestPrice, previousPrice: bitcoinPreviousPrice } = useBitcoinPrice();
   
   let priceHistory: PriceData[], latestPrice, previousPrice;
-
+  console.log(syncedTime);
   useEffect(() => {
     const fetchLotteries = async () => {
       try {
