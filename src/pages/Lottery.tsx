@@ -26,7 +26,7 @@ const DRAW_DURATION = 90000; // 1.5 minutes in milliseconds
 const PREPARATION_TIME = 30000; // 30 seconds in milliseconds
 
 interface Lottery {
-  id: number;
+  _id: string;
   date: string;
   buyTicketTime: string;
   startTime: number;
@@ -362,8 +362,8 @@ const Lottery = () => {
         <div className="px-4 space-y-1 mt-4">
           {lotteries?.map((lottery) => (
           <div
-          key={lottery?.id}
-          onClick={() => navigate(`/buy-ticket?type=${lotteryType}&id=${lottery.id}&timePeriod=${selectedPeriod}`)}
+          key={lottery?._id}
+          onClick={() => navigate(`/buy-ticket?type=${lotteryType}&id=${lottery?._id}&timePeriod=${selectedPeriod}`)}
           className={`relative rounded-xl overflow-hidden group cursor-pointer border ${
             theme === 'dark' ? 'bg-slate-800 border-slate-800' : 'bg-slate-100 border-slate-400'
           } shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-md ${
@@ -400,7 +400,7 @@ const Lottery = () => {
               <div className="flex items-center space-x-2">
                 <Trophy size={20} className="text-yellow-500" />
                 <span className="text-2xl font-bold text-yellow-500">
-                  #{lottery?.id}
+                  #{lottery?._id}
                 </span>
               </div>
             </div>
