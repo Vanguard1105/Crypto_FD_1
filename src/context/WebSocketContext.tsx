@@ -33,7 +33,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         autoConnect: true  
       });  
 
-    newSocket.on('connection', () => {  
+    newSocket.on('connect', () => {  
         console.log('Connected to socket server:', newSocket.id);  
     });  
 
