@@ -33,42 +33,30 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   useEffect(() => {
     const newSocket = io('https://crypto-bet-backend-fawn.vercel.app', {
-      withCredentials: true,
-      transports: ['websocket'],
+      autoConnect: true,
       reconnection: true,
       reconnectionAttempts: Infinity,
-      reconnectionDelay: 1000,
-      reconnectionDelayMax: 5000,
-      randomizationFactor: 0.5,
+      reconnectionDelay: 2000,
     });
 
-    const onConnect = () => {
-      setIsConnected(true);
-    };
-
-    const onDisconnect = () => {
-      setIsConnected(false);
-    };
-
-    const onConnectError = (error: Error) => {
-      console.error('Connection error:', error);
-      setIsConnected(false);
-    };
-
-    newSocket.on('connect', onConnect);
-    newSocket.on('disconnect', onDisconnect);
-    newSocket.on('connect_error', onConnectError);
-    newSocket.on('buy_lottery', (data: LotteryUpdate) => {
-      addLotteryUpdate(data);
+    newSocket.on('connect', () => {
+        console.log('Connected to socket server:', newSocket.id);
+    });
+    newSocket.on('buy_lottery', (data) => {
+        console.log('Received buy_lottery:', data);
+        addLotteryUpdate(data);
+    });
+    newSocket.on('disconnect', () => {
+        console.log('Disconnected from socket server');
+    });
+    newSocket.on('connect_error', (error) => {
+        console.error('Connection error:', error);
     });
 
     setSocket(newSocket);
 
     return () => {
-      newSocket.off('connect', onConnect);
-      newSocket.off('disconnect', onDisconnect);
-      newSocket.off('connect_error', onConnectError);
-      newSocket.disconnect();
+        newSocket.disconnect();
     };
   }, []);
 
