@@ -1,124 +1,140 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { io, Socket } from 'socket.io-client';
+import React, { createContext, useContext, useEffect, useState } from 'react';  
+import { io, Socket } from 'socket.io-client';  
 
-interface LotteryUpdate {
-  ticketId: string;
-  buyerId: string;
-  buyerName: string;
-  buyersCount: number;
-}
+interface LotteryUpdate {  
+  ticketId: string;  
+  buyerId: string;  
+  buyerName: string;  
+  buyersCount: number;  
+}  
 
-interface WebSocketContextType {
-  socket: Socket | null;
-  lotteryUpdates: LotteryUpdate[];
-  addLotteryUpdate: (update: LotteryUpdate) => void;
-  isConnected: boolean;
-  connectionError: string | null;
-}
+interface WebSocketContextType {  
+  socket: Socket | null;  
+  lotteryUpdates: LotteryUpdate[];  
+  addLotteryUpdate: (update: LotteryUpdate) => void;  
+  isConnected: boolean;  
+  connectionError: string | null;  
+}  
 
-const WebSocketContext = createContext<WebSocketContextType>({
-  socket: null,
-  lotteryUpdates: [],
-  addLotteryUpdate: () => {},
-  isConnected: false,
-  connectionError: null,
-});
+const WebSocketContext = createContext<WebSocketContextType>({  
+  socket: null,  
+  lotteryUpdates: [],  
+  addLotteryUpdate: () => {},  
+  isConnected: false,  
+  connectionError: null,  
+});  
 
-export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-const authToken = localStorage.getItem('authToken');
+export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {  
+  const authToken = localStorage.getItem('authToken');  
 
-  const [socket, setSocket] = useState<Socket | null>(null);
-  const [lotteryUpdates, setLotteryUpdates] = useState<LotteryUpdate[]>([]);
-  const [isConnected, setIsConnected] = useState(false);
-  const [connectionError, setConnectionError] = useState<string | null>(null);
+  const [socket, setSocket] = useState<Socket | null>(null);  
+  const [lotteryUpdates, setLotteryUpdates] = useState<LotteryUpdate[]>([]);  
+  const [isConnected, setIsConnected] = useState(false);  
+  const [connectionError, setConnectionError] = useState<string | null>(null);  
 
-  const addLotteryUpdate = (update: LotteryUpdate) => {
-    setLotteryUpdates(prev => [...prev, update]);
-  };
+  const addLotteryUpdate = (update: LotteryUpdate) => {  
+    setLotteryUpdates(prev => [...prev, update]);  
+  };  
 
-  useEffect(() => {
-    if (!authToken) {
-      setConnectionError('Authentication required');
-      return;
-    }
+  useEffect(() => {  
+    if (!authToken) {  
+      setConnectionError('Authentication required');  
+      return;  
+    }  
 
-    const newSocket = io('https://crypto-bet-backend-fawn.vercel.app', {
-      withCredentials: true,
-      transports: ['websocket'],
-      reconnection: true,
-      reconnectionAttempts: Infinity,
-      reconnectionDelay: 1000,
-      reconnectionDelayMax: 5000,
-      randomizationFactor: 0.5,
-      autoConnect: true,
-      auth: {
-        token: authToken,
-      },
-    });
+    // Set up socket connection  
+    const socketUrl = 'https://crypto-bet-backend-fawn.vercel.app';  
 
-    const onConnect = () => {
-      setIsConnected(true);
-      console.log("Connected to socket server...")
-      setConnectionError(null);
-    };
+    const newSocket = io(socketUrl, {  
+      autoConnect: true,  
+      transports: ['websocket'], // use WebSocket only for reliability  
+      reconnection: true,  
+      reconnectionAttempts: Infinity,  
+      reconnectionDelay: 1000,  
+      reconnectionDelayMax: 5000,  
+      // specify path if backend uses a custom socket endpoint, e.g. '/socket.io'  
+      // path: '/socket.io', // Uncomment if needed  
+      auth: {  
+        token: authToken,  
+      },  
+    });  
 
-    const onDisconnect = (reason: string) => {
-      setIsConnected(false);
-      if (reason === 'io server disconnect') {
-        setConnectionError('Disconnected by server. Please refresh the page.');
-      }
-    };
+    // Connection handlers  
+    const handleConnect = () => {  
+      console.log('Socket connected');  
+      setIsConnected(true);  
+      setConnectionError(null);  
+    };  
 
-    const onConnectError = (error: Error) => {
-      setIsConnected(false);
-      if (error.message.includes('Session ID unknown')) {
-        setConnectionError('Authentication failed. Please log in again.');
-      } else {
-        console.log(error)
-        setConnectionError('Connection error. Attempting to reconnect...');
-      }
-    };
+    const handleDisconnect = (reason: string) => {  
+      console.log('Socket disconnected:', reason);  
+      setIsConnected(false);  
+      if (reason === 'io server disconnect') {  
+        setConnectionError('Disconnected by server. Please refresh.');  
+      }  
+    };  
 
-    const onReconnectAttempt = (attempt: number) => {
-      setConnectionError(`Reconnection attempt ${attempt}...`);
-    };
+    const handleError = (error: Error) => {  
+      console.error('Socket error:', error);  
+      setIsConnected(false);  
+      if (error.message.includes('Unauthorized') || error.message.includes('failed authentication')) {  
+        setConnectionError('Authentication failed. Please log in again.');  
+      } else {  
+        setConnectionError('Connection error. Reconnecting...');  
+      }  
+    };  
 
-    const onReconnectFailed = () => {
-      setConnectionError('Failed to reconnect. Please refresh the page.');
-    };
+    const handleReconnectAttempt = (attempt: number) => {  
+      console.log(`Reconnect attempt: ${attempt}`);  
+      setConnectionError(`Reconnection attempt ${attempt}...`);  
+    };  
 
-    newSocket.on('connect', onConnect);
-    newSocket.on('disconnect', onDisconnect);
-    newSocket.on('connect_error', onConnectError);
-    newSocket.on('reconnect_attempt', onReconnectAttempt);
-    newSocket.on('reconnect_failed', onReconnectFailed);
-    newSocket.on('buy_lottery', (data: LotteryUpdate) => {
-      addLotteryUpdate(data);
-    });
+    const handleReconnectFailed = () => {  
+      console.log('Reconnect failed');  
+      setConnectionError('Failed to reconnect. Please refresh.');  
+    };  
 
-    setSocket(newSocket);
+    // Register event handlers  
+    newSocket.on('connect', handleConnect);  
+    newSocket.on('disconnect', handleDisconnect);  
+    newSocket.on('connect_error', handleError);  
+    newSocket.on('reconnect_attempt', handleReconnectAttempt);  
+    newSocket.on('reconnect_failed', handleReconnectFailed);  
 
-    return () => {
-      newSocket.off('connect', onConnect);
-      newSocket.off('disconnect', onDisconnect);
-      newSocket.off('connect_error', onConnectError);
-      newSocket.off('reconnect_attempt', onReconnectAttempt);
-      newSocket.off('reconnect_failed', onReconnectFailed);
-      newSocket.disconnect();
-    };
-  }, [authToken]);
+    // Listen for your custom event  
+    newSocket.on('buy_lottery', (data: LotteryUpdate) => {  
+      addLotteryUpdate(data);  
+    });  
 
-  return (
-    <WebSocketContext.Provider value={{ 
-      socket, 
-      lotteryUpdates, 
-      addLotteryUpdate, 
-      isConnected,
-      connectionError
-    }}>
-      {children}
-    </WebSocketContext.Provider>
-  );
-};
+    setSocket(newSocket);  
 
-export const useWebSocket = () => useContext(WebSocketContext);
+    // Cleanup on unmount  
+    return () => {  
+      if (newSocket) {  
+        newSocket.off('connect', handleConnect);  
+        newSocket.off('disconnect', handleDisconnect);  
+        newSocket.off('connect_error', handleError);  
+        newSocket.off('reconnect_attempt', handleReconnectAttempt);  
+        newSocket.off('reconnect_failed', handleReconnectFailed);  
+        newSocket.off('buy_lottery');  
+        newSocket.disconnect();  
+      }  
+    };  
+  }, [authToken]);  
+
+  return (  
+    <WebSocketContext.Provider  
+      value={{  
+        socket,  
+        lotteryUpdates,  
+        addLotteryUpdate,  
+        isConnected,  
+        connectionError,  
+      }}  
+    >  
+      {children}  
+    </WebSocketContext.Provider>  
+  );  
+};  
+
+export const useWebSocket = () => useContext(WebSocketContext);  
