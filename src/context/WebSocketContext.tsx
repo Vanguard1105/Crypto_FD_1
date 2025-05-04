@@ -29,16 +29,17 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   useEffect(() => {
-    const newSocket = io('https://crypto-bet-backend-fawn.vercel.app', {
-      withCredentials: true,
-      transports: ['websocket'],
-    });
+    const newSocket = io('https://crypto-bet-backend-fawn.vercel.app', {   
+        transports: ['websocket'], // Optional: force websocket transport  
+        autoConnect: true  
+      });  
 
-    newSocket.on('connection', () => {
-      // Connection established
-    });
+    newSocket.on('connection', () => {  
+        console.log('Connected to socket server:', newSocket.id);  
+    });  
 
     newSocket.on('buy_lottery', (data: LotteryUpdate) => {
+      console.log("Received data: ", data)
       addLotteryUpdate(data);
     });
 
