@@ -50,6 +50,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     });
 
     newSocket.on('connect_error', (error) => {
+      console.log(error)
       // Handle connection error
       setTimeout(() => {
         newSocket.connect();
