@@ -12,60 +12,68 @@ interface WebSocketContextType {
   socket: Socket | null;
   lotteryUpdates: LotteryUpdate[];
   addLotteryUpdate: (update: LotteryUpdate) => void;
+  isConnected: boolean;
 }
 
 const WebSocketContext = createContext<WebSocketContextType>({
   socket: null,
   lotteryUpdates: [],
   addLotteryUpdate: () => {},
+  isConnected: false,
 });
 
 export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [lotteryUpdates, setLotteryUpdates] = useState<LotteryUpdate[]>([]);
+  const [isConnected, setIsConnected] = useState(false);
 
   const addLotteryUpdate = (update: LotteryUpdate) => {
     setLotteryUpdates(prev => [...prev, update]);
   };
 
   useEffect(() => {
-    const newSocket = io('https://crypto-bet-backend-fawn.vercel.app', {   
-        transports: ['websocket'], // Optional: force websocket transport  
-        autoConnect: true  
-      });  
+    const newSocket = io('https://crypto-bet-backend-fawn.vercel.app', {
+      withCredentials: true,
+      transports: ['websocket'],
+      reconnection: true,
+      reconnectionAttempts: Infinity,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      randomizationFactor: 0.5,
+    });
 
-    newSocket.on('connect', () => {  
-        console.log('Connected to socket server:', newSocket.id);  
-    });  
+    const onConnect = () => {
+      setIsConnected(true);
+    };
 
+    const onDisconnect = () => {
+      setIsConnected(false);
+    };
+
+    const onConnectError = (error: Error) => {
+      console.error('Connection error:', error);
+      setIsConnected(false);
+    };
+
+    newSocket.on('connect', onConnect);
+    newSocket.on('disconnect', onDisconnect);
+    newSocket.on('connect_error', onConnectError);
     newSocket.on('buy_lottery', (data: LotteryUpdate) => {
-      console.log("Received data: ", data)
       addLotteryUpdate(data);
-    });
-
-    newSocket.on('disconnect', () => {
-        setTimeout(() => {
-            newSocket.connect();
-        }, 5000);
-    });
-
-    newSocket.on('connect_error', (error) => {
-      console.log(error)
-      // Handle connection error
-      setTimeout(() => {
-        newSocket.connect();
-      }, 5000);
     });
 
     setSocket(newSocket);
 
     return () => {
+      newSocket.off('connect', onConnect);
+      newSocket.off('disconnect', onDisconnect);
+      newSocket.off('connect_error', onConnectError);
       newSocket.disconnect();
     };
   }, []);
 
   return (
-    <WebSocketContext.Provider value={{ socket, lotteryUpdates, addLotteryUpdate }}>
+    <WebSocketContext.Provider value={{ socket, lotteryUpdates, addLotteryUpdate, isConnected }}>
       {children}
     </WebSocketContext.Provider>
   );
