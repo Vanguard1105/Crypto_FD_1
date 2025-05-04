@@ -32,7 +32,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   useEffect(() => {
-    const newSocket = io('https://crypto-bet-backend-fawn.vercel.app:5000', {
+    const newSocket = io('https://crypto-bet-backend-fawn.vercel.app', {
       withCredentials: true,
       transports: ['websocket'],
       reconnection: true,
