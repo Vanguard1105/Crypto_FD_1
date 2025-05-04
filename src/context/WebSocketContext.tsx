@@ -58,6 +58,7 @@ const authToken = localStorage.getItem('authToken');
 
     const onConnect = () => {
       setIsConnected(true);
+      console.log("Connected to socket server...")
       setConnectionError(null);
     };
 
