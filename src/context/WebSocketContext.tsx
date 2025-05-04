@@ -1,152 +1,122 @@
-// import React, { createContext, useContext, useEffect, useState } from 'react';
-// import { io, Socket } from 'socket.io-client';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { io, Socket } from 'socket.io-client';
 
-// interface LotteryUpdate {
-//   ticketId: string;
-//   buyerId: string;
-//   buyerName: string;
-//   buyersCount: number;
-// }
+interface LotteryUpdate {
+  ticketId: string;
+  buyerId: string;
+  buyerName: string;
+  buyersCount: number;
+}
 
-// interface WebSocketContextType {
-//   socket: Socket | null;
-//   lotteryUpdates: LotteryUpdate[];
-//   addLotteryUpdate: (update: LotteryUpdate) => void;
-//   isConnected: boolean;
-// }
+interface WebSocketContextType {
+  socket: Socket | null;
+  lotteryUpdates: LotteryUpdate[];
+  addLotteryUpdate: (update: LotteryUpdate) => void;
+  isConnected: boolean;
+  connectionError: string | null;
+}
 
-// const WebSocketContext = createContext<WebSocketContextType>({
-//   socket: null,
-//   lotteryUpdates: [],
-//   addLotteryUpdate: () => {},
-//   isConnected: false,
-// });
+const WebSocketContext = createContext<WebSocketContextType>({
+  socket: null,
+  lotteryUpdates: [],
+  addLotteryUpdate: () => {},
+  isConnected: false,
+  connectionError: null,
+});
 
-// export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-//   const [socket, setSocket] = useState<Socket | null>(null);
-//   const [lotteryUpdates, setLotteryUpdates] = useState<LotteryUpdate[]>([]);
-//   const [isConnected, setIsConnected] = useState(false);
+export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const authToken = localStorage.getItem('authToken');
 
-//   const addLotteryUpdate = (update: LotteryUpdate) => {
-//     setLotteryUpdates(prev => [...prev, update]);
-//   };
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [lotteryUpdates, setLotteryUpdates] = useState<LotteryUpdate[]>([]);
+  const [isConnected, setIsConnected] = useState(false);
+  const [connectionError, setConnectionError] = useState<string | null>(null);
 
-//   useEffect(() => {
-//     const newSocket = io('https://crypto-bet-backend-fawn.vercel.app', {
-//       autoConnect: true,
-//       reconnection: true,
-//       reconnectionAttempts: Infinity,
-//       reconnectionDelay: 2000,
-//     });
+  const addLotteryUpdate = (update: LotteryUpdate) => {
+    setLotteryUpdates(prev => [...prev, update]);
+  };
 
-//     newSocket.on('connect', () => {
-//         console.log('Connected to socket server:', newSocket.id);
-//     });
-//     newSocket.on('buy_lottery', (data) => {
-//         console.log('Received buy_lottery:', data);
-//         addLotteryUpdate(data);
-//     });
-//     newSocket.on('disconnect', () => {
-//         console.log('Disconnected from socket server');
-//     });
-//     newSocket.on('connect_error', (error) => {
-//         console.error('Connection error:', error);
-//     });
+  useEffect(() => {
+    if (!authToken) {
+      setConnectionError('Authentication required');
+      return;
+    }
 
-//     setSocket(newSocket);
+    const newSocket = io('https://crypto-bet-backend-fawn.vercel.app', {
+      withCredentials: true,
+      transports: ['websocket'],
+      reconnection: true,
+      reconnectionAttempts: Infinity,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      randomizationFactor: 0.5,
+      autoConnect: true,
+      auth: {
+        token: authToken,
+      },
+    });
 
-//     return () => {
-//         newSocket.disconnect();
-//     };
-//   }, []);
+    const onConnect = () => {
+      setIsConnected(true);
+      setConnectionError(null);
+    };
 
-//   return (
-//     <WebSocketContext.Provider value={{ socket, lotteryUpdates, addLotteryUpdate, isConnected }}>
-//       {children}
-//     </WebSocketContext.Provider>
-//   );
-// };
+    const onDisconnect = (reason: string) => {
+      setIsConnected(false);
+      if (reason === 'io server disconnect') {
+        setConnectionError('Disconnected by server. Please refresh the page.');
+      }
+    };
 
-// export const useWebSocket = () => useContext(WebSocketContext);
+    const onConnectError = (error: Error) => {
+      setIsConnected(false);
+      if (error.message.includes('Session ID unknown')) {
+        setConnectionError('Authentication failed. Please log in again.');
+      } else {
+        setConnectionError('Connection error. Attempting to reconnect...');
+      }
+    };
 
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';  
-import { io, Socket } from 'socket.io-client';  
+    const onReconnectAttempt = (attempt: number) => {
+      setConnectionError(`Reconnection attempt ${attempt}...`);
+    };
 
-// Define the shape of the updates  
-interface LotteryUpdate {  
-  // Define the properties based on your data structure  
-  // Example:  
-  id: string;  
-  amount: number;  
-  // Add other relevant fields here  
-  [key: string]: any; // fallback to any if structure varies  
-}  
+    const onReconnectFailed = () => {
+      setConnectionError('Failed to reconnect. Please refresh the page.');
+    };
 
-// Define the context state shape  
-interface WebSocketContextType {  
-  socket: Socket | null;  
-  lotteryUpdates: LotteryUpdate[];  
-  addLotteryUpdate: (update: LotteryUpdate) => void;  
-}  
+    newSocket.on('connect', onConnect);
+    newSocket.on('disconnect', onDisconnect);
+    newSocket.on('connect_error', onConnectError);
+    newSocket.on('reconnect_attempt', onReconnectAttempt);
+    newSocket.on('reconnect_failed', onReconnectFailed);
+    newSocket.on('buy_lottery', (data: LotteryUpdate) => {
+      addLotteryUpdate(data);
+    });
 
-// Default context value  
-const WebSocketContext = createContext<WebSocketContextType>({  
-  socket: null,  
-  lotteryUpdates: [],  
-  addLotteryUpdate: () => {},  
-});  
+    setSocket(newSocket);
 
-// Define the props for provider component  
-interface WebSocketProviderProps {  
-  children: ReactNode;  
-}  
+    return () => {
+      newSocket.off('connect', onConnect);
+      newSocket.off('disconnect', onDisconnect);
+      newSocket.off('connect_error', onConnectError);
+      newSocket.off('reconnect_attempt', onReconnectAttempt);
+      newSocket.off('reconnect_failed', onReconnectFailed);
+      newSocket.disconnect();
+    };
+  }, [authToken]);
 
-export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }) => {  
-  const [socket, setSocket] = useState<Socket | null>(null);  
-  const [lotteryUpdates, setLotteryUpdates] = useState<LotteryUpdate[]>([]);  
+  return (
+    <WebSocketContext.Provider value={{ 
+      socket, 
+      lotteryUpdates, 
+      addLotteryUpdate, 
+      isConnected,
+      connectionError
+    }}>
+      {children}
+    </WebSocketContext.Provider>
+  );
+};
 
-  const addLotteryUpdate = (update: LotteryUpdate) => {  
-    setLotteryUpdates(prev => [...prev, update]);  
-  };  
-
-  useEffect(() => {  
-    const newSocket = io('https://crypto-bet-backend-fawn.vercel.app', {  
-      autoConnect: true,  
-      reconnection: true,  
-      reconnectionAttempts: Infinity,  
-      reconnectionDelay: 4000,  
-    });  
-
-    newSocket.on('connect', () => {  
-      console.log('Connected to socket server:', newSocket.id);  
-    });  
-
-    newSocket.on('buy_lottery', (data: LotteryUpdate) => {  
-      console.log('Received buy_lottery:', data);  
-      addLotteryUpdate(data);  
-    });  
-
-    newSocket.on('disconnect', () => {  
-      console.log('Disconnected from socket server');  
-    });  
-
-    newSocket.on('connect_error', (error) => {  
-      console.error('Connection error:', error);  
-    });  
-
-    setSocket(newSocket);  
-
-    // Cleanup on unmount  
-    return () => {  
-      newSocket.disconnect();  
-    };  
-  }, []);  
-
-  return (  
-    <WebSocketContext.Provider value={{ socket, lotteryUpdates, addLotteryUpdate }}>  
-      {children}  
-    </WebSocketContext.Provider>  
-  );  
-};  
-
-export const useWebSocket = () => useContext(WebSocketContext);  
+export const useWebSocket = () => useContext(WebSocketContext);
