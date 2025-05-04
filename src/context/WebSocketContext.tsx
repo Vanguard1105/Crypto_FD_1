@@ -36,7 +36,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
-      if (message.type === 'lottery:update') {
+      if (message.type === 'buy_lottery') {
         addLotteryUpdate(message.data);
       }
     };
