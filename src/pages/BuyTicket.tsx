@@ -164,7 +164,7 @@ const BuyTicket = () => {
     if (!prediction || !userData?.diamond_count || userData?.diamond_count < 50) return;
     try {
         const response = await axios.post('https://crypto-bet-backend-fawn.vercel.app/api/lottery/buy-ticket', {
-          lotteryId,
+          ticket_id: lotteryId,
         });
         setShowSuccess(true);
         setTimeout(() => {
