@@ -114,7 +114,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
       autoConnect: true,  
       reconnection: true,  
       reconnectionAttempts: Infinity,  
-      reconnectionDelay: 2000,  
+      reconnectionDelay: 4000,  
     });  
 
     newSocket.on('connect', () => {  
