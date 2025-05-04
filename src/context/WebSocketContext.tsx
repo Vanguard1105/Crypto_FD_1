@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { io, Socket } from 'socket.io-client';
 
 interface LotteryUpdate {
   ticketId: string;
@@ -8,7 +9,7 @@ interface LotteryUpdate {
 }
 
 interface WebSocketContextType {
-  socket: WebSocket | null;
+  socket: Socket | null;
   lotteryUpdates: LotteryUpdate[];
   addLotteryUpdate: (update: LotteryUpdate) => void;
 }
@@ -20,7 +21,7 @@ const WebSocketContext = createContext<WebSocketContextType>({
 });
 
 export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [socket, setSocket] = useState<Socket | null>(null);
   const [lotteryUpdates, setLotteryUpdates] = useState<LotteryUpdate[]>([]);
 
   const addLotteryUpdate = (update: LotteryUpdate) => {
@@ -28,32 +29,34 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   useEffect(() => {
-    const ws = new WebSocket('wss://crypto-bet-backend-fawn.vercel.app');
+    const newSocket = io('https://crypto-bet-backend-fawn.vercel.app', {
+      withCredentials: true,
+      transports: ['websocket'],
+    });
 
-    ws.onopen = () => {
-      console.log('WebSocket connected');
-    };
+    newSocket.on('connection', () => {
+      // Connection established
+    });
 
-    ws.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-      if (message.type === 'buy_lottery') {
-        addLotteryUpdate(message.data);
-      }
-    };
+    newSocket.on('buy_lottery', (data: LotteryUpdate) => {
+      addLotteryUpdate(data);
+    });
 
-    ws.onclose = () => {
-      console.log('WebSocket disconnected');
-      // Implement reconnection logic if needed
-    };
+    newSocket.on('disconnect', () => {
+      // Handle disconnection
+    });
 
-    ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
+    newSocket.on('connect_error', (error) => {
+      // Handle connection error
+      setTimeout(() => {
+        newSocket.connect();
+      }, 5000);
+    });
 
-    setSocket(ws);
+    setSocket(newSocket);
 
     return () => {
-      ws.close();
+      newSocket.disconnect();
     };
   }, []);
 
