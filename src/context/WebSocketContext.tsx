@@ -43,7 +43,9 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     });
 
     newSocket.on('disconnect', () => {
-      // Handle disconnection
+        setTimeout(() => {
+            newSocket.connect();
+        }, 5000);
     });
 
     newSocket.on('connect_error', (error) => {
