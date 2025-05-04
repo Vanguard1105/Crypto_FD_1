@@ -74,6 +74,7 @@ const authToken = localStorage.getItem('authToken');
       if (error.message.includes('Session ID unknown')) {
         setConnectionError('Authentication failed. Please log in again.');
       } else {
+        console.log(error)
         setConnectionError('Connection error. Attempting to reconnect...');
       }
     };
