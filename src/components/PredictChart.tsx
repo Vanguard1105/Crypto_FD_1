@@ -108,7 +108,7 @@ const PredictChart: React.FC<PredictChartProps> = ({
 
   // Custom dot renderer for the end point
   const CustomDot = (props: any) => {
-    const { cx, cy, payload, index } = props;
+    const { cx, cy, index } = props;
     const isLast = index === smoothData.length - 1;
     
     if (!isLast) return null;
