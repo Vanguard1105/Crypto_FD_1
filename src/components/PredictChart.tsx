@@ -14,7 +14,7 @@ import { PriceData, Theme } from '../types';
 
 interface PredictChartProps {
   data: PriceData[];
-  title: string;
+  title: string | null;
   latestPrice: number;
   theme: Theme;
   isDrawing: boolean;
