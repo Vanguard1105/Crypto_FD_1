@@ -18,6 +18,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useWebSocket } from '../context/WebSocketContext';
 import axios from '../api/axios';
 import { useTimeSync } from '../context/TimeSyncContext';
+import datetime from 'datetime';
 
 type LotteryType = 'predict' | 'lottery';
 type VoteType = 'up' | 'down' | null;
@@ -183,6 +184,17 @@ const Lottery = () => {
   const handlePeriodChange = (period: TimePeriod) => {
     setSelectedPeriod(period);
   };
+
+  const formatTimestamp = (timestamp: number) => {
+    const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+  
+    return `${year}-${month}-${day}, ${hours}:${minutes}`;
+  }
 
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-white'}`}>
@@ -393,7 +405,7 @@ const Lottery = () => {
                       ? theme === 'dark' ? 'text-red-400' : 'text-red-500'
                       : theme === 'dark' ? 'text-green-400' : 'text-green-500'
                   }`}>
-                    {lottery?.endTime < syncedTime ? 'Ended:' : 'Start:'} {lottery?.startTime}
+                    {lottery?.endTime < syncedTime ? 'Ended:' : 'Start:'} {formatTimestamp(lottery?.startTime)}
                   </span>
                 </div>
               </div>
