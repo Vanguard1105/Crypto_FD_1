@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sun, Moon, Timer, Trophy, Calendar, ArrowUp, ArrowDown } from 'lucide-react';
+import { Sun, Moon, Timer, Calendar, ArrowUp, ArrowDown } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import PriceChart from '../components/PriceChart';
 import PredictChart from '../components/PredictChart';
@@ -185,7 +185,7 @@ const Lottery = () => {
   };
 
   const formatTimestamp = (timestamp: number) => {
-    const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+    const date = new Date(timestamp); // Convert seconds to milliseconds
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
     const day = String(date.getDate()).padStart(2, '0');
