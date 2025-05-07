@@ -14,6 +14,7 @@ import { PriceData, Theme } from '../types';
 
 interface PredictChartProps {
   data: PriceData[];
+  title: string;
   latestPrice: number;
   theme: Theme;
   isDrawing: boolean;
@@ -43,6 +44,7 @@ const CustomTooltip = ({ active, payload, label, theme }: any) => {
 
 const PredictChart: React.FC<PredictChartProps> = ({
   data,
+  title,
   latestPrice: initialLatestPrice,
   theme,
   isDrawing,
@@ -142,7 +144,7 @@ const PredictChart: React.FC<PredictChartProps> = ({
         <div className="flex items-center justify-between ml-2 mr-[44px] h-5">
           <div className='flex flex-row gap-2 items-center'>
             <div>
-              <span className='text-md text-[#007aff] font-semibold'>SOL</span>
+              <span className='text-md text-[#007aff] font-semibold'>{title}</span>
               <span className={`text-md font-semibold ${
                 theme === 'dark' ? 'border-slate-700/50' : 'text-slate-900'
               }`}> / </span>

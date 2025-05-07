@@ -145,7 +145,7 @@ const Lottery = () => {
             const now = Date.now();
             setDrawingState({
               isActive: true,
-              startTime: now - 12000,
+              startTime: now,
               endTime: now + DRAW_DURATION,
               startPrice: latestPrice,
             });
