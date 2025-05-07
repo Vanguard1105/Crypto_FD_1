@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const TELEGRAM_BOT_TOKEN = '7616908940:AAG6lS1nOPuZ47HxQLtWm9b2kEw8RrmOFm0';
+const TELEGRAM_BOT_TOKEN = '7840814435:AAFPY_yWc0aQ_p71dbP8Dc4FOp9ADkTrwPM';
 
 export const getTelegramAvatar = async (userId: number): Promise<string | null> => {
   try {

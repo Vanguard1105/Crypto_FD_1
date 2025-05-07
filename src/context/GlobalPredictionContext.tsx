@@ -1,5 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 import { PriceData, DrawingState } from '../types';
+import { usePrice } from './PriceContext';
+import { useEthereumPrice } from './EthereumPriceContext';
+import { useBitcoinPrice } from './BitcoinPriceContext';
 
 // Define types for each token's prediction state
 interface TokenPredictionState {
@@ -15,6 +18,7 @@ interface GlobalPredictionContextType {
   btcPrediction: TokenPredictionState;
   updatePrediction: (token: 'SOL' | 'ETH' | 'BTC', data: Partial<TokenPredictionState>) => void;
   setVote: (token: 'SOL' | 'ETH' | 'BTC', vote: 'up' | 'down' | null) => void;
+  startPrediction: (token: 'SOL' | 'ETH' | 'BTC') => void;
 }
 
 const defaultDrawingState: DrawingState = {
@@ -37,9 +41,14 @@ const GlobalPredictionContext = createContext<GlobalPredictionContextType>({
   btcPrediction: defaultPredictionState,
   updatePrediction: () => {},
   setVote: () => {},
+  startPrediction: () => {},
 });
 
 export const GlobalPredictionProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { latestPrice: solLatestPrice } = usePrice();
+  const { latestPrice: ethLatestPrice } = useEthereumPrice();
+  const { latestPrice: btcLatestPrice } = useBitcoinPrice();
+  
   const [solPrediction, setSolPrediction] = useState<TokenPredictionState>(defaultPredictionState);
   const [ethPrediction, setEthPrediction] = useState<TokenPredictionState>(defaultPredictionState);
   const [btcPrediction, setBtcPrediction] = useState<TokenPredictionState>(defaultPredictionState);
@@ -62,6 +71,47 @@ export const GlobalPredictionProvider: React.FC<{ children: React.ReactNode }> =
     updatePrediction(token, { selectedVote: vote });
   };
 
+  const startPrediction = (token: 'SOL' | 'ETH' | 'BTC') => {
+    const now = Date.now();
+    const endTime = now + 30000; // 30 seconds from now
+
+    switch (token) {
+      case 'SOL':
+        updatePrediction(token, {
+          drawingState: {
+            isActive: true,
+            startTime: now,
+            endTime,
+            startPrice: solLatestPrice,
+          },
+          countdown: 30,
+        });
+        break;
+      case 'ETH':
+        updatePrediction(token, {
+          drawingState: {
+            isActive: true,
+            startTime: now,
+            endTime,
+            startPrice: ethLatestPrice,
+          },
+          countdown: 30,
+        });
+        break;
+      case 'BTC':
+        updatePrediction(token, {
+          drawingState: {
+            isActive: true,
+            startTime: now,
+            endTime,
+            startPrice: btcLatestPrice,
+          },
+          countdown: 30,
+        });
+        break;
+    }
+  };
+
   return (
     <GlobalPredictionContext.Provider
       value={{
@@ -70,6 +120,7 @@ export const GlobalPredictionProvider: React.FC<{ children: React.ReactNode }> =
         btcPrediction,
         updatePrediction,
         setVote,
+        startPrediction,
       }}
     >
       {children}
