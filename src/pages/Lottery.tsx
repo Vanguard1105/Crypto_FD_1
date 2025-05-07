@@ -18,6 +18,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useWebSocket } from '../context/WebSocketContext';
 import axios from '../api/axios';
 import { useTimeSync } from '../context/TimeSyncContext';
+import { useLottery } from '../context/LotteryContext';
 
 type LotteryType = 'predict' | 'lottery';
 type VoteType = 'up' | 'down' | null;
@@ -52,7 +53,7 @@ const Lottery = () => {
   const [selectedVote, setSelectedVote] = useState<VoteType>(null);
   const [betAmount, setBetAmount] = useState<string>('1');
   const [showVoteSuccess, setShowVoteSuccess] = useState(false);
-  const [lotteries, setLotteries] = useState<Lottery [] | null>(null);
+  const { lotteries, setLotteries, addLottery, updateLottery, getLotteryById } = useLottery();
   const { syncedTime } = useTimeSync();
   const [drawingState, setDrawingState] = useState<DrawingState>({
     isActive: false,
@@ -83,11 +84,11 @@ const Lottery = () => {
           setLotteries(response.data);
         } else {
           console.error('Invalid bonuses data format:', response.data);
-          setLotteries(null);
+          setLotteries([]);
         }
       } catch (error) {
         console.error('Error fetching bonuses:', error);
-        setLotteries(null);
+        setLotteries([]);
       }
     };
     fetchLotteries();
@@ -127,7 +128,6 @@ const Lottery = () => {
           ...userData,
           solBalance: balanceInSol
         });
-        // setUserData({ username, user_id, email, publicKey, has_password, nickname, diamond_count, avatar, solBalance});
       };
       fetchBalance();
     }
@@ -239,6 +239,7 @@ const Lottery = () => {
         {selectedType === 'predict' ? (
           <PredictChart
             data={predictData}
+            title = {lotteryType}
             latestPrice={latestPrice}
             theme={theme}
             isDrawing={drawingState.isActive}

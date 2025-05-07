@@ -18,6 +18,7 @@ import { GlobalPredictionProvider } from './context/GlobalPredictionContext';
 import { PredictionService } from './services/PredictionService';
 import { WebSocketProvider } from './context/WebSocketContext';
 import { TimeSyncProvider } from './context/TimeSyncContext';
+import { LotteryProvider } from './context/LotteryContext';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <EthereumPriceProvider>
             <BitcoinPriceProvider>
               <PredictionProvider>
+                <LotteryProvider>
                 <GlobalPredictionProvider>
                   <TimeSyncProvider>
                     <WebSocketProvider>
@@ -46,6 +48,7 @@ function App() {
                     </WebSocketProvider>
                   </TimeSyncProvider>
                 </GlobalPredictionProvider>
+                </LotteryProvider>
               </PredictionProvider>
               
             </BitcoinPriceProvider>
