@@ -31,7 +31,7 @@ const CustomTooltip = ({ active, payload, label, theme }: any) => {
       <div className={`px-2 py-1 rounded-md text-[10px] ${
         theme === 'dark' ? 'bg-slate-800 text-white' : 'bg-white text-slate-900'
       } shadow-lg border border-slate-200/10`}>
-        <p>{format(date, 'HH:mm:ss.SSS')}</p>
+        <p>{format(date, 'HH:mm:ss')}</p>
         <p className="font-medium">
           ${payload[0]?.value?.toFixed(3)}
         </p>

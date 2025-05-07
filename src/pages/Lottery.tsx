@@ -145,7 +145,7 @@ const Lottery = () => {
             const now = Date.now();
             setDrawingState({
               isActive: true,
-              startTime: now,
+              startTime: now - 12000,
               endTime: now + DRAW_DURATION,
               startPrice: latestPrice,
             });
@@ -414,7 +414,6 @@ const Lottery = () => {
               <span className={`px-4 py-1 rounded-md text-sm font-medium bg-purple-500/10 text-purple-500`}>
               3rd SOL Lottery
               </span>
-              <div className={`w-24 h-24 absolute bottom-4 right-4 rounded-lg bg-purple-500/5 transition-transform duration-300 group-hover:scale-110`} />
             </div>
           </div>
         </div>
