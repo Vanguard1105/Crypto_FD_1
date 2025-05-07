@@ -378,7 +378,7 @@ const Lottery = () => {
                 <div className="flex items-center space-x-2">
                   <Calendar size={16} className="text-purple-400" />
                   <span className="text-sm font-medium text-purple-400">
-                    {lottery?.date}
+                    {new Date(lottery?.buyTicketTime).toISOString().split('T')[0]}
                   </span>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -396,12 +396,6 @@ const Lottery = () => {
                     {lottery?.endTime < syncedTime ? 'Ended:' : 'Start:'} {lottery?.startTime}
                   </span>
                 </div>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Trophy size={20} className="text-yellow-500" />
-                <span className="text-2xl font-bold text-yellow-500">
-                  #{lottery?._id}
-                </span>
               </div>
             </div>
             
