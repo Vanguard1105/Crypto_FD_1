@@ -18,7 +18,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useWebSocket } from '../context/WebSocketContext';
 import axios from '../api/axios';
 import { useTimeSync } from '../context/TimeSyncContext';
-import datetime from 'datetime';
 
 type LotteryType = 'predict' | 'lottery';
 type VoteType = 'up' | 'down' | null;
