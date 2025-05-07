@@ -14,6 +14,8 @@ import { FaUserCog } from "react-icons/fa";
 import { CgChevronLeft } from "react-icons/cg";
 import { PriceData, TimePeriod } from '../types';
 import axios from "../api/axios";
+import { useLottery } from '../context/LotteryContext';
+import { useTimeSync } from '../context/TimeSyncContext';
 
 interface Ticket {
   id: number;
@@ -30,7 +32,6 @@ const BuyTicket = () => {
   const [solBalance, setSolBalance] = useState<number | null>(null);
   const [prediction, setPrediction] = useState<string>('');
   const [showSuccess, setShowSuccess] = useState(false);
-  const [countdown, setCountdown] = useState({ hours: 16, minutes: 43, seconds: 27 });
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const lotteryType = searchParams.get('type') || 'SOL';
@@ -39,6 +40,13 @@ const BuyTicket = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>(timePeriod as TimePeriod);
   const [error, setError] = useState('');
   const [showError, setShowError] = useState(false);
+  const { getLotteryById } = useLottery();
+  const lottery = getLotteryById(lotteryId);
+  const { syncedTime } = useTimeSync();
+  const diffMs = lottery?.startTime? Math.floor(Math.abs(lottery.startTime - syncedTime) / 1000) : 0;
+  const [countdown, setCountdown] = useState({ hours: Math.floor(diffMs / 3600), minutes: Math.floor((diffMs % 3600) / 60), seconds: diffMs % 60 });
+
+
 
   const ErrorNotification = () => (
     <AnimatePresence>

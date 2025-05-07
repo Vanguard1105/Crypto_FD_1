@@ -16,7 +16,7 @@ interface LotteryContextType {
   setLotteries: React.Dispatch<React.SetStateAction<Lottery[]>>;
   addLottery: (lottery: Lottery) => void;
   updateLottery: (id: string, updatedData: Partial<Lottery>) => void;
-  getLotteryById: (id: string) => Lottery | undefined;
+  getLotteryById: (id: string | null) => Lottery | undefined;
 }
 
 const LotteryContext = createContext<LotteryContextType>({
@@ -42,7 +42,7 @@ export const LotteryProvider: React.FC<{ children: React.ReactNode }> = ({ child
     );
   };
 
-  const getLotteryById = (id: string) => {
+  const getLotteryById = (id: string | null) => {
     return lotteries.find(lottery => lottery._id === id);
   };
 
